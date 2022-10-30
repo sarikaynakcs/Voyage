@@ -89,7 +89,7 @@
             android:layout_marginTop="30dp"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="#7145"
+            android:text="#5555"
             android:textSize="40dp"
             android:textColor="@color/gray02"
             android:textAlignment="center"
