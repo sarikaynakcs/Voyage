@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back01"
+    tools:context=".DashboardUserActivity">
+
+    <!--Toolbar-->
+    <RelativeLayout
+        android:id="@+id/toolbarRL"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/shape_toolbar02"
+        android:alpha="0.7">
+        
+        <TextView
+            android:id="@+id/titleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_centerHorizontal="true"
+            android:text="Dashboard User"
+            android:textStyle="bold|italic"
+            android:textColor="#347BDA"/>
+
+        <TextView
+            android:id="@+id/subTitleTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/titleTv"
+            android:text="abc@example.com"/>
+
+        <ImageButton
+            android:id="@+id/logoutBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_logout_white"
+            android:layout_alignParentEnd="true"
+            android:background="@android:color/transparent"/>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbarRL"
+        android:layout_marginTop="15dp"
+        android:paddingStart="30dp"
+        android:paddingEnd="30dp"
+        android:orientation="vertical">
+        <TextView
+            android:id="@+id/infoPlaceWithSrcId"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingTop="10dp"
+            android:paddingStart="30dp"
+            android:background="@drawable/stroke_deneme"
+            android:text="Anadolu Medeniyetleri Müzesi"
+            android:textColor="@color/white" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:id="@+id/infoPlaceWithSrc2Id"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:paddingTop="10dp"
+            android:paddingStart="30dp"
+            android:background="@drawable/stroke_deneme"
+            android:text="Anadolu Medeniyetleri Müzesi"
+            android:textColor="@color/white" />
+    </LinearLayout>
+
+
+    <!--Bottom Navbar-->
+    <LinearLayout
+        android:id="@+id/linearBotId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/notificationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="notificationButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_notification_white"/>
+
+        <ImageView
+            android:id="@+id/informationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="informationButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_information_white"/>
+
+        <ImageView
+            android:id="@+id/gameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="gameButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_game_white"/>
+
+        <ImageView
+            android:id="@+id/chatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="chatButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_chat_white"/>
+
+        <ImageView
+            android:id="@+id/profileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="profileButton"
+            android:background="@drawable/shape_toolbar04"
+            android:src="@drawable/ic_profile_white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

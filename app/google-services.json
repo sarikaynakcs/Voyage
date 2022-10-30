@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "369853074217",
+    "project_id": "voyage-app-df91b",
+    "storage_bucket": "voyage-app-df91b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:369853074217:android:e23150bc0823000b1a4538",
+        "android_client_info": {
+          "package_name": "com.example.voyageapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "369853074217-u00iuolivtnuj7jh0c7vh2a3cach9j1j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.voyageapp",
+            "certificate_hash": "849ff5865793c38a2b073e7bcbdddcf6e67a8096"
+          }
+        },
+        {
+          "client_id": "369853074217-r30ovgepfk5hkr1jljtdqunl3up5gsdp.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBK3OzWiQaf_UiXGyn1mluuaR-wA_u7mV4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "369853074217-r30ovgepfk5hkr1jljtdqunl3up5gsdp.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

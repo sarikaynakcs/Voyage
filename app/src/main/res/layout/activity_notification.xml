@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back01"
+    tools:context=".NotificationActivity">
+
+    <LinearLayout
+        android:id="@+id/linearTopId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true">
+
+        <ImageView
+            android:id="@+id/activityInfoButtonId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_notification_white"
+            android:background="@drawable/shape_toolbar07"
+            android:backgroundTint="#ADADD8"
+            tools:ignore="DuplicateIds"/>
+
+        <ImageView
+            android:id="@+id/notificationInfoButtonId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_events_white"
+            android:background="@drawable/shape_toolbar07"
+            android:backgroundTint="#ADADD8"/>
+
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/recyclerView"
+        android:layout_below="@+id/linearTopId"
+        android:layout_above="@+id/linearBotId"/>
+
+    <!--Bottom Navbar-->
+    <LinearLayout
+        android:id="@+id/linearBotId"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <ImageView
+            android:id="@+id/notificationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="notificationButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_notification_white"/>
+
+        <ImageView
+            android:id="@+id/informationButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="informationButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_information_white"/>
+
+        <ImageView
+            android:id="@+id/gameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="gameButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_game_white"/>
+
+        <ImageView
+            android:id="@+id/chatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="chatButton"
+            android:background="@drawable/shape_toolbar04"
+            android:layout_marginRight="1dp"
+            android:src="@drawable/ic_chat_white"/>
+
+        <ImageView
+            android:id="@+id/profileButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:onClick="profileButton"
+            android:background="@drawable/shape_toolbar04"
+            android:src="@drawable/ic_profile_white"/>
+
+    </LinearLayout>
+
+</RelativeLayout>

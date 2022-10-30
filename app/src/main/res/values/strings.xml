@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Voyage App</string>
+    <string name="new_user_signup"><u>Not have an account? <b>SignUp</b></u></string>
+    <string name="forgot_password"><u>Forgot Password?</u></string>
+</resources>
