@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/back01"
+    tools:context=".ProfileFragment">
+
+    <ImageView
+        android:id="@+id/editPhotoId"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/ic_profile_white"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/stroke_deneme"
+        android:layout_marginTop="5dp"/>
+    <Button
+        android:id="@+id/editPhotoButtonId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editPhotoId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:text="Fotoğrafını Değiştir"
+        android:background="@drawable/shape_button01"
+        android:textSize="15sp"/>
+
+    <TextView
+        android:id="@+id/commentTextId"
+        android:layout_width="200dp"
+        android:layout_height="100dp"
+        android:layout_below="@id/editPhotoButtonId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/stroke_deneme"
+        android:text="  Durumunu Yaz"/>
+
+    <EditText
+        android:id="@+id/editNameId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@id/commentTextId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Ad"/>
+
+    <EditText
+        android:id="@+id/editSurnameId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:layout_below="@id/editNameId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Soyad"/>
+
+    <EditText
+        android:id="@+id/editPasswordId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType=""
+        android:layout_below="@id/editSurnameId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Şifre"/>
+
+    <EditText
+        android:id="@+id/editCheckPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType=""
+        android:layout_below="@id/editPasswordId"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Şifreni Doğrula "/>
+
+    <Button
+        android:id="@+id/saveProfileId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/editCheckPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="1dp"
+        android:text="Kaydet"
+        android:background="@drawable/shape_button01"
+        android:textSize="15sp"/>
+
+</RelativeLayout>
