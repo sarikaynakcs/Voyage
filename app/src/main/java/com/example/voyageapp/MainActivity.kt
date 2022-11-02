@@ -27,9 +27,7 @@ class MainActivity : AppCompatActivity() {
         //hand click, skip and continue to main screen
         binding.skipBtn.setOnClickListener() {
             //will do later
-            startActivity(Intent(this, DashboardUserActivity::class.java))
+            startActivity(Intent(this, RegisterActivity::class.java))
         }
-
-
     }
 }
