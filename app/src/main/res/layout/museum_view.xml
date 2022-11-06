@@ -13,6 +13,7 @@
         android:id="@+id/museumImg"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:background="@android:color/transparent"
         android:elevation="30dp"
         android:src="@drawable/museum_img_01" />
 
