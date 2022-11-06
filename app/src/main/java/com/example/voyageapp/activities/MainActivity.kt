@@ -1,9 +1,10 @@
-package com.example.voyageapp
+package com.example.voyageapp.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.core.content.ContextCompat
+import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {

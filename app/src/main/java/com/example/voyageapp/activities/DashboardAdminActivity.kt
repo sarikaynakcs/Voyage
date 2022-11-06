@@ -1,4 +1,4 @@
-package com.example.voyageapp
+package com.example.voyageapp.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -6,9 +6,10 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import androidx.core.content.ContextCompat
-import com.example.voyageapp.adapter.AdapterCategory
+import com.example.voyageapp.R
+import com.example.voyageapp.adapters.AdapterCategory
 import com.example.voyageapp.databinding.ActivityDashboardAdminBinding
-import com.example.voyageapp.model.ModelCategory
+import com.example.voyageapp.models.ModelCategory
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -57,7 +58,6 @@ class DashboardAdminActivity : AppCompatActivity() {
 
                 }
             }
-
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -69,9 +69,13 @@ class DashboardAdminActivity : AppCompatActivity() {
             checkUser()
         }
 
-        //handle click, start add content page
+        //handle click, start add category page
         binding.addCategoryBtn.setOnClickListener {
             startActivity(Intent(this@DashboardAdminActivity, AddCategoryActivity::class.java))
+        }
+        //handle click, start add museum page
+        binding.addMuseumBtn.setOnClickListener {
+            startActivity(Intent(this@DashboardAdminActivity, AddMuseumActivity::class.java))
         }
     }
 

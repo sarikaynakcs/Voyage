@@ -1,4 +1,4 @@
-package com.example.voyageapp.model
+package com.example.voyageapp.models
 
 class ModelCategory {
 

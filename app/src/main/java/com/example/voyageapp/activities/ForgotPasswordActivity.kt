@@ -1,9 +1,10 @@
-package com.example.voyageapp
+package com.example.voyageapp.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityForgotPasswordBinding
 import com.google.firebase.auth.FirebaseAuth
 
