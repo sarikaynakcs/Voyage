@@ -6,88 +6,158 @@
     android:background="@drawable/back01"
     tools:context=".ProfileFragment">
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:background="@drawable/back04"
+        android:layout_marginTop="40dp"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@drawable/shape_toolbar02">
+
+        <TextView
+            android:id="@+id/toolbarTittle"
+            android:text="Profile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"/>
+
+        <ImageButton
+            android:id="@+id/editProfileId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+
+            android:background="@android:color/transparent"
+            android:onClick="edit"
+            android:src="@drawable/ic_baseline_edit_24"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    </RelativeLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="180dp"
+        android:background="@drawable/shape_rect01"/>
     <ImageView
-        android:id="@+id/editPhotoId"
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:src="@drawable/ic_profile_white"
+        android:id="@+id/profileImageId"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/stroke_deneme"
-        android:layout_marginTop="5dp"/>
-    <Button
-        android:id="@+id/editPhotoButtonId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editPhotoId"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Fotoğrafını Değiştir"
-        android:background="@drawable/shape_button01"
-        android:textSize="15sp"/>
-
+        android:layout_marginTop="120dp"
+        android:background="@color/white"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person_gray"/>
     <TextView
-        android:id="@+id/commentTextId"
-        android:layout_width="200dp"
-        android:layout_height="100dp"
-        android:layout_below="@id/editPhotoButtonId"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/stroke_deneme"
-        android:text="  Durumunu Yaz"/>
-
-    <EditText
-        android:id="@+id/editNameId"
+        android:id="@+id/fullNameId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_below="@id/commentTextId"
+        android:layout_below="@id/profileImageId"
+        android:text="Full Name"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="Ad"/>
-
-    <EditText
-        android:id="@+id/editSurnameId"
+        android:textStyle="bold"
+        android:textSize="18sp"/>
+    <TextView
+        android:id="@+id/emailId"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:layout_below="@id/editNameId"
+        android:layout_below="@id/fullNameId"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Soyad"/>
-
-    <EditText
-        android:id="@+id/editPasswordId"
-        android:layout_width="wrap_content"
+        android:textColor="@color/black"
+        android:text="abc@example.com"
+        android:textSize="12sp"/>
+    <LinearLayout
+        android:id="@+id/detailsId"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType=""
-        android:layout_below="@id/editSurnameId"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Şifre"/>
+        android:orientation="horizontal"
+        android:layout_below="@id/emailId"
+        android:layout_marginTop="5dp">
 
-    <EditText
-        android:id="@+id/editCheckPassword"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType=""
-        android:layout_below="@id/editPasswordId"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:text="Şifreni Doğrula "/>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
 
-    <Button
-        android:id="@+id/saveProfileId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/editCheckPassword"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="1dp"
-        android:text="Kaydet"
-        android:background="@drawable/shape_button01"
-        android:textSize="15sp"/>
+            <TextView
+                android:id="@+id/followersId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Takipçiler"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/followersCountId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/followsId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Takip"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/followsCountId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/networksId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bağlantılar"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+            <TextView
+                android:id="@+id/networksCountId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="100"
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+
+
 
 </RelativeLayout>
