@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:id="@+id/body_container"
     android:background="@drawable/back01"
-    tools:context=".DashboardUserActivity">
+    tools:context=".activities.DashboardUserActivity">
 
     <!--Toolbar-->
     <RelativeLayout

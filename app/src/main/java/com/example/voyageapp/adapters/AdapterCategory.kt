@@ -1,15 +1,18 @@
-package com.example.voyageapp.adapter
+package com.example.voyageapp.adapters
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
-import com.example.voyageapp.filter.FilterCategory
+import com.example.voyageapp.activities.MuseumActivity
+import com.example.voyageapp.R
+import com.example.voyageapp.filters.FilterCategory
 import com.example.voyageapp.databinding.RowCategoryBinding
-import com.example.voyageapp.model.ModelCategory
+import com.example.voyageapp.models.ModelCategory
 import com.google.firebase.database.FirebaseDatabase
 
 class AdapterCategory :RecyclerView.Adapter<AdapterCategory.HolderCategory>, Filterable{
@@ -54,7 +57,7 @@ class AdapterCategory :RecyclerView.Adapter<AdapterCategory.HolderCategory>, Fil
             //confirm before delete
             val builder = AlertDialog.Builder(context)
             builder.setTitle("Delete")
-                .setMessage("Are you sure want to delete this category")
+                .setMessage("Are you sure want to delete this category?")
                 .setPositiveButton("Confirm"){a, d->
                     Toast.makeText(context, "Deleting...", Toast.LENGTH_SHORT).show()
                     deleteCategory(model, holder)
@@ -63,6 +66,12 @@ class AdapterCategory :RecyclerView.Adapter<AdapterCategory.HolderCategory>, Fil
                     a.dismiss()
                 }
                 .show()
+        }
+
+        holder.itemView.findViewById<androidx.cardview.widget.CardView>(R.id.parent_layout).setOnClickListener {
+            val intent = Intent(context, MuseumActivity::class.java)
+            intent.putExtra("name", category)
+            context.startActivity(intent)
         }
     }
 
@@ -100,5 +109,4 @@ class AdapterCategory :RecyclerView.Adapter<AdapterCategory.HolderCategory>, Fil
         }
         return filter as FilterCategory
     }
-
 }

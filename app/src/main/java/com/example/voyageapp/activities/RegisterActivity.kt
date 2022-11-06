@@ -1,4 +1,4 @@
-package com.example.voyageapp
+package com.example.voyageapp.activities
 
 import android.app.ProgressDialog
 import android.content.Intent
@@ -7,11 +7,10 @@ import android.os.Bundle
 import android.util.Patterns
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
-import java.time.LocalDate
-import java.util.Calendar
 
 class RegisterActivity : AppCompatActivity() {
 

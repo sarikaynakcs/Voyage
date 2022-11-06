@@ -1,22 +1,21 @@
-package com.example.voyageapp.filter
+package com.example.voyageapp.filters
 
 import android.widget.Filter
-import com.example.voyageapp.adapter.AdapterCategory
-import com.example.voyageapp.model.ModelCategory
+import com.example.voyageapp.adapters.AdapterMuseum
+import com.example.voyageapp.models.ModelMuseum
 
-
-class FilterCategory: Filter {
+class FilterMuseum: Filter {
 
     //arraylist in which we want to search
-    private var filterList: ArrayList<ModelCategory>
+    private var filterList: ArrayList<ModelMuseum>
 
     //adapter in which filter need to be implemented
-    private var adapterCategory: AdapterCategory
+    private var adapterMuseum: AdapterMuseum
 
     //constructor
-    constructor(filterList: ArrayList<ModelCategory>, adapterCategory: AdapterCategory) :super() {
+    constructor(filterList: ArrayList<ModelMuseum>, adapterMuseum: AdapterMuseum) :super() {
         this.filterList = filterList
-        this.adapterCategory = adapterCategory
+        this.adapterMuseum = adapterMuseum
     }
 
     override fun performFiltering(constraint: CharSequence?): FilterResults {
@@ -29,11 +28,11 @@ class FilterCategory: Filter {
 
             //change to upper case, or lower case to avoid case sensitivity
             constraint = constraint.toString().uppercase()
-            val filteredModels:ArrayList<ModelCategory> = ArrayList()
+            val filteredModels:ArrayList<ModelMuseum> = ArrayList()
 
             for (i in 0 until filterList.size){
                 //validate
-                if (filterList[i].category.uppercase().contains(constraint)){
+                if (filterList[i].museumName.uppercase().contains(constraint)){
                     //add to filtered list
                     filteredModels.add(filterList[i])
                 }
@@ -46,17 +45,14 @@ class FilterCategory: Filter {
             results.count = filterList.size
             results.values = filterList
         }
-
         return results
     }
 
     override fun publishResults(constraint: CharSequence?, results: FilterResults) {
         //apply filter changes
-        adapterCategory.categoryArrayList = results.values as ArrayList<ModelCategory>
+        adapterMuseum.museumArrayList = results.values as ArrayList<ModelMuseum>
 
         //notify changes
-        adapterCategory.notifyDataSetChanged()
+        adapterMuseum.notifyDataSetChanged()
     }
-
-
 }

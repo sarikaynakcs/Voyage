@@ -1,16 +1,14 @@
-package com.example.voyageapp
+package com.example.voyageapp.activities
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.example.voyageapp.*
 import com.example.voyageapp.databinding.ActivityDashboardUserBinding
+import com.example.voyageapp.fragments.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 
 class DashboardUserActivity : AppCompatActivity() {
 

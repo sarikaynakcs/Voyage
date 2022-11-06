@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginStart="20dp"
+    android:layout_marginBottom="15dp"
+    android:background="@drawable/stroke_shape_01"
+    android:padding="10dp"
+    android:id="@+id/parent_layout_museum">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/museumImg"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:elevation="30dp"
+        android:src="@drawable/museum_img_01" />
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="125dp"
+        android:layout_marginStart="-60dp"
+        android:layout_marginEnd="10dp"
+        android:backgroundTint="@color/secondary"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="20dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="65dp"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Anadolu Medeniyetleri Müzesi"
+                android:layout_marginTop="1dp"
+                android:textColor="@color/white"
+                android:textSize="13sp"
+                android:textStyle="bold" />
+
+            <View
+                android:layout_width="190dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#03A9F4"
+                android:orientation="vertical" />
+
+            <TextView
+                android:id="@+id/subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:fontFamily="@font/poppins_regular"
+                android:text="History and Archeology Museum"
+                android:textColor="@color/subtext"
+                android:textSize="12sp" />
+
+            <View
+                android:layout_width="190dp"
+                android:layout_height="1dp"
+                android:layout_marginTop="0dp"
+                android:background="#03A9F4"
+                android:orientation="vertical" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Kuruluş Tarihi: "
+                    android:textColor="@color/subtext"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/establishment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="1921"
+                    android:textColor="@color/subtext"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+            <View
+                android:layout_width="190dp"
+                android:layout_height="1dp"
+                android:background="#03A9F4"
+                android:layout_marginTop="0dp"
+                android:orientation="vertical" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="0dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Şehir: "
+                    android:textColor="@color/subtext"
+                    android:textSize="12sp"/>
+                <TextView
+                    android:id="@+id/museumCity"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:fontFamily="@font/poppins_regular"
+                    android:text="Ankara"
+                    android:textColor="@color/subtext"
+                    android:textSize="12sp"/>
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <ImageButton
+            android:id="@+id/deleteBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_delete_gray"
+            android:layout_gravity="right|bottom"
+            android:layout_marginBottom="5dp"/>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

@@ -1,15 +1,11 @@
-package com.example.voyageapp
+package com.example.voyageapp.activities
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.util.TypedValue
-import android.view.View
-import android.view.Window
-import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import com.example.voyageapp.R
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
