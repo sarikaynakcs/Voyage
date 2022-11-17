@@ -3,6 +3,7 @@ package com.example.voyageapp.activities
 import android.app.ProgressDialog
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.example.voyageapp.R
 import com.example.voyageapp.adapters.AdapterMuseum
@@ -72,6 +73,16 @@ class MuseumDetailActivity : AppCompatActivity() {
             if (museumCity == "İstanbul"){
                 binding.topIv.setImageResource(R.drawable.back03)
             }
+            /*if (binding.historyInfo.text.isEmpty()){
+                binding.historyTv.visibility = View.GONE
+                binding.historyView.visibility = View.GONE
+            }*/
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        finish()
+        overridePendingTransition(0,0)
     }
 }

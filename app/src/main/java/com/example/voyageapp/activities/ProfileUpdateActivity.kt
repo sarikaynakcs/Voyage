@@ -15,10 +15,11 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityProfileUpdateBinding
-import com.google.android.gms.tasks.OnFailureListener
+import com.example.voyageapp.models.ModelUser
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -26,7 +27,6 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageException
 
 class ProfileUpdateActivity : AppCompatActivity() {
 
@@ -38,10 +38,14 @@ class ProfileUpdateActivity : AppCompatActivity() {
 
     private lateinit var progressDialog: ProgressDialog
 
+    private lateinit var userList: ModelUser
+
     override fun onCreate(savedInstanceState: Bundle?) {
         binding=ActivityProfileUpdateBinding.inflate(layoutInflater)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
         progressDialog = ProgressDialog(this)
         progressDialog.setTitle("Please wait")
@@ -61,15 +65,15 @@ class ProfileUpdateActivity : AppCompatActivity() {
         }
     }
     private var name =""
-    private var surname =""
+    private var username =""
     private fun validateData() {
         name = binding.nameId.text.toString().trim()
-        surname = binding.surnameId.text.toString().trim()
+        username = binding.usernameId.text.toString().trim()
         if (name.isEmpty()){
             Toast.makeText(this,"Enter name", Toast.LENGTH_SHORT).show()
         }
-        else if (surname.isEmpty()){
-            Toast.makeText(this,"Enter surname", Toast.LENGTH_SHORT).show()
+        else if (username.isEmpty()){
+            Toast.makeText(this,"Enter username", Toast.LENGTH_SHORT).show()
         }
         else{
             if (imageUri== null){
@@ -78,8 +82,6 @@ class ProfileUpdateActivity : AppCompatActivity() {
             else{
                 uploadImage()
             }
-
-
         }
     }
 
@@ -107,21 +109,15 @@ class ProfileUpdateActivity : AppCompatActivity() {
 
             }
     }
-    internal inner class MyFailureListener : OnFailureListener {
-        override fun onFailure(exception: Exception) {
-            val errorCode = (exception as StorageException).errorCode
-            val errorMessage = exception.message
-            // test the errorCode and errorMessage, and handle accordingly
-        }
-    }
 
     private fun updateProfile(uploadedImageUrl: String) {
         progressDialog.setMessage("Updating profile...")
-
         //setup info to db
         val hashMap: HashMap<String, Any> = HashMap()
-        hashMap["name"] = "$name"
-        hashMap["surname"] = "$surname"
+
+        hashMap["username"] = username
+        hashMap["name"] = name
+
         if (imageUri !=null){
             hashMap["profileImage"] = uploadedImageUrl
         }
@@ -147,18 +143,14 @@ class ProfileUpdateActivity : AppCompatActivity() {
             .addValueEventListener(object: ValueEventListener {
                 @SuppressLint("SetTextI18n")
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    val email = "${snapshot.child("email").value}"
                     val name = "${snapshot.child("name").value}"
-                    val surname = "${snapshot.child("surname").value}"
+                    val username = "${snapshot.child("username").value}"
                     val profileImage = "${snapshot.child("profileImage").value}"
-                    val timestamp = "${snapshot.child("timestamp").value}"
-                    val uid = "${snapshot.child("uid").value}"
-                    val userType = "${snapshot.child("userType").value}"
 
                     // val formattedDate = Myapplication.formatTimeStamp(timestamp.toLong())
 
                     binding.nameId.setText(name)
-                    binding.surnameId.setText(surname)
+                    binding.usernameId.setText(username)
 
                     try{
                         Glide.with(this@ProfileUpdateActivity)
@@ -251,5 +243,10 @@ class ProfileUpdateActivity : AppCompatActivity() {
 
         }
     )
+
+    private fun generateOTP(): String {
+        val randomPin = (Math.random() * 9000).toInt() + 1000
+        return randomPin.toString()
+    }
 
 }

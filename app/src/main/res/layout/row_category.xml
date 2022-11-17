@@ -6,10 +6,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:contentPadding="10dp"
     app:cardUseCompatPadding="true"
-    app:cardCornerRadius="8dp"
+    app:cardCornerRadius="10dp"
     app:cardElevation="0dp"
     android:id="@+id/parent_layout"
-    app:cardBackgroundColor="@color/white">
+    app:cardBackgroundColor="#FFC107">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         <TextView
             android:id="@+id/categoryTv"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:layout_gravity="center_vertical"
             android:text="Category Title"
             android:layout_weight="1"
@@ -30,8 +30,9 @@
             android:id="@+id/deleteBtn"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:background="@drawable/shape_button04"
-            android:src="@drawable/ic_delete_gray"/>
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_delete_gray"
+            android:visibility="invisible"/>
 
     </LinearLayout>
 

@@ -1,5 +1,7 @@
 package com.example.voyageapp.adapters
 
+
+import android.app.Activity
 import android.content.Context
 import android.app.AlertDialog
 import android.content.Intent
@@ -9,12 +11,19 @@ import android.view.View
 import android.widget.*
 import android.widget.Filterable
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.voyageapp.activities.MuseumDetailActivity
 import com.example.voyageapp.databinding.MuseumViewBinding
 import com.example.voyageapp.filters.FilterMuseum
 import com.example.voyageapp.models.ModelMuseum
 import com.example.voyageapp.R
+import com.example.voyageapp.activities.ChangeMuseumImageActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import java.lang.System.load
 
 class AdapterMuseum :RecyclerView.Adapter<AdapterMuseum.HolderMuseum>, Filterable {
 
@@ -25,6 +34,9 @@ class AdapterMuseum :RecyclerView.Adapter<AdapterMuseum.HolderMuseum>, Filterabl
     private var filter: FilterMuseum? = null
 
     private lateinit var binding: MuseumViewBinding
+
+    //firebase auth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     //constructor
     constructor(context: Context, museumArrayList: ArrayList<ModelMuseum>) {
@@ -55,12 +67,21 @@ class AdapterMuseum :RecyclerView.Adapter<AdapterMuseum.HolderMuseum>, Filterabl
         val establishment = model.establishment
         val uid = model.uid
         val timestamp = model.timestamp
+        val museumImg = model.museumImage
+
+        //init firebase auth
+        firebaseAuth = FirebaseAuth.getInstance()
+        checkUser(holder)
 
         //set data
         holder.museumName.text = museumName
         holder.museumType.text = museumType
         holder.museumCity.text = museumCity
         holder.establishment.text = establishment
+
+        Glide.with(context)
+            .load(museumArrayList[position].museumImage)
+            .into(holder.museumImg)
 
         //handle click, delete museum
         holder.deleteBtn.setOnClickListener {
@@ -80,6 +101,7 @@ class AdapterMuseum :RecyclerView.Adapter<AdapterMuseum.HolderMuseum>, Filterabl
 
         holder.itemView.findViewById<LinearLayout>(R.id.parent_layout_museum).setOnClickListener {
             val intent = Intent(context, MuseumDetailActivity::class.java)
+            val activity = context as Activity
             intent.putExtra("museumName", museumName)
             intent.putExtra("museumType", museumType)
             intent.putExtra("overview", overview)
@@ -88,8 +110,37 @@ class AdapterMuseum :RecyclerView.Adapter<AdapterMuseum.HolderMuseum>, Filterabl
             intent.putExtra("establishment", establishment)
             intent.putExtra("museumCity", museumCity)
             context.startActivity(intent)
+            activity.overridePendingTransition(0,0)
         }
 
+        holder.uploadBtn.setOnClickListener {
+            val intent = Intent(context, ChangeMuseumImageActivity::class.java)
+            intent.putExtra("id", id)
+            context.startActivity(intent)
+        }
+
+    }
+
+    private fun checkUser(holder: HolderMuseum) {
+        val firebaseUser = firebaseAuth.currentUser!!
+
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.child(firebaseUser.uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    //get user type e.g. user or admin
+                    val userType = snapshot.child("userType").value
+                    if (userType == "admin"){
+                        holder.deleteBtn.visibility = View.VISIBLE
+                        holder.uploadBtn.visibility = View.VISIBLE
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
     }
 
     private fun deleteMuseum(model: ModelMuseum, holder: HolderMuseum) {
@@ -119,7 +170,8 @@ class AdapterMuseum :RecyclerView.Adapter<AdapterMuseum.HolderMuseum>, Filterabl
         var museumCity:TextView = binding.museumCity
         var establishment:TextView = binding.establishment
         var deleteBtn:ImageButton = binding.deleteBtn
-        var museumImg:ImageView = binding.museumImg
+        var uploadBtn:ImageButton = binding.uploadBtn
+        var museumImg:de.hdodenhof.circleimageview.CircleImageView = binding.museumImg
     }
 
     override fun getFilter(): Filter {

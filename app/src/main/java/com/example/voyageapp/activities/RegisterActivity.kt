@@ -9,8 +9,14 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityRegisterBinding
+import com.example.voyageapp.models.ModelMuseum
+import com.example.voyageapp.models.ModelUser
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_register.*
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -56,14 +62,14 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private var name = ""
-    private var surname = ""
+    private var username = ""
     private var email = ""
     private var password = ""
 
     private fun validateData() {
         //1) Input data
         name = binding.nameEt.text.toString().trim()
-        surname = binding.surnameEt.text.toString().trim()
+        username = binding.usermameEt.text.toString().trim()
         email = binding.emailEt.text.toString().trim()
         password = binding.passwordEt.text.toString().trim()
         val cPassword = binding.cPasswordEt.text.toString().trim()
@@ -72,8 +78,8 @@ class RegisterActivity : AppCompatActivity() {
         if (name.isEmpty()) {
             Toast.makeText(this, "Enter your name...", Toast.LENGTH_SHORT).show()
         }
-        else if (surname.isEmpty()) {
-            Toast.makeText(this, "Enter your surname...", Toast.LENGTH_SHORT).show()
+        else if (username.isEmpty()) {
+            Toast.makeText(this, "Enter your username...", Toast.LENGTH_SHORT).show()
         }
         else if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
             //invalid email pattern
@@ -120,6 +126,29 @@ class RegisterActivity : AppCompatActivity() {
         //timestamp
         val timestamp = System.currentTimeMillis()
 
+        var barcodeId = generateOTP()
+        val mRef = FirebaseDatabase.getInstance().getReference("Users")
+        mRef.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                for (ds in snapshot.children){
+                    val model = ds.getValue(ModelUser::class.java)
+                    val userName = ds.child("username").getValue(String::class.java)
+
+                    if (userName == username && barcodeId == model?.barcodeId) {
+                        barcodeId = generateOTP()
+                        while (barcodeId != model.barcodeId){
+                            barcodeId = generateOTP()
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+
+            }
+
+        })
+
         //get current user uid, since user is registered so we can get it now
         val uid = firebaseAuth.uid
 
@@ -128,10 +157,12 @@ class RegisterActivity : AppCompatActivity() {
         hashMap["uid"] = uid
         hashMap["email"] = email
         hashMap["name"] = name
-        hashMap["surname"] = surname
+        hashMap["username"] = username
         hashMap["profileImage"] = "" //empty now, do in profile edit
         hashMap["userType"] = "user" //possible values are user/admin, will change value to admin manually on firebase db
         hashMap["timestamp"] = timestamp
+        hashMap["friends"] = ""
+        hashMap["barcodeId"] = barcodeId
 
         //set data to db
         val ref = FirebaseDatabase.getInstance().getReference("Users")
@@ -149,5 +180,15 @@ class RegisterActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 Toast.makeText(this, "Failed saving user info due to ${e.message}", Toast.LENGTH_SHORT).show()
             }
+        nameEt.text.clear()
+        usermameEt.text.clear()
+        emailEt.text.clear()
+        passwordEt.text.clear()
+        cPasswordEt.text.clear()
+    }
+
+    private fun generateOTP(): String {
+        val randomPin = (Math.random() * 9000).toInt() + 1000
+        return randomPin.toString()
     }
 }

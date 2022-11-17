@@ -5,49 +5,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/body_container"
-    android:background="@drawable/back01"
+    android:background="@color/primary"
     tools:context=".activities.DashboardUserActivity">
 
-    <!--Toolbar-->
-    <RelativeLayout
-        android:id="@+id/toolbarRL"
+
+    <LinearLayout
+        android:id="@+id/headerLl"
         android:layout_width="match_parent"
-        android:layout_height="?actionBarSize"
-        android:background="@drawable/shape_toolbar02"
-        android:alpha="0.7">
-        
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_centerHorizontal="true"
-            android:text="Dashboard User"
-            android:textStyle="bold|italic"
-            android:textColor="#347BDA"/>
+        android:layout_height="60dp"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal"
+        android:layout_marginBottom="15dp">
 
         <TextView
-            android:id="@+id/subTitleTv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/titleTv"
-            android:text="abc@example.com"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Voyage"
+            android:gravity="start|bottom"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="25sp"/>
 
-        <ImageButton
-            android:id="@+id/logoutBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_logout_white"
-            android:layout_alignParentEnd="true"
-            android:background="@android:color/transparent"/>
+    </LinearLayout>
 
-    </RelativeLayout>
+    <!--Search-->
+    <EditText
+        android:id="@+id/searchEt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/headerLl"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/shape_button_add_museum"
+        android:drawableStart="@drawable/ic_search_gray"
+        android:hint="Search"
+        android:padding="10dp"
+        android:textColorHint="@color/gray01"
+        android:textColor="@color/white"/>
 
+    <!--Categories-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/categoriesRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/searchEt"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:alpha="0.8"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/row_category" />
 
     <!--Bottom Navbar-->
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/linearBotId"
+        android:id="@+id/linearBotIdDashboard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
