@@ -9,6 +9,7 @@ import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityAddCategoryBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
+import kotlinx.android.synthetic.main.activity_add_category.*
 
 class AddCategoryActivity : AppCompatActivity() {
 
@@ -88,5 +89,6 @@ class AddCategoryActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 Toast.makeText(this, "Failed to add due to ${e.message}", Toast.LENGTH_SHORT).show()
             }
+        categoryEt.text.clear()
     }
 }

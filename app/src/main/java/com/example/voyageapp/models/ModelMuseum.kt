@@ -13,12 +13,14 @@ class ModelMuseum {
     var establishment:String = ""
     var timestamp:Long = 0
     var uid:String = ""
+    var museumImage:String = ""
 
     //empty constructor, require by firebase
     constructor()
 
     //parameterized constructor
-    constructor(id: String, museumName: String, museumType: String, overview: String, history: String, exhibitions: String, museumCity: String, establishment: String, timestamp: Long, uid: String) {
+    constructor(id: String, museumName: String, museumType: String, overview: String, history: String,
+                exhibitions: String, museumCity: String, establishment: String, timestamp: Long, uid: String, museumImage: String) {
         this.id = id
         this.museumName = museumName
         this.museumType = museumType
@@ -29,6 +31,6 @@ class ModelMuseum {
         this.establishment = establishment
         this.timestamp = timestamp
         this.uid = uid
+        this.museumImage = museumImage
     }
-
 }

@@ -103,79 +103,10 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/overviewTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/museumTypeTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/overviewEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_summary_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Overview of the Museum"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/historyTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/overviewTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/historyEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_history_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="History of the Museum"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/exhibitionsTil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/historyTil"
-                android:layout_marginTop="5dp"
-                app:hintEnabled="false">
-
-                <EditText
-                    android:id="@+id/exhibitionsEt"
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"
-                    android:background="@drawable/shape_edittext01"
-                    android:drawableStart="@drawable/ic_architecture_gray"
-                    android:drawablePadding="10dp"
-                    android:hint="Exhibited artifacts"
-                    android:inputType="textMultiLine|textCapSentences"
-                    android:padding="10dp"
-                    android:textColor="@color/black"
-                    android:textColorHint="@color/gray01"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/establishmentTil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/exhibitionsTil"
+                android:layout_below="@id/museumTypeTil"
                 android:layout_marginTop="5dp"
                 app:hintEnabled="false">
 

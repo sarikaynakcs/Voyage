@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import kotlinx.android.synthetic.main.activity_add_museum.*
 
 class AddMuseumActivity : AppCompatActivity() {
 
@@ -64,7 +65,7 @@ class AddMuseumActivity : AppCompatActivity() {
         //init arraylist
         categoryArrayList = ArrayList()
 
-        //db referebce to load categories DB -> Categories
+        //db reference to load categories DB -> Categories
         val ref = FirebaseDatabase.getInstance().getReference("Categories")
         ref.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -117,9 +118,6 @@ class AddMuseumActivity : AppCompatActivity() {
 
     private var museumName = ""
     private var museumType = ""
-    private var overview = ""
-    private var history = ""
-    private var exhibitions = ""
     private var museumCity = ""
     private var establishment = ""
 
@@ -129,9 +127,6 @@ class AddMuseumActivity : AppCompatActivity() {
         //get data
         museumName = binding.museumNameEt.text.toString().trim()
         museumType = binding.museumTypeEt.text.toString().trim()
-        overview = binding.overviewEt.text.toString().trim()
-        history = binding.historyEt.text.toString().trim()
-        exhibitions = binding.exhibitionsEt.text.toString().trim()
         museumCity = binding.museumCityTv.text.toString().trim()
         establishment = binding.establishmentEt.text.toString().trim()
 
@@ -141,15 +136,6 @@ class AddMuseumActivity : AppCompatActivity() {
         }
         else if (museumType.isEmpty()){
             Toast.makeText(this, "Enter a Museum Type...", Toast.LENGTH_SHORT).show()
-        }
-        else if (overview.isEmpty()){
-            Toast.makeText(this, "Enter the overview of the Museum...", Toast.LENGTH_SHORT).show()
-        }
-        else if (history.isEmpty()){
-            Toast.makeText(this, "Enter the history of the Museum...", Toast.LENGTH_SHORT).show()
-        }
-        else if (exhibitions.isEmpty()){
-            Toast.makeText(this, "Enter the exhibited artifacts of the Museum...", Toast.LENGTH_SHORT).show()
         }
         else if(museumCity.isEmpty()){
             Toast.makeText(this, "Enter the city of the Museum...", Toast.LENGTH_SHORT).show()
@@ -174,9 +160,9 @@ class AddMuseumActivity : AppCompatActivity() {
         hashMap["id"] = "$timestamp"
         hashMap["museumName"] = museumName
         hashMap["museumType"] = museumType
-        hashMap["overview"] = overview
-        hashMap["history"] = history
-        hashMap["exhibitions"] = exhibitions
+        hashMap["overview"] = ""
+        hashMap["history"] = ""
+        hashMap["exhibitions"] = ""
         hashMap["museumCity"] = museumCity
         hashMap["establishment"] = establishment
         hashMap["museumImage"] = "" //empty now, do later
@@ -196,5 +182,9 @@ class AddMuseumActivity : AppCompatActivity() {
                 progressDialog.dismiss()
                 Toast.makeText(this, "Failed to add due to ${e.message}", Toast.LENGTH_SHORT).show()
             }
+        museumNameEt.text.clear()
+        museumTypeEt.text.clear()
+        museumCityTv.text = ""
+        establishmentEt.text.clear()
     }
 }

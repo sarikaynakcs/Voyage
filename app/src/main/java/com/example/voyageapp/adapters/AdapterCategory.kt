@@ -1,5 +1,6 @@
 package com.example.voyageapp.adapters
 
+import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
@@ -13,17 +14,25 @@ import com.example.voyageapp.R
 import com.example.voyageapp.filters.FilterCategory
 import com.example.voyageapp.databinding.RowCategoryBinding
 import com.example.voyageapp.models.ModelCategory
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class AdapterCategory :RecyclerView.Adapter<AdapterCategory.HolderCategory>, Filterable{
 
     private val context: Context
+
     public var categoryArrayList: ArrayList<ModelCategory>
     private var filterList: ArrayList<ModelCategory>
 
     private var filter: FilterCategory? = null
 
     private lateinit var binding: RowCategoryBinding
+
+    //firebase auth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     //constructor
     constructor(context: Context, categoryArrayList: ArrayList<ModelCategory>) {
@@ -49,6 +58,10 @@ class AdapterCategory :RecyclerView.Adapter<AdapterCategory.HolderCategory>, Fil
         val uid = model.uid
         val timestamp = model.timestamp
 
+        //init firebase auth
+        firebaseAuth = FirebaseAuth.getInstance()
+        checkUser(holder)
+
         //set data
         holder.categoryTv.text = category
 
@@ -70,9 +83,32 @@ class AdapterCategory :RecyclerView.Adapter<AdapterCategory.HolderCategory>, Fil
 
         holder.itemView.findViewById<androidx.cardview.widget.CardView>(R.id.parent_layout).setOnClickListener {
             val intent = Intent(context, MuseumActivity::class.java)
+            val activity = context as Activity
             intent.putExtra("name", category)
             context.startActivity(intent)
+            activity.overridePendingTransition(0,0)
         }
+    }
+
+    private fun checkUser(holder: HolderCategory) {
+        val firebaseUser = firebaseAuth.currentUser!!
+
+        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        ref.child(firebaseUser.uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    //get user type e.g. user or admin
+                    val userType = snapshot.child("userType").value
+                    if (userType == "admin"){
+                        holder.deleteBtn.visibility = View.VISIBLE
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+            })
     }
 
     private fun deleteCategory(model: ModelCategory, holder: HolderCategory) {

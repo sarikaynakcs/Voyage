@@ -72,7 +72,7 @@
                     android:background="@drawable/shape_edittext01"
                     android:drawableStart="@drawable/ic_person_gray"
                     android:drawablePadding="10dp"
-                    android:hint="Name"
+                    android:hint="Name and Surname"
                     android:inputType="textPersonName|textCapWords"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -82,7 +82,7 @@
 
             <!--Surname-->
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/surnameTil"
+                android:id="@+id/usernameTil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/nameTil"
@@ -90,13 +90,13 @@
                 app:hintEnabled="false">
 
                 <EditText
-                    android:id="@+id/surnameEt"
+                    android:id="@+id/usermameEt"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/shape_edittext01"
                     android:drawableStart="@drawable/ic_person_gray"
                     android:drawablePadding="10dp"
-                    android:hint="Surname"
+                    android:hint="Username"
                     android:inputType="textPersonName|textCapWords"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -111,7 +111,7 @@
                 android:id="@+id/emailTil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/surnameTil"
+                android:layout_below="@id/usernameTil"
                 android:layout_marginTop="5dp"
                 app:hintEnabled="false">
 

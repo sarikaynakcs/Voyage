@@ -59,7 +59,7 @@
             android:hint="Name"
             android:autofillHints="" />
         <EditText
-            android:id="@+id/surnameId"
+            android:id="@+id/usernameId"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_below="@id/nameId"
@@ -69,14 +69,15 @@
             android:drawableStart="@drawable/ic_person_gray"
             android:inputType="textPersonName|textCapWords"
             android:textColor="@color/black"
-            android:hint="Surname"
+            android:hint="Username"
             android:autofillHints="" />
         <Button
             android:id="@+id/updateButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/surnameId"
+            android:layout_below="@id/usernameId"
             android:textColor="@color/white"
+            android:backgroundTint="@color/secondary"
             android:text="update"
             android:layout_marginTop="20dp"/>
 
