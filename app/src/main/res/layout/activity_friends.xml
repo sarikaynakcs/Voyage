@@ -39,4 +39,17 @@
         app:labelVisibilityMode="unlabeled"
         app:elevation="-1dp"/>
 
+    <!--Chats-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/friendsRv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/linearTopIdFriends"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/add_friends_item"/>
+
 </RelativeLayout>

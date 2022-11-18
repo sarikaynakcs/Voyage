@@ -161,7 +161,6 @@ class RegisterActivity : AppCompatActivity() {
         hashMap["profileImage"] = "" //empty now, do in profile edit
         hashMap["userType"] = "user" //possible values are user/admin, will change value to admin manually on firebase db
         hashMap["timestamp"] = timestamp
-        hashMap["friends"] = ""
         hashMap["barcodeId"] = barcodeId
 
         //set data to db
