@@ -33,10 +33,14 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
             .into(holder.photo)
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(context, InsideChatActivity::class.java)
-            intent.putExtra("name", currentUser.name)
-            intent.putExtra("uid", currentUser.uid)
-            context.startActivity(intent)
+            if (isClickable == false){
+                return@setOnClickListener
+            }else {
+                val intent = Intent(context, InsideChatActivity::class.java)
+                intent.putExtra("name", currentUser.name)
+                intent.putExtra("uid", currentUser.uid)
+                context.startActivity(intent)
+            }
         }
     }
 

@@ -99,6 +99,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
 
     private fun loadUser(){
         mUsers = ArrayList()
+        mUser = ModelUser()
 
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener{
@@ -116,11 +117,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
                     }
 
                     if (model?.barcodeId == barcode && model.username == username){
-                        if (mUser.barcodeId == model.barcodeId && mUser.username == model.username){
-                            Toast.makeText(this@AddFriendsActivity, "You cannot add yourself as a friend!", Toast.LENGTH_SHORT).show()
-                        }else{
-                            (mUsers as ArrayList<ModelUser>).add(model)
-                        }
+                        (mUsers as ArrayList<ModelUser>).add(model)
                     }
                 }
                 binding.friendsRv.adapter = mAdapter
