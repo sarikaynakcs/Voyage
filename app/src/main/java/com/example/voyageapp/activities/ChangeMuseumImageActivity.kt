@@ -13,6 +13,7 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.ActivityResultCallback
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityChangeMuseumImageBinding
@@ -47,6 +48,8 @@ class ChangeMuseumImageActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityChangeMuseumImageBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
         firebaseAuth = FirebaseAuth.getInstance()
 
@@ -221,6 +224,9 @@ class ChangeMuseumImageActivity : AppCompatActivity() {
         }
     )
 
-
-
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
+    }
 }

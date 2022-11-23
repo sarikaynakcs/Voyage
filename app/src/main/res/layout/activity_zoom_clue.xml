@@ -45,14 +45,17 @@
         android:layout_marginBottom="50dp">
 
         <TextView
-            android:id="@id/clueOne"
+            android:id="@+id/ipuclar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="@drawable/clue_design_radius"
+            android:fontFamily="@font/poppins_semibold"
             android:text=""
-            android:background="@color/secondary"
-            android:textColor="@color/white"
-            android:textSize="20sp"
-            android:gravity="center">
+            android:textColor="@color/primary"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textSize="12sp"
+            android:textStyle="bold">
 
         </TextView>
 

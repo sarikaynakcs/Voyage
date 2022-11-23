@@ -3,8 +3,11 @@ package com.example.voyageapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.WindowManager
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import com.example.voyageapp.Common.Common
+import com.example.voyageapp.R
 import com.example.voyageapp.Remote.IGoogleAPIService
 import com.example.voyageapp.databinding.ActivityInsideGameBinding
 import com.google.firebase.database.DatabaseReference
@@ -27,9 +30,12 @@ class InsideGameActivity : AppCompatActivity() {
         binding = ActivityInsideGameBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+
         mServices = Common.googleAPIService
 
-
+        var idc = 0
         //-----------------------------------------
         val long =intent.getStringExtra("museum")
         binding.museumName.text=long
@@ -43,9 +49,7 @@ class InsideGameActivity : AppCompatActivity() {
             intent.putExtra("museum", long)
             intent.putExtra("number",number)
             startActivity(intent)
-
-
-            //startActivity(Intent(this@MapsDemoActivity,ViewPlaceActivity::class.java))
+            overridePendingTransition(0,0)
 
             true
         }
@@ -53,32 +57,37 @@ class InsideGameActivity : AppCompatActivity() {
             val intent= Intent(this@InsideGameActivity, ZoomClueActivity::class.java)
             intent.putExtra("museum", long)
             intent.putExtra("number",number)
-
+            idc=1
+            val idcstring=idc.toString()
+            intent.putExtra("idc",idcstring)
             startActivity(intent)
-
-            //startActivity(Intent(this@MapsDemoActivity,ViewPlaceActivity::class.java))
+            overridePendingTransition(0,0)
 
             true
 
         }
         binding.clueTwo.setOnClickListener {
-            val intent= Intent(this@InsideGameActivity, ZoomClueTwoActivity::class.java)
+            val intent= Intent(this@InsideGameActivity, ZoomClueActivity::class.java)
             intent.putExtra("museum", long)
             intent.putExtra("number",number)
+            idc=2
+            val idcstring=idc.toString()
+            intent.putExtra("idc",idcstring)
             startActivity(intent)
-
-            //startActivity(Intent(this@MapsDemoActivity,ViewPlaceActivity::class.java))
+            overridePendingTransition(0,0)
 
             true
 
         }
         binding.clueThree.setOnClickListener {
-            val intent= Intent(this@InsideGameActivity, ZoomClueThreeActivity::class.java)
+            val intent= Intent(this@InsideGameActivity, ZoomClueActivity::class.java)
             intent.putExtra("museum", long)
             intent.putExtra("number",number)
+            idc=3
+            val idcstring=idc.toString()
+            intent.putExtra("idc",idcstring)
             startActivity(intent)
-
-            //startActivity(Intent(this@MapsDemoActivity,ViewPlaceActivity::class.java))
+            overridePendingTransition(0,0)
 
             true
 
@@ -95,12 +104,11 @@ class InsideGameActivity : AppCompatActivity() {
                 val clueOne=it.child("clue1").value
                 val clueTwo=it.child("clue2").value
                 val clueThree=it.child("clue3").value
-                //val clueFour=it.child("clueFour").value
+
                 Toast.makeText(this,"Successfully",Toast.LENGTH_SHORT).show()
                 binding.clueOne.text=clueOne.toString()
                 binding.clueTwo.text=clueTwo.toString()
                 binding.clueThree.text=clueThree.toString()
-                //binding.clueFour.text=clueFour.toString()
                 binding.museumName.text=museumName.toString()
 
             }
@@ -112,4 +120,9 @@ class InsideGameActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
+    }
 }

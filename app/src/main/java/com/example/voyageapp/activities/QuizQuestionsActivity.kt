@@ -3,8 +3,12 @@ package com.example.voyageapp.activities
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
+import androidx.lifecycle.VIEW_MODEL_STORE_OWNER_KEY
 import com.example.voyageapp.R
 import com.example.voyageapp.databinding.ActivityQuizQuestionsBinding
 import com.google.firebase.database.DatabaseReference
@@ -19,6 +23,9 @@ class QuizQuestionsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizQuestionsBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
+        window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
         val long =intent.getStringExtra("museum")
         readData("$long")
@@ -40,11 +47,11 @@ class QuizQuestionsActivity : AppCompatActivity() {
                 binding.option1.text=optionOne.toString()
                 binding.option2.text=optionTwo.toString()
                 binding.option3.text=optionThree.toString()
-                ""
                 var id= 0
-
+                var checkAnswer: Boolean = true
 
                 binding.option1.setOnClickListener{
+                    binding.submit.visibility = View.VISIBLE
                     binding.option1.setBackgroundColor(ContextCompat.getColor(this, R.color.gray01))
                     binding.option2.setBackgroundColor(ContextCompat.getColor(this,
                         R.color.secondary
@@ -52,32 +59,11 @@ class QuizQuestionsActivity : AppCompatActivity() {
                     binding.option3.setBackgroundColor(ContextCompat.getColor(this,
                         R.color.secondary
                     ))
-
                     id= 1
-                    binding.option1
 
-
-                    //if(binding.option1.text==answer)
-                    //{
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //}
-                    //else if (binding.option2.text==answer)
-                    //{
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-//
-                    //}
-                    //else if(binding.option3.text==answer)
-                    //{
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //}
                 }
                 binding.option2.setOnClickListener{
+                    binding.submit.visibility = View.VISIBLE
                     binding.option2.setBackgroundColor(ContextCompat.getColor(this, R.color.gray01))
                     binding.option1.setBackgroundColor(ContextCompat.getColor(this,
                         R.color.secondary
@@ -86,27 +72,10 @@ class QuizQuestionsActivity : AppCompatActivity() {
                         R.color.secondary
                     ))
                     id= 2
-                    //if(binding.option2.text==answer)
-                    //{
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //}
-                    //else if(binding.option1.text==answer)
-                    //{
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-//
-                    //}
-                    //else if(binding.option3.text==answer)
-                    //{
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //}
+
                 }
                 binding.option3.setOnClickListener{
+                    binding.submit.visibility = View.VISIBLE
                     binding.option3.setBackgroundColor(ContextCompat.getColor(this, R.color.gray01))
                     binding.option2.setBackgroundColor(ContextCompat.getColor(this,
                         R.color.secondary
@@ -115,41 +84,23 @@ class QuizQuestionsActivity : AppCompatActivity() {
                         R.color.secondary
                     ))
                     id= 3
-                    //if(binding.option3.text==answer)
-                    //{
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //}
-                    //else if(binding.option1.text==answer)
-                    //{
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-//
-                    //}
-                    //else if(binding.option2.text==answer)
-                    //{
-                    //    binding.option2.setBackgroundColor(ContextCompat.getColor(this,R.color.green))
-                    //    binding.option1.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //    binding.option3.setBackgroundColor(ContextCompat.getColor(this,R.color.red))
-                    //}
 
                 }
+
                 binding.submit.setOnClickListener {
-
-
 
                     if(id == 1){
                         if(binding.option1.text==answer){
                             binding.option1.setBackgroundColor(ContextCompat.getColor(this,
                                 R.color.green
                             ))
+                            checkAnswer = true
                         }
                         else{
                             binding.option1.setBackgroundColor(ContextCompat.getColor(this,
                                 R.color.red
                             ))
+                            checkAnswer = false
                         }
                     }
                     else if(id == 2){
@@ -157,11 +108,13 @@ class QuizQuestionsActivity : AppCompatActivity() {
                             binding.option2.setBackgroundColor(ContextCompat.getColor(this,
                                 R.color.green
                             ))
+                            checkAnswer = true
                         }
                         else{
                             binding.option2.setBackgroundColor(ContextCompat.getColor(this,
                                 R.color.red
                             ))
+                            checkAnswer = false
                         }
                     }
                     else if(id == 3){
@@ -169,11 +122,13 @@ class QuizQuestionsActivity : AppCompatActivity() {
                             binding.option3.setBackgroundColor(ContextCompat.getColor(this,
                                 R.color.green
                             ))
+                            checkAnswer = true
                         }
                         else{
                             binding.option3.setBackgroundColor(ContextCompat.getColor(this,
                                 R.color.red
                             ))
+                            checkAnswer = false
                         }
                     }
                     binding.option1.isEnabled=false
@@ -185,16 +140,18 @@ class QuizQuestionsActivity : AppCompatActivity() {
                     binding.option3.isEnabled=false
                     binding.option3.isClickable=false
 
-                    binding.submit.visibility=android.view.View.INVISIBLE
+                    binding.submit.visibility= View.GONE
                     binding.submit.isEnabled=false
-                    binding.next.visibility=android.view.View.VISIBLE
+                    binding.next.visibility= View.VISIBLE
 
                     binding.next.setOnClickListener {
                         val intent= Intent(this@QuizQuestionsActivity, GameScoreActivity::class.java)
+                        intent.putExtra("check", checkAnswer.toString())
+                        intent.putExtra("museum", name)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
-                        //startActivity(Intent(this@MapsDemoActivity,ViewPlaceActivity::class.java))
-
-                        true
+                        finish()
+                        overridePendingTransition(0,0)
                     }
                 }
             }
@@ -206,8 +163,10 @@ class QuizQuestionsActivity : AppCompatActivity() {
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        if (binding.submit.isEnabled == true){
+        if (binding.submit.isEnabled){
+            super.onBackPressed()
             overridePendingTransition(0,0)
             finish()
         }

@@ -244,9 +244,8 @@ class ProfileUpdateActivity : AppCompatActivity() {
         }
     )
 
-    private fun generateOTP(): String {
-        val randomPin = (Math.random() * 9000).toInt() + 1000
-        return randomPin.toString()
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
     }
-
 }

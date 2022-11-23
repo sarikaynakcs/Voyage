@@ -66,16 +66,21 @@ class DashboardAdminActivity : AppCompatActivity() {
         //handle click, logout
         binding.logoutBtn.setOnClickListener {
             firebaseAuth.signOut()
-            checkUser()
+            val intent = Intent(this@DashboardAdminActivity, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            startActivity(intent)
+            overridePendingTransition(0,0)
         }
 
         //handle click, start add category page
         binding.addCategoryBtn.setOnClickListener {
             startActivity(Intent(this@DashboardAdminActivity, AddCategoryActivity::class.java))
+            overridePendingTransition(0,0)
         }
         //handle click, start add museum page
         binding.addMuseumBtn.setOnClickListener {
             startActivity(Intent(this@DashboardAdminActivity, AddMuseumActivity::class.java))
+            overridePendingTransition(0,0)
         }
     }
 

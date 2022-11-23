@@ -65,6 +65,7 @@ class MuseumActivity : AppCompatActivity() {
         //handle click, start add museum page
         binding.addMuseumBtn.setOnClickListener {
             startActivity(Intent(this@MuseumActivity, AddMuseumActivity::class.java))
+            overridePendingTransition(0,0)
         }
 
         //handle search button

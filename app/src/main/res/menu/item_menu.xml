@@ -5,10 +5,6 @@
         android:title="Information"
         android:icon="@drawable/ic_information_white"/>
 
-    <item android:id="@+id/nav_notification"
-        android:title="Notification"
-        android:icon="@drawable/ic_notification_white"/>
-
     <item android:id="@+id/nav_game"
         android:title="Game"
         android:icon="@drawable/ic_game_white"/>

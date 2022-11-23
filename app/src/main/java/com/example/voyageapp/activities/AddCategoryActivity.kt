@@ -91,4 +91,10 @@ class AddCategoryActivity : AppCompatActivity() {
             }
         categoryEt.text.clear()
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
+    }
 }
