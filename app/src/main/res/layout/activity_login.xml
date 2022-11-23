@@ -23,25 +23,25 @@
             android:src="@drawable/logo"/>
         
         <TextView
+            android:id="@+id/logintxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/iconIv"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="180dp"
-            android:text="Please Login"
-            android:textColor="@color/common_google_signin_btn_text_light"
-            android:fontFamily="sans-serif-condensed"
+            android:layout_marginTop="90dp"
+            android:text="Lütfen Giriş Yapın"
+            android:textColor="@color/yellow"
+            android:fontFamily="@font/poppins_semibold"
             android:textSize="20sp"/>
         
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="450dp"
-        android:layout_marginBottom="75dp">
+        android:layout_marginTop="350dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -61,7 +61,7 @@
                 android:background="@drawable/shape_edittext01"
                 android:drawableStart="@drawable/ic_email_gray"
                 android:drawablePadding="10dp"
-                android:hint="Email"
+                android:hint="E-posta"
                 android:inputType="textEmailAddress"
                 android:padding="10dp"
                 android:textColor="@color/black"
@@ -86,7 +86,7 @@
                     android:background="@drawable/shape_edittext01"
                     android:drawableStart="@drawable/ic_lock_gray"
                     android:drawablePadding="10dp"
-                    android:hint="Password"
+                    android:hint="Şifre"
                     android:inputType="textPassword"
                     android:padding="10dp"
                     android:textColor="@color/black"
@@ -105,7 +105,7 @@
                 android:padding="5dp"
                 android:text="@string/forgot_password"
                 android:textStyle="italic"
-                android:textColor="@color/gray02"/>
+                android:textColor="@color/white"/>
 
             <!--Login Button-->
             <Button
@@ -113,10 +113,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/forgotTv"
-                android:text="Login"
-                android:layout_marginTop="20dp"
+                android:text="Giriş Yap"
+                android:textAllCaps="false"
+                android:layout_marginTop="15dp"
                 android:background="@drawable/shape_button01"
-                android:textColor="@color/white"/>
+                android:textColor="@color/yellow"/>
 
         </RelativeLayout>
 
@@ -131,6 +132,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:padding="10dp"
-        android:text="@string/new_user_signup"/>
+        android:text="@string/new_user_signup"
+        android:textColor="@color/white"/>
     
 </RelativeLayout>

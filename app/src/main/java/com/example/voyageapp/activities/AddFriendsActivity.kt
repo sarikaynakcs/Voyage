@@ -103,7 +103,6 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
 
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener{
-            @SuppressLint("NotifyDataSetChanged")
             override fun onDataChange(snapshot: DataSnapshot) {
                 //clear list before starting adding data into it
                 (mUsers as ArrayList<ModelUser>).clear()
@@ -185,6 +184,8 @@ class FriendsAdapter(private val listener: Listener)
     private var mUsers: List<ModelUser> = listOf<ModelUser>()
     private var mFollows: Map<String, Boolean> = mapOf<String, Boolean>()
     private var mPositions: Map<String, Int> = mapOf<String, Int>()
+    //firebase auth
+    private lateinit var firebaseAuth: FirebaseAuth
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -203,6 +204,8 @@ class FriendsAdapter(private val listener: Listener)
                 .into(view.photo_image)
             view.follow_btn.setOnClickListener { listener.follow(user.uid) }
             view.unfollow_btn.setOnClickListener { listener.unfollow(user.uid) }
+            //init firebase auth
+            firebaseAuth = FirebaseAuth.getInstance()
 
             val follows = mFollows[user.uid] ?: false
             if (follows) {
@@ -210,6 +213,14 @@ class FriendsAdapter(private val listener: Listener)
                 view.unfollow_btn.visibility = View.VISIBLE
             }else{
                 view.follow_btn.visibility = View.VISIBLE
+                view.unfollow_btn.visibility = View.GONE
+            }
+            if (firebaseAuth.uid == user.uid) {
+                view.follow_btn.visibility = View.GONE
+                view.unfollow_btn.visibility = View.GONE
+            }
+            if (user.userType == "admin") {
+                view.follow_btn.visibility = View.GONE
                 view.unfollow_btn.visibility = View.GONE
             }
         }
@@ -231,5 +242,6 @@ class FriendsAdapter(private val listener: Listener)
         mFollows -= uid
         notifyItemChanged(mPositions[uid]!!)
     }
+
     override fun getItemCount() = mUsers.size
 }

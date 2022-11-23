@@ -1,6 +1,7 @@
 package com.example.voyageapp.activities
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -25,6 +26,9 @@ class ProfileActivity : AppCompatActivity() {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
+    //progress dialog
+    private lateinit var progressDialog: ProgressDialog
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
@@ -37,6 +41,11 @@ class ProfileActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         loadUserInfo()
 
+        //init progress dialog, will show while login user
+        progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Please wait")
+        progressDialog.setCanceledOnTouchOutside(false)
+
         navigationView = findViewById(R.id.linearBotIdProfile)
 
         navigationView.selectedItemId = R.id.nav_profile
@@ -48,12 +57,6 @@ class ProfileActivity : AppCompatActivity() {
 
                 R.id.nav_information -> {
                     startActivity(Intent(applicationContext, DashboardUserActivity::class.java))
-                    finish()
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true
-                }
-                R.id.nav_notification -> {
-                    startActivity(Intent(applicationContext, NotificationActivity::class.java))
                     finish()
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
@@ -78,12 +81,16 @@ class ProfileActivity : AppCompatActivity() {
             val intent = Intent (this@ProfileActivity, ProfileUpdateActivity::class.java)
             intent.putExtra("barcode", barcodeId.text)
             startActivity(intent)
+            overridePendingTransition(0,0)
         }
         logoutBtn.setOnClickListener {
+            //progressDialog.setMessage("Logging Out...")
+            //progressDialog.show()
             firebaseAuth.signOut()
             val intent = Intent(this@ProfileActivity, MainActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
+            overridePendingTransition(0,0)
         }
     }
 
@@ -97,11 +104,6 @@ class ProfileActivity : AppCompatActivity() {
                     val name = "${snapshot.child("name").value}"
                     val barcode = "${snapshot.child("barcodeId").value}"
                     val profileImage = "${snapshot.child("profileImage").value}"
-                    val timestamp = "${snapshot.child("timestamp").value}"
-                    val uid = "${snapshot.child("uid").value}"
-                    val userType = "${snapshot.child("userType").value}"
-
-                    // val formattedDate = Myapplication.formatTimeStamp(timestamp.toLong())
 
                     fullNameId.text = name
                     emailId.text = email

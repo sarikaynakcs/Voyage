@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/back05"
     android:orientation="vertical"
     tools:context=".activities.MuseumActivity">
 
@@ -40,7 +40,7 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/shape_button_add_museum"
         android:drawableStart="@drawable/ic_search_gray"
-        android:hint="Search"
+        android:hint="Ara"
         android:padding="10dp"
         android:textColorHint="@color/gray01"
         android:textColor="@color/white"/>
@@ -81,7 +81,7 @@
             android:text="+ Add new Museum"
             android:textColor="@color/subtext"
             android:textAllCaps="false"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
     </LinearLayout>
 

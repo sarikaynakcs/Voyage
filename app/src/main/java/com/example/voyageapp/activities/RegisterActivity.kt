@@ -173,6 +173,7 @@ class RegisterActivity : AppCompatActivity() {
                 Toast.makeText(this, "Account created", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@RegisterActivity, DashboardUserActivity::class.java))
                 finish()
+                overridePendingTransition(0,0)
             }
             .addOnFailureListener { e->
                 //failed adding data to db
@@ -189,5 +190,11 @@ class RegisterActivity : AppCompatActivity() {
     private fun generateOTP(): String {
         val randomPin = (Math.random() * 9000).toInt() + 1000
         return randomPin.toString()
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
     }
 }

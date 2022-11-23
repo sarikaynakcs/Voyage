@@ -12,10 +12,12 @@ class ModelUser {
     var uid: String = ""
     var barcodeId: String = ""
     var friends: Map<String, Boolean> = emptyMap()
+    var games: Map<String, Boolean> = emptyMap()
 
     constructor(){}
 
-    constructor(name: String, email: String, uid: String, username: String, profileImage: String, userType: String, timestamp: Long, barcodeId: String, friends: Map<String, Boolean>){
+    constructor(name: String, email: String, uid: String, username: String, profileImage: String, userType: String,
+                timestamp: Long, barcodeId: String, friends: Map<String, Boolean>, games: Map<String, Boolean>){
         this.name = name
         this.email = email
         this.uid = uid
@@ -25,5 +27,6 @@ class ModelUser {
         this.timestamp = timestamp
         this.barcodeId = barcodeId
         this.friends = friends
+        this.games = games
     }
 }

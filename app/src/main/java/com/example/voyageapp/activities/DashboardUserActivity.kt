@@ -65,12 +65,6 @@ class DashboardUserActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_information -> return@OnNavigationItemSelectedListener true
 
-                R.id.nav_notification -> {
-                    startActivity(Intent(applicationContext, NotificationActivity::class.java))
-                    finish()
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true
-                }
                 R.id.nav_game -> {
                     startActivity(Intent(applicationContext, GameActivity::class.java))
                     finish()

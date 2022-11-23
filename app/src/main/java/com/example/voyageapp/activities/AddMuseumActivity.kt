@@ -187,4 +187,10 @@ class AddMuseumActivity : AppCompatActivity() {
         museumCityTv.text = ""
         establishmentEt.text.clear()
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(0,0)
+    }
 }

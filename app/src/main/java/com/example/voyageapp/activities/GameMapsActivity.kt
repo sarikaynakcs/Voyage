@@ -31,6 +31,11 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.BitmapDescriptorFactory
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_game_maps.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +47,7 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var myMarker: Marker
     private lateinit var mMap: GoogleMap
     private lateinit var binding: ActivityGameMapsBinding
+    private lateinit var firebaseAuth: FirebaseAuth
 
     //
     private var latitude:Double=0.toDouble()
@@ -67,6 +73,8 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
         window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
+
+        firebaseAuth = FirebaseAuth.getInstance()
 
         // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         val mapFragment = supportFragmentManager
@@ -121,8 +129,6 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                     if (response.isSuccessful)
                     {
-
-
                         for(i in 0 until response.body()!!.results!!.size)
                         {
                             val markerOptions=MarkerOptions()
@@ -131,46 +137,93 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             val lng = googlePlace.geometry!!.location!!.lng
                             val placeName = googlePlace.name
                             val latLng= LatLng(lat,lng)
-                            markerOptions.position(latLng)
-                            markerOptions.title(placeName)
-                            markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_museum))
-                            //if (typePlace == "museum")
-                            //    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_museum_o))
-                            //else if(typePlace == "hospital")
-                            //    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_hospital_o))
-                            //else if(typePlace == "school")
-                            //    markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_more))
-                            //else
-                            //markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_BLUE))
-                            markerOptions.snippet(i.toString())
 
+                            val mRef = FirebaseDatabase.getInstance().getReference("GameUpdate")
+                            mRef.addValueEventListener(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (snapshot.hasChild(placeName!!)) {
+                                        markerOptions.position(latLng)
+                                        markerOptions.title(placeName)
+                                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_museum))
+                                        markerOptions.snippet(i.toString())
+
+                                        //Add marker to map
+                                        mMap.addMarker(markerOptions)
+                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                                        mMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+
+                            })
+                            //markerOptions.position(latLng)
+                            //markerOptions.title(placeName)
+                            //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_museum))
+                            //markerOptions.snippet(i.toString())
                             //Add marker to map
-                            mMap.addMarker(markerOptions)
-
-                            mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                            mMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
-
-
-
+                            //mMap.addMarker(markerOptions)
+                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                            //mMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
 
                         }
-                        mMap!!.setOnMarkerClickListener { marker ->
+                        mMap!!.setOnInfoWindowClickListener  { marker ->
 
-                            //Common.currentResult = currentPlaces!!.results!![Integer.parseInt(marker.snippet)]
-                            val intent= Intent(this@GameMapsActivity, InsideGameActivity::class.java)
-                            intent.putExtra("museum", marker.title)
-                            startActivity(intent)
+                            val mRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.uid!!)
+                            mRef.addValueEventListener(object : ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
 
-                            //startActivity(Intent(this@MapsDemoActivity,ViewPlaceActivity::class.java))
+                                        if (snapshot.hasChild("games")) {
+                                            mRef.child("games")
+                                                .addValueEventListener(object : ValueEventListener{
+                                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                                        for (sd in snapshot.children) {
+                                                            val museumName = sd.key
 
-                            true
+                                                            if (museumName == marker.title) {
+                                                                val intent = Intent(this@GameMapsActivity, GamePrizeActivity::class.java)
+                                                                Toast.makeText(this@GameMapsActivity, "Keşfet sayfasına yönlendiriliyorsun", Toast.LENGTH_SHORT).show()
+                                                                intent.putExtra("museum", marker.title)
+                                                                startActivity(intent)
+                                                                finish()
+                                                                overridePendingTransition(0,0)
+                                                            }
+                                                            else {
+                                                                val intent= Intent(this@GameMapsActivity, InsideGameActivity::class.java)
+                                                                intent.putExtra("museum", marker.title)
+                                                                startActivity(intent)
+                                                                overridePendingTransition(0,0)
+                                                            }
+                                                        }
+                                                    }
+
+                                                    override fun onCancelled(error: DatabaseError) {
+                                                        TODO("Not yet implemented")
+                                                    }
+
+                                                })
+                                        }
+                                        else {
+                                            val intent= Intent(this@GameMapsActivity, InsideGameActivity::class.java)
+                                            intent.putExtra("museum", marker.title)
+                                            startActivity(intent)
+                                            overridePendingTransition(0,0)
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+
                         }
 
                     }
 
                 }
-
-
 
                 override fun onFailure(call: Call<MyPlaces>, t: Throwable) {
                     Toast.makeText(baseContext,""+ t.message,Toast.LENGTH_SHORT).show()
@@ -180,6 +233,29 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     }
 
+    private fun goInsideGame(title: String?) {
+
+        val ref = FirebaseDatabase.getInstance().getReference("GameUpdate")
+        ref.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.hasChild(title!!)) {
+                    val intent= Intent(this@GameMapsActivity, InsideGameActivity::class.java)
+                    intent.putExtra("museum", title)
+                    startActivity(intent)
+                    overridePendingTransition(0,0)
+                }
+                else{
+                    Toast.makeText(this@GameMapsActivity, "Bu müzede içerik bulunmamaktadır.", Toast.LENGTH_SHORT).show()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+
     private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
         val googlePlaceUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
         googlePlaceUrl.append("?location=39.87523, 32.86346")
@@ -187,14 +263,6 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         googlePlaceUrl.append("&types=museum")
         googlePlaceUrl.append("&sensor=true")
         googlePlaceUrl.append("&key=AIzaSyD4juMI81htuZG65dWSd2osD9WwtdmkdH4")
-
-
-
-        //val googlePlaceUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
-        //googlePlaceUrl.append("?location=$latitude,$longitude")
-        //googlePlaceUrl.append("&radius=10000") //10km
-        //googlePlaceUrl.append("&type=$typePlace")
-        //googlePlaceUrl.append("&key=AIzaSyD4juMI81htuZG65dWSd2osD9WwtdmkdH4")
 
         Log.d("URL_DEBUG",googlePlaceUrl.toString())
         return googlePlaceUrl.toString()
@@ -305,12 +373,12 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
         else
             mMap!!.isMyLocationEnabled=true
 
-
-
-
-
-        //mMap.uiSettings.isZoomControlsEnabled=true
-
     }
 
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        startActivity(Intent(this@GameMapsActivity, GameActivity::class.java))
+        overridePendingTransition(0,0)
+        finish()
+    }
 }

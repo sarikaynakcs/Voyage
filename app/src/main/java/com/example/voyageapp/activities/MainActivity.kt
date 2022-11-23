@@ -21,16 +21,15 @@ class MainActivity : AppCompatActivity() {
 
         //handle click, login
         binding.loginBtn.setOnClickListener() {
-            //will do later
             startActivity(Intent(this, LoginActivity::class.java))
             finish()
+            overridePendingTransition(0,0)
         }
 
-        //hand click, skip and continue to main screen
+        //handle click, skip and continue to main screen
         binding.skipBtn.setOnClickListener() {
-            //will do later
             startActivity(Intent(this, RegisterActivity::class.java))
-
+            overridePendingTransition(0,0)
         }
     }
 }

@@ -44,6 +44,7 @@ class LoginActivity : AppCompatActivity() {
         //handle click, not have account, goto register screen
         binding.noAccountTv.setOnClickListener {
             startActivity(Intent(this, RegisterActivity::class.java))
+            overridePendingTransition(0,0)
         }
         binding.forgotTv.setOnClickListener {
             startActivity(Intent(this, ForgotPasswordActivity::class.java))
@@ -100,6 +101,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Login failed due to ${e.message}", Toast.LENGTH_SHORT).show()
                 finish()
                 startActivity(Intent(this, LoginActivity::class.java))
+                overridePendingTransition(0,0)
             }
     }
 
@@ -124,10 +126,12 @@ class LoginActivity : AppCompatActivity() {
                     if (userType == "user"){
                         startActivity(Intent(this@LoginActivity, DashboardUserActivity::class.java))
                         finish()
+                        overridePendingTransition(0,0)
                     }
                     else if (userType == "admin"){
                         startActivity(Intent(this@LoginActivity, DashboardAdminActivity::class.java))
                         finish()
+                        overridePendingTransition(0,0)
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {

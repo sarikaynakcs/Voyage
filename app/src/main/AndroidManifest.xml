@@ -17,21 +17,14 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".activities.GamePrizeActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.GameScoreActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.ZoomClueThreeActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.ZoomClueTwoActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -104,13 +97,6 @@
         </activity>
         <activity
             android:name=".activities.GameActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.NotificationActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

@@ -4,17 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/back05"
     tools:context=".activities.InsideGameActivity">
-
 
     <LinearLayout
         android:id="@+id/headerLl"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/bg_header"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15dp">
+        android:orientation="horizontal">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +23,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Anıtkabir"
+                android:text=""
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold"
@@ -37,124 +35,91 @@
     </LinearLayout>
 
     <TextView
+        android:layout_below="@id/headerLl"
         android:layout_centerHorizontal="true"
-        android:layout_margin="90dp"
+
         android:id="@+id/time"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
         android:fontFamily="@font/poppins_semibold"
-        android:background="@color/secondary"
+        android:background="@drawable/clue_design_right"
         android:text=" 15:00 "
-        android:textColor="@color/white"
+        android:textAlignment="center"
+        android:textColor="@color/black"
         android:textSize="30sp"
         android:textStyle="bold"
         />
 
-    <TextView
-        android:layout_margin="170dp"
-        android:layout_centerHorizontal="true"
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/secondary"
-        android:fontFamily="@font/poppins_semibold"
-        android:text=" İpucu 1: "
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        />
+
 
     <TextView
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginVertical="210dp"
+        android:layout_below="@id/time"
         android:id="@+id/clueOne"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/clue_design_top"
         android:fontFamily="@font/poppins_semibold"
-        android:background="@color/secondary"
-        android:text="                                                                "
-        android:textColor="@color/white"
+        android:text=""
+        android:textColor="@color/primary"
+        android:gravity="center"
+        android:padding="15dp"
         android:textSize="12sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
+
+
 
     <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_marginVertical="280dp"
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/secondary"
-        android:fontFamily="@font/poppins_semibold"
-        android:text=" İpucu 2: "
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
-
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginVertical="320dp"
         android:id="@+id/clueTwo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/clueOne"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/clue_design_center"
         android:fontFamily="@font/poppins_semibold"
-        android:background="@color/secondary"
-        android:text="                                                                "
-        android:textColor="@color/white"
+        android:text=""
+        android:textColor="@color/primary"
+        android:gravity="center"
+        android:padding="15dp"
         android:textSize="12sp"
-        android:textStyle="bold"
-        />
+        android:textStyle="bold" />
+
+
 
     <TextView
         android:layout_centerHorizontal="true"
-        android:layout_marginVertical="390dp"
-        android:id="@+id/textView8"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/secondary"
-        android:fontFamily="@font/poppins_semibold"
-        android:text=" İpucu 3: "
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:textStyle="bold"
-        />
-
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="100dp"
-        android:layout_marginEnd="100dp"
-        android:layout_marginVertical="430dp"
+        android:layout_below="@+id/clueTwo"
+        android:layout_marginTop="20dp"
         android:id="@+id/clueThree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="350dp"
+        android:layout_height="100dp"
         android:fontFamily="@font/poppins_semibold"
-        android:background="@color/secondary"
-        android:text="                                                                "
-        android:textColor="@color/white"
+        android:background="@drawable/clue_design_bottom"
+        android:text=""
+        android:textColor="@color/primary"
+        android:gravity="center"
+        android:padding="15dp"
         android:textSize="12sp"
         android:textStyle="bold"
         />
 
 
 
-    <Button
-        android:layout_marginBottom="70dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+    <TextView
         android:id="@+id/goToAnswer"
-        android:layout_width="177dp"
-        android:layout_height="53dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:background="@drawable/shape_button_add_museum"
-        android:backgroundTint="@color/secondary"
-        android:text="CEVAPLA"
+        android:layout_width="250dp"
+        android:layout_height="50dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/clue_design_top"
+        android:fontFamily="@font/poppins_black"
+        android:gravity="center"
+        android:text="Devam Et"
+        android:textColor="@color/black"
+        android:layout_alignParentBottom="true"
         />
-
 
 </RelativeLayout>

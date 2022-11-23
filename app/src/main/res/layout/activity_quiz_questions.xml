@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/back05"
     tools:context=".activities.QuizQuestionsActivity">
 
     <LinearLayout
@@ -43,68 +43,85 @@
         <TextView
 
             android:layout_below="@id/headerLl"
-            android:layout_marginTop="180dp"
-
-            android:background="@drawable/shape_button_add_museum"
-            android:layout_centerHorizontal="true"
             android:id="@+id/option1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            tools:ignore="NotSibling"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="150dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/clue_design_top"
+            android:fontFamily="@font/poppins_semibold"
             android:text=""
-            android:textSize="35dp"
-            android:textColor="@color/white"
+            android:textColor="@color/primary"
             android:gravity="center"
-            tools:ignore="NotSibling">
+            android:padding="15dp"
+            android:textSize="12sp"
+            android:textStyle="bold">
 
         </TextView>
         <TextView
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/shape_button_add_museum"
-            android:id="@+id/option2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="35dp"
-            android:textColor="@color/white"
             android:layout_below="@id/option1"
-            android:gravity="center">
+            android:id="@+id/option2"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/clue_design_center"
+            android:fontFamily="@font/poppins_semibold"
+            android:text=""
+            android:textColor="@color/primary"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textSize="12sp"
+            android:textStyle="bold">
 
         </TextView>
         <TextView
-            android:layout_marginTop="25dp"
-            android:layout_centerHorizontal="true"
-            android:background="@drawable/shape_button_add_museum"
-            android:id="@+id/option3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text=""
-            android:textSize="35dp"
-            android:textColor="@color/white"
             android:layout_below="@id/option2"
-            android:gravity="center">
+            android:id="@+id/option3"
+            android:layout_width="350dp"
+            android:layout_height="100dp"
+            android:layout_marginTop="20dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/clue_design_bottom"
+            android:fontFamily="@font/poppins_semibold"
+            android:text=""
+            android:textColor="@color/primary"
+            android:gravity="center"
+            android:padding="15dp"
+            android:textSize="12sp"
+            android:textStyle="bold">
 
         </TextView>
 
-        <Button
+        <TextView
             android:id="@+id/submit"
-            android:text="Submıt"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginBottom="30dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/clue_design_top"
+            android:fontFamily="@font/poppins_black"
+            android:gravity="center"
+            android:text="Onayla"
+            android:visibility="gone"
+            android:textColor="@color/black"
             android:layout_alignParentBottom="true">
 
-        </Button>
-        <Button
+        </TextView>
+        <TextView
             android:id="@+id/next"
-            android:text="Next"
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginBottom="30dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/clue_design_top"
+            android:fontFamily="@font/poppins_black"
+            android:gravity="center"
+            android:text="Devam Et"
+            android:textColor="@color/black"
             android:layout_alignParentBottom="true"
-            android:visibility="invisible">
+            android:visibility="gone">
 
-        </Button>
+        </TextView>
 
     </RelativeLayout>
 

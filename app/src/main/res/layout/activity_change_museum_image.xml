@@ -7,10 +7,23 @@
     android:background="@color/secondary"
     tools:context=".activities.ChangeMuseumImageActivity">
 
+    <TextView
+        android:id="@+id/museumTv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Update Museum Image"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/yellow"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_centerHorizontal="true"
+        android:textSize="20sp"/>
+
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/museumImageId"
         android:layout_width="180dp"
         android:layout_height="180dp"
+        android:layout_below="@id/museumTv"
         android:background="@drawable/stroke_deneme"
         android:src="@drawable/ic_person_gray"
         android:layout_centerHorizontal="true"

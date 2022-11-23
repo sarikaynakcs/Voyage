@@ -115,8 +115,10 @@ class AdapterMuseum :RecyclerView.Adapter<AdapterMuseum.HolderMuseum>, Filterabl
 
         holder.uploadBtn.setOnClickListener {
             val intent = Intent(context, ChangeMuseumImageActivity::class.java)
+            val activity = context as Activity
             intent.putExtra("id", id)
             context.startActivity(intent)
+            activity.overridePendingTransition(0,0)
         }
 
     }

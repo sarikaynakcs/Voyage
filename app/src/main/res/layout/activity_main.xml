@@ -21,9 +21,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/iconIv"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="10dp"
-        android:text="Welcome to Voyage App"
-        android:textColor="@color/black"
+        android:layout_marginTop="20dp"
+        android:text="Voyage App'e Hoşgeldin"
+        android:fontFamily="@font/poppins_semibold"
+        android:textColor="@color/yellow"
         android:textSize="16sp"/>
 
     <Button
@@ -33,27 +34,18 @@
         android:layout_marginBottom="20dp"
         android:background="@drawable/shape_button01"
         android:layout_above="@id/skipBtn"
-        android:text="Login"
-        android:textColor="@color/white"/>
-
-    <TextView
-        android:id="@+id/orTv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OR"
-        android:textColor="@color/gray02"
-        android:fontFamily="sans-serif-condensed"
-        android:layout_centerHorizontal="true"
-        android:layout_above="@id/skipBtn"/>
-
+        android:text="Giriş Yap"
+        android:textAllCaps="false"
+        android:textColor="@color/yellow"/>
 
     <Button
         android:id="@+id/skipBtn"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Regıster now"
-        android:textColor="@color/purple_200"
-        android:background="@drawable/shape_button02"/>
+        android:text="Şimdi Kayıt Ol"
+        android:textColor="@color/yellow"
+        android:textAllCaps="false"
+        android:background="@drawable/shape_button01"/>
 
 </RelativeLayout>

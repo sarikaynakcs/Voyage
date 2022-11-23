@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/body_container"
-    android:background="@color/primary"
+    android:background="@drawable/back05"
     tools:context=".activities.DashboardUserActivity">
 
 
@@ -41,7 +41,7 @@
         android:layout_marginEnd="10dp"
         android:background="@drawable/shape_button_add_museum"
         android:drawableStart="@drawable/ic_search_gray"
-        android:hint="Search"
+        android:hint="Ara"
         android:padding="10dp"
         android:textColorHint="@color/gray01"
         android:textColor="@color/white"/>
@@ -53,9 +53,9 @@
         android:layout_height="match_parent"
         android:layout_below="@id/searchEt"
         android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
+        android:layout_above="@id/linearBotIdDashboard"
         android:alpha="0.8"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/row_category" />
@@ -66,7 +66,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginStart="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
         android:elevation="2dp"
         app:menu="@menu/item_menu"
         android:background="@drawable/round_corner"

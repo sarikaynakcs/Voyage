@@ -35,8 +35,9 @@ class SplashActivity : AppCompatActivity() {
         val firebaseUser = firebaseAuth.currentUser
         if (firebaseUser == null){
             //user not logged in, goto main screen
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
             finish()
+            overridePendingTransition(0,0)
         }
         else{
             //user logged in, check user type
@@ -51,10 +52,12 @@ class SplashActivity : AppCompatActivity() {
                         if (userType == "user"){
                             startActivity(Intent(this@SplashActivity, DashboardUserActivity::class.java))
                             finish()
+                            overridePendingTransition(0,0)
                         }
                         else if (userType == "admin"){
                             startActivity(Intent(this@SplashActivity, DashboardAdminActivity::class.java))
                             finish()
+                            overridePendingTransition(0,0)
                         }
                     }
                     override fun onCancelled(error: DatabaseError) {

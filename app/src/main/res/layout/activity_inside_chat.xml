@@ -4,10 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/back05"
     tools:context=".activities.InsideChatActivity">
 
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/headerLl"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -15,18 +15,43 @@
         android:orientation="horizontal"
         android:layout_marginBottom="15dp">
 
+        <ImageButton
+            android:id="@+id/backBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@id/photo_img"
+            app:layout_constraintEnd_toStartOf="@id/photo_img"
+            app:layout_constraintBottom_toBottomOf="@id/photo_img"
+            app:layout_constraintVertical_bias="0.5"
+            android:src="@drawable/ic_back_white"
+            android:background="@android:color/transparent"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/photo_img"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_button5"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="30dp"
+            android:src="@drawable/ic_person_white"/>
+
         <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Voyage"
-            android:gravity="start|bottom"
-            android:layout_marginLeft="15dp"
+            android:id="@+id/name_txt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=""
+            app:layout_constraintVertical_bias="0.5"
+            app:layout_constraintStart_toEndOf="@id/photo_img"
+            app:layout_constraintTop_toTopOf="@id/photo_img"
+            app:layout_constraintBottom_toBottomOf="@id/photo_img"
+            android:layout_marginStart="10dp"
             android:textColor="@color/white"
             android:textStyle="bold"
-            android:textSize="25sp"/>
+            android:textSize="16sp"/>
 
-    </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
     
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/inChatRv"
@@ -47,28 +72,36 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true">
 
-        <EditText
-            android:id="@+id/edit_chat_message"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_centerVertical="true"
-            android:layout_toStartOf="@+id/button_gchat_send"
-            android:background="@drawable/shape_button_05"
-            android:hint="Enter Message"
-            android:padding="9dp"
-            android:inputType="textMultiLine"
-            android:textColor="@color/white"
-            android:maxLines="6"
-            tools:ignore="Autofill"/>
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            tools:ignore="UselessParent">
 
-        <ImageButton
-            android:id="@+id/button_gchat_send"
-            android:layout_width="64dp"
-            android:layout_height="64dp"
-            android:layout_alignParentEnd="true"
-            android:background="?attr/selectableItemBackground"
-            android:src="@drawable/ic_send"/>
+            <EditText
+                android:id="@+id/edit_chat_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="Mesaj Yaz"
+                android:padding="12dp"
+                android:inputType="textMultiLine"
+                android:textColor="@color/black"
+                android:textCursorDrawable="@drawable/my_custom_cursor"
+                android:textColorHighlight="@color/yellow"
+                android:background="@drawable/common_google_signin_btn_icon_dark_normal_background"
+                tools:ignore="Autofill" />
+
+            <ImageButton
+                android:id="@+id/button_gchat_send"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackground"
+                android:src="@drawable/ic_send_white"
+                tools:ignore="ContentDescription" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 

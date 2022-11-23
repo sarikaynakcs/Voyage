@@ -4,7 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -48,6 +50,12 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         //init firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()
         mAdapter = FriendsAdapter(this)
+        userList = ArrayList()
+        mUser = ModelUser()
+        //setup adapter
+        adapterUser = AdapterUser(this@FriendsActivity, userList)
+        //set adapter to recyclerview
+        binding.friendsRv.adapter = adapterUser
         loadUsers()
 
         navigationViewTop = findViewById(R.id.linearTopIdFriends)
@@ -77,10 +85,6 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
     }
 
     private fun loadUsers() {
-        //init arraylist
-        //mUsers = ArrayList()
-        userList = ArrayList()
-        mUser = ModelUser()
 
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener{
@@ -105,6 +109,7 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
                                     if (model != null) {
                                         //(mUsers as ArrayList<ModelUser>).add(model)
                                         userList.add(model)
+                                        adapterUser.notifyDataSetChanged()
                                     }
                                 }
                             }
@@ -115,22 +120,7 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
                         }
 
                     })
-                    /*if (mUser.friends.keys.contains(model?.uid)){
-                        if (model != null) {
-                            (mUsers as ArrayList<ModelUser>).add(model)
-                        }
-                    }*/
                 }
-                //binding.friendsRv.adapter = mAdapter
-                //friendsRv.layoutManager = LinearLayoutManager(this@FriendsActivity)
-                //mAdapter.update(mUsers as ArrayList<ModelUser>, mUser.friends)
-
-                //setup adapter
-                adapterUser = AdapterUser(this@FriendsActivity, userList)
-                adapterUser.isClickable = false
-                //set adapter to recyclerview
-                binding.friendsRv.adapter = adapterUser
-                adapterUser.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {

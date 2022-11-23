@@ -5,7 +5,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.WindowManager
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.voyageapp.R
 import com.example.voyageapp.adapters.AdapterUser
 import com.example.voyageapp.databinding.ActivityChatBinding
@@ -37,6 +39,13 @@ class ChatActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         //init firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()
+        //init arraylist
+        userList = ArrayList()
+        //setup adapter
+        adapterUser = AdapterUser(this@ChatActivity, userList)
+        //set adapter to recyclerview
+        binding.chatsRv.layoutManager = LinearLayoutManager(this)
+        binding.chatsRv.adapter = adapterUser
         loadUsers()
 
         navigationViewTop = findViewById(R.id.linearTopIdChat)
@@ -76,12 +85,6 @@ class ChatActivity : AppCompatActivity() {
                     overridePendingTransition(0, 0)
                     return@OnNavigationItemSelectedListener true
                 }
-                R.id.nav_notification -> {
-                    startActivity(Intent(applicationContext, NotificationActivity::class.java))
-                    finish()
-                    overridePendingTransition(0, 0)
-                    return@OnNavigationItemSelectedListener true
-                }
                 R.id.nav_game -> {
                     startActivity(Intent(applicationContext, GameActivity::class.java))
                     finish()
@@ -100,10 +103,9 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun loadUsers() {
-        //init arraylist
-        userList = ArrayList()
 
         //get all users from firebase database...
+        val mRef = FirebaseDatabase.getInstance().getReference("Chats")
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -113,17 +115,26 @@ class ChatActivity : AppCompatActivity() {
                 for (ds in snapshot.children){
                     //get data as model
                     val model = ds.getValue(ModelUser::class.java)
-                    val userType = ds.child("userType").getValue(String::class.java)
                     val uid = ds.child("uid").getValue(String::class.java)
-                    if (userType != "admin" && uid != firebaseAuth.currentUser?.uid){
-                        userList.add(model!!)
-                    }
+                    val senderRoom = uid + firebaseAuth.currentUser?.uid
+
+                    mRef.addValueEventListener(object : ValueEventListener{
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.hasChild(senderRoom)) {
+                                userList.add(model!!)
+                                adapterUser.notifyDataSetChanged()
+                            }
+
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+
+                    })
+                    //adapterUser.notifyDataSetChanged()
                 }
-                //setup adapter
-                adapterUser = AdapterUser(this@ChatActivity, userList)
-                //set adapter to recyclerview
-                binding.chatsRv.adapter = adapterUser
-                adapterUser.notifyDataSetChanged()
+                //adapterUser.notifyDataSetChanged()
             }
 
             override fun onCancelled(error: DatabaseError) {

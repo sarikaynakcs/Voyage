@@ -4,59 +4,80 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back01"
+    android:background="@drawable/back05"
     tools:context=".activities.ProfileUpdateActivity">
 
-    <RelativeLayout
-        android:id="@+id/toolbarRL"
+    <LinearLayout
+        android:id="@+id/headerLl"
         android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:background="@drawable/shape_toolbar02">
+        android:layout_height="60dp"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/backBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/ic_back_white"
-            android:background="@android:color/transparent"/>
         <TextView
-            android:id="@+id/toolbarTittle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Profili Değiştir"
-            android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            android:textColor="@color/black"
-            android:textStyle="bold"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Profili Düzenle"
+            android:gravity="bottom|center_horizontal"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/subtext"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
 
-        <ImageView
-            android:id="@+id/profileImageId"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/toolbarTittle"
-            android:layout_marginTop="40dp"
-            android:src="@drawable/ic_person_gray"
-            android:background="@color/white"
-            />
-    </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:layout_below="@id/headerLl"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/bg_header2" />
+
+
+    <ImageButton
+        android:id="@+id/backBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_cancel_gray"
+        android:background="@android:color/transparent"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImageId"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_below="@id/headerLl"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/shape_button5"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person_white"/>
+
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@id/profileImageId"
         android:layout_marginStart="30dp"
         android:layout_marginEnd="30dp"
-        android:layout_marginTop="225dp">
+        android:layout_marginTop="50dp">
 
         <EditText
             android:id="@+id/nameId"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@drawable/shape_edittext01"
-            android:drawablePadding="10dp"
-            android:drawableStart="@drawable/ic_person_gray"
+            android:background="@drawable/shape_edittext02"
+            android:drawablePadding="5dp"
+            android:padding="8dp"
+            android:drawableStart="@drawable/ic_person_yellow"
             android:inputType="textPersonName|textCapWords"
             android:textColor="@color/black"
-            android:hint="Name"
+            android:hint="Ad &amp; Soyad"
+            android:textColorHint="@color/gray01"
+            android:textCursorDrawable="@drawable/my_custom_cursor"
+            android:textColorHighlight="@color/yellow"
             android:autofillHints="" />
         <EditText
             android:id="@+id/usernameId"
@@ -64,22 +85,29 @@
             android:layout_height="40dp"
             android:layout_below="@id/nameId"
             android:layout_marginTop="10dp"
-            android:background="@drawable/shape_edittext01"
-            android:drawablePadding="10dp"
-            android:drawableStart="@drawable/ic_person_gray"
+            android:background="@drawable/shape_edittext02"
+            android:drawablePadding="5dp"
+            android:padding="8dp"
+            android:drawableStart="@drawable/ic_person_yellow"
             android:inputType="textPersonName|textCapWords"
             android:textColor="@color/black"
-            android:hint="Username"
+            android:hint="Kullanıcı adı"
+            android:textColorHint="@color/gray01"
+            android:textCursorDrawable="@drawable/my_custom_cursor"
+            android:textColorHighlight="@color/yellow"
             android:autofillHints="" />
-        <Button
+        <TextView
             android:id="@+id/updateButton"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/usernameId"
-            android:textColor="@color/white"
-            android:backgroundTint="@color/secondary"
-            android:text="update"
-            android:layout_marginTop="20dp"/>
+            android:textColor="@color/yellow"
+            android:text="Güncelle"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/shape_edittext02"
+            android:layout_centerHorizontal="true"
+            android:textSize="16sp"
+            android:padding="10dp"/>
 
 
     </RelativeLayout>

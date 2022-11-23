@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/back05"
     tools:context=".activities.FriendsActivity">
 
     <LinearLayout
@@ -50,6 +50,6 @@
         android:layout_marginEnd="5dp"
         android:layout_marginBottom="5dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/add_friends_item"/>
+        tools:listitem="@layout/chat_view"/>
 
 </RelativeLayout>

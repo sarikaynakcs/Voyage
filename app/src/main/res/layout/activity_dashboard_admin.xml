@@ -95,7 +95,7 @@
             android:background="@drawable/shape_button01"
             android:minHeight="50dp"
             android:text="+ Add new Category"
-            android:textColor="@color/gray02"
+            android:textColor="@color/yellow"
             android:textAllCaps="false"/>
 
         <!--Add new museum-->
@@ -108,7 +108,7 @@
             android:backgroundTint="@color/secondary"
             android:minHeight="50dp"
             android:text="+ Add new Museum"
-            android:textColor="@color/gray02"
+            android:textColor="@color/yellow"
             android:textAllCaps="false"/>
 
     </LinearLayout>

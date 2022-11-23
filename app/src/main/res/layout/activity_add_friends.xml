@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary"
+    android:background="@drawable/back05"
     tools:context=".activities.AddFriendsActivity">
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:fontFamily="@font/poppins_semibold"
             android:text="Voyage"
             android:gravity="start|bottom"
-            android:layout_marginLeft="15dp"
+            android:layout_marginStart="15dp"
             android:textColor="@color/white"
             android:textStyle="bold"
             android:textSize="25sp"/>
@@ -44,7 +44,7 @@
         android:layout_height="wrap_content"
         android:text="ARKADAŞ EKLE"
         android:textStyle="bold"
-        android:textSize="25dp"
+        android:textSize="25sp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
         android:textColor="@color/white"
@@ -76,7 +76,7 @@
         <!--Username-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/usernameTil"
-            android:layout_width="140dp"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             app:boxStrokeColor="@color/yellow"
             app:hintEnabled="false">
@@ -88,12 +88,12 @@
                 android:background="@drawable/shape_edittext02"
                 android:drawableStart="@drawable/ic_person_yellow"
                 android:drawablePadding="5dp"
-                android:hint="Username"
+                android:hint="Kullanıcı adı"
                 android:inputType="textPersonName|textCapWords"
                 android:padding="10dp"
                 android:textColor="@color/subtext"
                 android:textColorHint="@color/gray01"
-                android:textCursorDrawable="@color/yellow"
+                android:textCursorDrawable="@drawable/my_custom_cursor"
                 android:textColorHighlight="@color/yellow"/>
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -104,7 +104,7 @@
             android:layout_width="100dp"
             android:layout_height="wrap_content"
             app:boxStrokeColor="@color/yellow"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
             app:hintEnabled="false">
 
             <EditText
@@ -120,7 +120,7 @@
                 android:padding="10dp"
                 android:textColor="@color/subtext"
                 android:textColorHint="@color/gray01"
-                android:textCursorDrawable="@color/yellow"
+                android:textCursorDrawable="@drawable/my_custom_cursor"
                 android:textColorHighlight="@color/yellow"/>
 
         </com.google.android.material.textfield.TextInputLayout>
