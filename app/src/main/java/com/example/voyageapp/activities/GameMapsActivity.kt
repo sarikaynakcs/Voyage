@@ -189,12 +189,15 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                                                 startActivity(intent)
                                                                 finish()
                                                                 overridePendingTransition(0,0)
+                                                                mRef.removeEventListener(this)
                                                             }
-                                                            else {
-                                                                val intent= Intent(this@GameMapsActivity, InsideGameActivity::class.java)
+                                                            else if (marker.title != "Your Position") {
+                                                                val intent = Intent(this@GameMapsActivity, InsideGameActivity::class.java)
                                                                 intent.putExtra("museum", marker.title)
                                                                 startActivity(intent)
+                                                                //finish()
                                                                 overridePendingTransition(0,0)
+                                                                mRef.removeEventListener(this)
                                                             }
                                                         }
                                                     }
@@ -206,10 +209,12 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                                 })
                                         }
                                         else {
-                                            val intent= Intent(this@GameMapsActivity, InsideGameActivity::class.java)
+                                            val intent = Intent(this@GameMapsActivity, InsideGameActivity::class.java)
                                             intent.putExtra("museum", marker.title)
                                             startActivity(intent)
+                                            //finish()
                                             overridePendingTransition(0,0)
+                                            mRef.removeEventListener(this)
                                         }
                                     }
 
@@ -218,7 +223,6 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                     }
 
                                 })
-
                         }
 
                     }
@@ -231,29 +235,6 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             })
 
-    }
-
-    private fun goInsideGame(title: String?) {
-
-        val ref = FirebaseDatabase.getInstance().getReference("GameUpdate")
-        ref.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.hasChild(title!!)) {
-                    val intent= Intent(this@GameMapsActivity, InsideGameActivity::class.java)
-                    intent.putExtra("museum", title)
-                    startActivity(intent)
-                    overridePendingTransition(0,0)
-                }
-                else{
-                    Toast.makeText(this@GameMapsActivity, "Bu müzede içerik bulunmamaktadır.", Toast.LENGTH_SHORT).show()
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
 
     private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
