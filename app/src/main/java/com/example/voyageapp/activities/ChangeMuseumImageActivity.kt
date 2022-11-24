@@ -34,6 +34,7 @@ class ChangeMuseumImageActivity : AppCompatActivity() {
     
 
     private lateinit var firebaseAuth: FirebaseAuth
+    
 
     private var imageUri: Uri?=null
 
