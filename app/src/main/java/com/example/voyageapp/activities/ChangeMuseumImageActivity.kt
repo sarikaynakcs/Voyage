@@ -31,6 +31,7 @@ import kotlinx.android.synthetic.main.museum_view.*
 class ChangeMuseumImageActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityChangeMuseumImageBinding
+    
 
     private lateinit var firebaseAuth: FirebaseAuth
 
