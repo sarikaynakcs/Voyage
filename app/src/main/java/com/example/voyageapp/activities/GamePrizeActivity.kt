@@ -88,6 +88,7 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
                     })
 
                 }
+                //ref.removeEventListener(this)
                 binding.prizeRv.adapter = mAdapter
                 prizeRv.layoutManager = LinearLayoutManager(this@GamePrizeActivity)
                 mAdapter.update(mUsers as ArrayList<ModelUser>, mUser.friends)
@@ -129,5 +130,12 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
                 Toast.makeText(this, "Failed due to ${it.exception!!.message}", Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        startActivity(Intent(this@GamePrizeActivity, GameActivity::class.java))
+        overridePendingTransition(0,0)
+        finish()
     }
 }

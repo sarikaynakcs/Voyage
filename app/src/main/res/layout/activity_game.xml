@@ -34,19 +34,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/headerLl"
-        android:background="@drawable/back05"
+        android:background="@drawable/start"
         android:visibility="gone"
         android:orientation="horizontal">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <Button
-                android:id="@+id/nextBtn"
-                android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="devam et"
+                android:gravity="center"
+                android:layout_marginTop="30dp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Görev yerine yakınsan başla butonuna bas"/>
+
+            <TextView
+                android:id="@+id/nextBtn"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="@drawable/button_design"
+                android:fontFamily="@font/poppins_black"
+                android:gravity="center"
+                android:text="Devam Et"
+                android:textColor="@color/yellow"
                 android:layout_centerInParent="true"/>
 
 

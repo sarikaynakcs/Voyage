@@ -31,20 +31,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".activities.ZoomClueActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
-            android:name=".activities.QuizQuestionsActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".activities.InsideGameActivity"
             android:exported="false">
             <meta-data

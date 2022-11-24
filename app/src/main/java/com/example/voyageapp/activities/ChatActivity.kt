@@ -134,6 +134,7 @@ class ChatActivity : AppCompatActivity() {
                     })
                     //adapterUser.notifyDataSetChanged()
                 }
+                //ref.removeEventListener(this)
                 //adapterUser.notifyDataSetChanged()
             }
 

@@ -7,119 +7,151 @@
     android:background="@drawable/back05"
     tools:context=".activities.InsideGameActivity">
 
-    <LinearLayout
-        android:id="@+id/headerLl"
+    <TextView
+
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/bg_header"
-        android:orientation="horizontal">
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/museumName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/poppins_semibold"
-                android:text=""
-                android:textColor="@color/white"
-                android:textSize="18sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </LinearLayout>
-
-    <TextView
-        android:layout_below="@id/headerLl"
-        android:layout_centerHorizontal="true"
-
-        android:id="@+id/time"
-        android:layout_marginTop="30dp"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:fontFamily="@font/poppins_semibold"
-        android:background="@drawable/clue_design_right"
-        android:text=" 15:00 "
-        android:textAlignment="center"
-        android:textColor="@color/black"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        />
-
-
-
-    <TextView
-        android:layout_below="@id/time"
-        android:id="@+id/clueOne"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:layout_marginTop="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/clue_design_top"
-        android:fontFamily="@font/poppins_semibold"
-        android:text=""
-        android:textColor="@color/primary"
-        android:gravity="center"
-        android:padding="15dp"
-        android:textSize="12sp"
-        android:textStyle="bold" />
-
-
-
-    <TextView
-        android:id="@+id/clueTwo"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@id/clueOne"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/clue_design_center"
-        android:fontFamily="@font/poppins_semibold"
-        android:text=""
-        android:textColor="@color/primary"
-        android:gravity="center"
-        android:padding="15dp"
-        android:textSize="12sp"
-        android:textStyle="bold" />
-
-
-
-    <TextView
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/clueTwo"
-        android:layout_marginTop="20dp"
-        android:id="@+id/clueThree"
-        android:layout_width="350dp"
-        android:layout_height="100dp"
-        android:fontFamily="@font/poppins_semibold"
-        android:background="@drawable/clue_design_bottom"
-        android:text=""
-        android:textColor="@color/primary"
-        android:gravity="center"
-        android:padding="15dp"
-        android:textSize="12sp"
-        android:textStyle="bold"
-        />
-
-
-
-    <TextView
-        android:id="@+id/goToAnswer"
-        android:layout_width="250dp"
         android:layout_height="50dp"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/clue_design_top"
-        android:fontFamily="@font/poppins_black"
+        android:text="İpuclarını kullanarak doğru cevabı bulmaya çalış"
         android:gravity="center"
-        android:text="Devam Et"
-        android:textColor="@color/black"
+        android:textColor="@color/white"/>
+
+    <HorizontalScrollView
+        android:id="@+id/horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:fillViewport="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="50dp">
+            <TextView
+                android:id="@+id/clueOne"
+                android:layout_width="310dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/clue_design_radius"
+
+                android:text="ipucu 1"></TextView>
+            <TextView
+                android:id="@+id/clueTwo"
+                android:layout_width="310dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/clue_design_radius"
+                android:text="ipucu 2"></TextView>
+            <TextView
+                android:id="@+id/clueThree"
+                android:layout_width="310dp"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_marginEnd="30dp"
+                android:background="@drawable/clue_design_radius"
+
+                android:text="ipucu 3"></TextView>
+
+        </LinearLayout>
+    </HorizontalScrollView>
+    <TextView
+        android:id="@+id/sayac"
+        android:layout_below="@id/horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="25dp"
+        android:gravity="center"
+        android:text=""
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/metin2"
+        android:layout_below="@id/sayac"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="center"
+        android:text="İçlerinden birini seçip devam butonuna bas"
+        android:textColor="@color/white"/>
+    <LinearLayout
+
+        android:id="@+id/answerOne"
+        android:layout_below="@id/metin2"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginBottom="15dp"
+        android:padding="5dp">
+
+        <TextView
+            android:id="@+id/option1"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="cevap a"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/clue_design_radius"/>
+        <TextView
+            android:id="@+id/option2"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="cevap a"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/clue_design_radius"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/answerTwo"
+        android:layout_below="@id/answerOne"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:padding="5dp">
+        <TextView
+            android:id="@+id/option3"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="cevap c"
+            android:layout_weight="1"
+            android:layout_marginEnd="10dp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/clue_design_radius"/>
+        <TextView
+            android:id="@+id/option4"
+            android:layout_width="150dp"
+            android:layout_height="match_parent"
+            android:text="cevap d"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:background="@drawable/clue_design_radius"/>
+
+
+    </LinearLayout>
+    <TextView
+        android:id="@+id/submit"
         android:layout_alignParentBottom="true"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="Seç"
+        android:gravity="center"
+        android:background="@drawable/clue_design_radius"/>
+    <TextView
+        android:id="@+id/next"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:text="İlerle"
+        android:gravity="center"
+        android:background="@drawable/clue_design_radius"
+        android:visibility="invisible"/>
+
 
 </RelativeLayout>

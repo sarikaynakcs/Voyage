@@ -71,4 +71,11 @@ class GameScoreActivity : AppCompatActivity() {
             overridePendingTransition(0,0)
         }
     }
+
+    @Deprecated("Deprecated in Java")
+    override fun onBackPressed() {
+        startActivity(Intent(this@GameScoreActivity, GameActivity::class.java))
+        overridePendingTransition(0,0)
+        finish()
+    }
 }
