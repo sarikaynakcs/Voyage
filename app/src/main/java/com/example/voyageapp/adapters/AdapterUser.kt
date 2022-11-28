@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.voyageapp.activities.InsideChatActivity
 import com.example.voyageapp.R
-import com.example.voyageapp.activities.ChatActivity
+import com.example.voyageapp.activities.ShowProfileActivity
 import com.example.voyageapp.models.ModelUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
@@ -36,11 +36,12 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
         return UserViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: UserViewHolder, @SuppressLint("RecyclerView") position: Int) {
         //init firebase auth
         firebaseAuth = FirebaseAuth.getInstance()
 
         val currentUser = userList[position]
+
         holder.name.text = currentUser.name
 
         Glide.with(context)
@@ -65,18 +66,58 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
 
             })
 
+        val dbRef = FirebaseDatabase.getInstance().getReference("Blocklist")
+        dbRef.child(currentUser.uid).child("blocklist")
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.hasChild(firebaseAuth.uid!!)) {
+                        holder.name.text = "Voyage Kullanıcısı"
+                        holder.message.visibility = View.GONE
+                        holder.photo.setImageResource(R.drawable.ic_person_white)
+                    } else {
+
+                        dbRef.child(firebaseAuth.uid!!).child("blocklist")
+                            .addValueEventListener(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (snapshot.hasChild(currentUser.uid)) {
+                                        holder.name.text = "Voyage Kullanıcısı"
+                                        holder.message.visibility = View.GONE
+                                        holder.photo.setImageResource(R.drawable.ic_person_white)
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+
+                            })
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
 
         holder.itemView.setOnClickListener {
-            if (!isClickable){
-                return@setOnClickListener
-            }else {
-                val intent = Intent(context, InsideChatActivity::class.java)
-                val activity = context as Activity
-                intent.putExtra("name", currentUser.name)
-                intent.putExtra("uid", currentUser.uid)
-                context.startActivity(intent)
-                activity.overridePendingTransition(0,0)
-            }
+            val intent = Intent(context, InsideChatActivity::class.java)
+            val activity = context as Activity
+            intent.putExtra("name", currentUser.name)
+            intent.putExtra("uid", currentUser.uid)
+            context.startActivity(intent)
+            context.finish()
+            activity.overridePendingTransition(0,0)
+        }
+
+        holder.photo.setOnClickListener {
+            val intent = Intent(context, ShowProfileActivity::class.java)
+            val activity = context as Activity
+            intent.putExtra("uid", currentUser.uid)
+            context.startActivity(intent)
+            context.finish()
+            activity.overridePendingTransition(0,0)
         }
 
         val sender = currentUser.uid + firebaseAuth.currentUser?.uid
@@ -86,22 +127,25 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
                 if (snapshot.hasChild(sender)) {
                     holder.itemView.setOnLongClickListener {
 
-                        if (!holder.delete.isVisible) {
-                            Toast.makeText(context, "Çöp kutusuna tıklayarak sohbeti silebilirsiniz.", Toast.LENGTH_SHORT).show()
-                            holder.delete.visibility = View.VISIBLE
+                        if (isClickable) {
+                            if (!holder.delete.isVisible) {
+                                Toast.makeText(context, "Çöp kutusuna tıklayarak sohbeti silebilirsiniz.", Toast.LENGTH_SHORT).show()
+                                holder.delete.visibility = View.VISIBLE
+                            }
+                            else {
+                                holder.delete.visibility = View.GONE
+                            }
                         }
-                        else {
-                            holder.delete.visibility = View.GONE
-                        }
+
                         true
                     }
                 }
-                else {
+                /*else {
                     holder.itemView.setOnLongClickListener {
                         Toast.makeText(context, "Sohbet geçmişi bulunamadı.", Toast.LENGTH_SHORT).show()
                         true
                     }
-                }
+                }*/
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
@@ -110,25 +154,30 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
         })
 
         holder.delete.setOnClickListener {
-            //confirm before delete
-            val builder = AlertDialog.Builder(context)
-            builder.setTitle("Sohbeti Sil")
-                .setMessage("Bu sohbeti silmek istediğinizden emin misiniz?")
-                .setPositiveButton("Evet"){a, d->
-                    Toast.makeText(context, "Siliniyor...", Toast.LENGTH_SHORT).show()
-                    deleteChat(currentUser.uid, holder)
-                }
-                .setNegativeButton("Hayır"){a, d->
-                    a.dismiss()
-                }
-                .show()
+            if (isClickable) {
+                //confirm before delete
+                val builder = AlertDialog.Builder(context)
+                builder.setTitle("Sohbeti Sil")
+                    .setMessage("Bu sohbeti silmek istediğinizden emin misiniz?")
+                    .setPositiveButton("Evet"){a, d->
+                        Toast.makeText(context, "Siliniyor...", Toast.LENGTH_SHORT).show()
+                        deleteChat(currentUser.uid, holder)
+                        userList.remove(userList[position])
+                    }
+                    .setNegativeButton("Hayır"){a, d->
+                        a.dismiss()
+                    }
+                    .show()
+            }
         }
     }
 
     private fun deleteChat(uid: String, holder: UserViewHolder) {
         val senderRoom = uid + firebaseAuth.currentUser?.uid
+        val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
 
-        val ref = FirebaseDatabase.getInstance().getReference("Chats").child(senderRoom).removeValue()
+        FirebaseDatabase.getInstance().getReference("Chats").child(senderRoom).removeValue()
+        databaseRef.child(firebaseAuth.uid!!).child("chats").child(uid).removeValue()
         Toast.makeText(context, "Sohbet silindi...", Toast.LENGTH_SHORT).show()
         holder.delete.visibility = View.GONE
 

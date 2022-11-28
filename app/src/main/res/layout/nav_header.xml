@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="200dp"
+    android:layout_height="200dp"
+    android:orientation="vertical"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/back05">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profileImageHeader"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/shape_button5"
+        android:scaleType="centerCrop"
+        android:src="@drawable/ic_person_white"
+
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:id="@+id/nameHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"/>
+    <TextView
+        android:id="@+id/emailHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/gray01"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="5dp"/>
+
+
+
+
+</LinearLayout>

@@ -171,7 +171,7 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         }
                         mMap!!.setOnInfoWindowClickListener  { marker ->
 
-                            val mRef = FirebaseDatabase.getInstance().getReference("Users").child(firebaseAuth.uid!!)
+                            val mRef = FirebaseDatabase.getInstance().getReference("PlayerGames").child(firebaseAuth.uid!!)
                             mRef.addValueEventListener(object : ValueEventListener{
                                     override fun onDataChange(snapshot: DataSnapshot) {
 

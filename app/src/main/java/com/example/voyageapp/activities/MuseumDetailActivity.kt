@@ -73,10 +73,42 @@ class MuseumDetailActivity : AppCompatActivity() {
             if (museumCity == "İstanbul"){
                 binding.topIv.setImageResource(R.drawable.back03)
             }
-            /*if (binding.historyInfo.text.isEmpty()){
+            if (museumCity == "Sivas"){
+                binding.topIv.setImageResource(R.drawable.back06)
+            }
+            if (museumCity == "Hatay"){
+                binding.topIv.setImageResource(R.drawable.back07)
+            }
+            if (museumCity == "Van"){
+                binding.topIv.setImageResource(R.drawable.back08)
+            }
+            if (museumCity == "Trabzon"){
+                binding.topIv.setImageResource(R.drawable.back09)
+            }
+            if (museumCity == "Çanakkale"){
+                binding.topIv.setImageResource(R.drawable.back10)
+            }
+            if (museumCity == "Gaziantep"){
+                binding.topIv.setImageResource(R.drawable.back11)
+            }
+            if (museumCity == "İzmir"){
+                binding.topIv.setImageResource(R.drawable.back12)
+            }
+            if (binding.historyInfo.text.isEmpty()){
                 binding.historyTv.visibility = View.GONE
                 binding.historyView.visibility = View.GONE
-            }*/
+                binding.historyInfo.visibility = View.GONE
+            }
+            if (binding.exhibitionsInfo.text.isEmpty()) {
+                binding.exhibitionsTv.visibility = View.GONE
+                binding.exhibitionsView.visibility = View.GONE
+                binding.exhibitionsInfo.visibility = View.GONE
+            }
+            if (binding.overviewInfo.text.isEmpty()) {
+                binding.overviewTv.visibility = View.GONE
+                binding.overviewView.visibility = View.GONE
+                binding.overviewInfo.visibility = View.GONE
+            }
         }
     }
 

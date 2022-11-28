@@ -55,6 +55,7 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
         mUser = ModelUser()
         val museum = intent.getStringExtra("museum")
 
+        val mRef = FirebaseDatabase.getInstance().getReference("PlayerGames")
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
@@ -68,16 +69,31 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
                             mUser = model
                         }
                     }
-                    ref.child(model?.uid!!).child("games").addValueEventListener(object : ValueEventListener{
-                        @SuppressLint("NotifyDataSetChanged")
+                    mRef.addValueEventListener(object : ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
-                            for (sd in snapshot.children) {
-                                val uid = sd.key
+                            if (snapshot.hasChild(model!!.uid)) {
+                                mRef.child(model.uid).child("games")
+                                    .addValueEventListener(object : ValueEventListener{
+                                        @SuppressLint("NotifyDataSetChanged")
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            for (sd in snapshot.children) {
+                                                val uid = sd.key
 
-                                if (uid == museum) {
-                                    (mUsers as ArrayList<ModelUser>).add(model)
-                                    mAdapter.notifyDataSetChanged()
-                                }
+                                                if (uid == museum) {
+                                                    (mUsers as ArrayList<ModelUser>).add(model)
+                                                    //mAdapter.notifyDataSetChanged()
+                                                }
+                                                binding.prizeRv.adapter = mAdapter
+                                                prizeRv.layoutManager = LinearLayoutManager(this@GamePrizeActivity)
+                                                mAdapter.update(mUsers as ArrayList<ModelUser>, mUser.friends)
+                                            }
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            TODO("Not yet implemented")
+                                        }
+
+                                    })
                             }
                         }
 
@@ -88,10 +104,7 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
                     })
 
                 }
-                //ref.removeEventListener(this)
-                binding.prizeRv.adapter = mAdapter
-                prizeRv.layoutManager = LinearLayoutManager(this@GamePrizeActivity)
-                mAdapter.update(mUsers as ArrayList<ModelUser>, mUser.friends)
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -115,7 +128,7 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
     }
 
     private fun setFollow(uid: String, follow: Boolean, onSucces: () -> Unit){
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        val ref = FirebaseDatabase.getInstance().getReference("Friends")
 
         val followTask = ref.child(uid).child("friends").child(firebaseAuth.uid!!)
         val setFollow = if (follow) followTask.setValue(true) else followTask.removeValue()

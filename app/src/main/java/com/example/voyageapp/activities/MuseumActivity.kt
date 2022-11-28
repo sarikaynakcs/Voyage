@@ -130,6 +130,9 @@ class MuseumActivity : AppCompatActivity() {
                         museumArrayList.add(model!!)
                     }
                 }
+                museumArrayList.sortBy {
+                    it.museumName.lowercase()
+                }
                 //setup adapter
                 adapterMuseum = AdapterMuseum(this@MuseumActivity, museumArrayList)
                 //set adapter to recyclerview

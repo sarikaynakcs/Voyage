@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.ShowProfileActivity">
+
+    <LinearLayout
+        android:id="@+id/headerLl"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@drawable/bg_header"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/poppins_semibold"
+            android:text="Voyage"
+            android:gravity="start|bottom"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="25sp"/>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/headerLl"
+        android:layout_marginTop="-1dp"
+        android:background="@drawable/bg_header2" />
+
+    <RelativeLayout
+        android:id="@+id/profileInfos"
+        android:layout_width="350dp"
+        android:layout_height="350dp"
+        android:background="@drawable/button_design"
+        android:layout_centerInParent="true">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageId"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_button5"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person_white"/>
+
+        <TextView
+            android:id="@+id/fullNameId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileImageId"
+            android:text=""
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/light_white"
+            android:textSize="14sp"/>
+        <TextView
+            android:id="@+id/barcodeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/barcodeId"
+            android:text="#"
+            android:textColor="@color/yellow"
+            android:layout_below="@id/fullNameId"
+            android:layout_marginEnd="2dp"
+            android:textSize="11dp"
+            android:fontFamily="@font/poppins_semibold"/>
+        <TextView
+            android:id="@+id/barcodeId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fullNameId"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textSize="11sp"
+            android:fontFamily="@font/poppins_semibold"
+            android:textColor="@color/yellow" />
+        <TextView
+            android:id="@+id/emailId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/barcodeId"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/subtext"
+            android:text=""
+            android:textSize="12sp"/>
+
+        <TextView
+            android:id="@+id/follow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg"
+            android:textColor="@color/white"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Ekle"
+            android:layout_below="@id/emailId"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"/>
+
+        <TextView
+            android:id="@+id/unfollow_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emailId"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/gray_btn_bg"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="10dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="3dp"
+            android:text="Çıkar"
+            android:textColor="@color/secondary" />
+
+        <TextView
+            android:id="@+id/block_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_bg"
+            android:textColor="@color/white"
+            android:minHeight="0dp"
+            android:minWidth="0dp"
+            android:paddingTop="3dp"
+            android:paddingBottom="3dp"
+            android:paddingStart="10dp"
+            android:paddingEnd="10dp"
+            android:text="Engelle"
+            android:layout_centerInParent="true"
+            android:layout_below="@id/emailId"
+            android:layout_marginTop="50dp"/>
+
+        <TextView
+            android:id="@+id/unblock_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/emailId"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/gray_btn_bg"
+            android:minWidth="0dp"
+            android:minHeight="0dp"
+            android:paddingStart="10dp"
+            android:paddingTop="3dp"
+            android:paddingEnd="10dp"
+            android:paddingBottom="3dp"
+            android:text="Engeli Kaldır"
+            android:textColor="@color/secondary" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

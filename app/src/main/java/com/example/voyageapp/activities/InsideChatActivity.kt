@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
 import android.widget.ImageButton
@@ -43,19 +44,17 @@ class InsideChatActivity : AppCompatActivity() {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
 
         firebaseAuth = FirebaseAuth.getInstance()
-
         val name = intent.getStringExtra("name")
         val receiverUid = intent.getStringExtra("uid")
 
-        binding.nameTxt.text = name
 
+        binding.nameTxt.text = name
         val mRef = FirebaseDatabase.getInstance().getReference("Users")
         mRef.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 for (ds in snapshot.children){
                     val model = ds.getValue(ModelUser::class.java)
                     val profileImage = "${receiverUid?.let { snapshot.child(it).child("profileImage").value }}"
-
                     if (receiverUid == model?.uid) {
                         Glide.with(this@InsideChatActivity)
                             .load(profileImage)
@@ -64,12 +63,49 @@ class InsideChatActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-
         })
+
+
+        val dbRef = FirebaseDatabase.getInstance().getReference("Blocklist")
+        dbRef.child(receiverUid!!).child("blocklist")
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.hasChild(firebaseAuth.uid!!)) {
+                        binding.status.visibility = View.GONE
+                        binding.photoImg.setImageResource(R.drawable.ic_person_white)
+                        binding.nameTxt.text = "Voyage Kullanıcısı"
+                        binding.editChatMessage.isClickable = false
+                        binding.buttonGchatSend.isClickable = false
+                    } else {
+
+                        dbRef.child(firebaseAuth.uid!!).child("blocklist")
+                            .addValueEventListener(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (snapshot.hasChild(receiverUid)) {
+                                        binding.status.visibility = View.GONE
+                                        binding.photoImg.setImageResource(R.drawable.ic_person_white)
+                                        binding.nameTxt.text = "Voyage Kullanıcısı"
+                                        binding.editChatMessage.isClickable = false
+                                        binding.buttonGchatSend.isClickable = false
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+
+                            })
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
 
         //handle click back button
         binding.backBtn.setOnClickListener {
@@ -114,18 +150,98 @@ class InsideChatActivity : AppCompatActivity() {
         // adding the message to database
         sendButton.setOnClickListener {
             val message = messageBox.text.toString()
-            val messageObject = ModelMessage(message, senderUid)
+            val timestamp = System.currentTimeMillis()
+            val messageObject = ModelMessage(message, senderUid, timestamp)
+            val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
 
             if (message.isNotEmpty()) {
+
                 ref.child("Chats").child(senderRoom!!).child("Messages").push()
-                    .setValue(messageObject).addOnSuccessListener {
-                        ref.child("Chats").child(receiverRoom!!).child("Messages").push()
-                            .setValue(messageObject)
-                    }
+                    .setValue(messageObject)
+                databaseRef.child(senderUid!!).child("chats").child(receiverUid).setValue(true)
+                ref.child("Chats").child(receiverRoom!!).child("Messages").push()
+                    .setValue(messageObject)
+                databaseRef.child(receiverUid).child("chats").child(senderUid).setValue(true)
+
                 messageBox.text.clear()
             }
         }
 
+    }
+
+    private fun checkStatus(receiverUid: String?) {
+        val mRef = FirebaseDatabase.getInstance().getReference("Blocklist")
+        val dbRef = FirebaseDatabase.getInstance().getReference("Status").child(receiverUid!!)
+
+        mRef.child(receiverUid!!).child("blocklist")
+            .addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.hasChild(firebaseAuth.uid!!)) {
+                        binding.status.visibility = View.GONE
+                    } else {
+                        mRef.child(firebaseAuth.uid!!).child("blocklist")
+                            .addValueEventListener(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    if (snapshot.hasChild(receiverUid)) {
+                                        binding.status.visibility = View.GONE
+                                    } else {
+                                        dbRef.child("status").addValueEventListener(object : ValueEventListener{
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                val status = snapshot.value.toString()
+
+                                                if (status == "online") {
+                                                    binding.status.visibility = View.VISIBLE
+                                                }else {
+                                                    binding.status.visibility = View.GONE
+                                                }
+                                            }
+
+                                            override fun onCancelled(error: DatabaseError) {
+                                                TODO("Not yet implemented")
+                                            }
+
+                                        })
+                                    }
+                                }
+
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
+
+                            })
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+
+    }
+
+    private fun online(status: String) {
+        val db = FirebaseDatabase.getInstance().getReference("Status").child(firebaseAuth.uid!!)
+        val hashMap: HashMap<String, Any?> = HashMap()
+        hashMap["status"] = status
+        db.updateChildren(hashMap)
+        val receiverUid = intent.getStringExtra("uid")
+        checkStatus(receiverUid)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        online("online")
+    }
+
+    /*override fun onStop() {
+        super.onStop()
+        online("offline")
+    }*/
+
+    override fun onPause() {
+        super.onPause()
+        online("offline")
     }
 
     @Deprecated("Deprecated in Java")
