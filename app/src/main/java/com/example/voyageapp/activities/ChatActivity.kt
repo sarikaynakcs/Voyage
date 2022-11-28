@@ -15,6 +15,7 @@ import com.example.voyageapp.models.ModelUser
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import kotlinx.android.synthetic.main.activity_chat.*
 
 class ChatActivity : AppCompatActivity() {
 
@@ -105,7 +106,7 @@ class ChatActivity : AppCompatActivity() {
     private fun loadUsers() {
 
         //get all users from firebase database...
-        val mRef = FirebaseDatabase.getInstance().getReference("Chats")
+        val mRef = FirebaseDatabase.getInstance().getReference("isChat")
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener {
             @SuppressLint("NotifyDataSetChanged")
@@ -118,10 +119,12 @@ class ChatActivity : AppCompatActivity() {
                     val uid = ds.child("uid").getValue(String::class.java)
                     val senderRoom = uid + firebaseAuth.currentUser?.uid
 
-                    mRef.addValueEventListener(object : ValueEventListener{
+                    /*mRef.child(firebaseAuth.uid!!).child("chats")
+                        .addValueEventListener(object : ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
-                            if (snapshot.hasChild(senderRoom)) {
-                                userList.add(model!!)
+
+                            if (snapshot.hasChild(model!!.uid)) {
+                                userList.add(model)
                                 adapterUser.notifyDataSetChanged()
                             }
 
@@ -131,11 +134,64 @@ class ChatActivity : AppCompatActivity() {
                             TODO("Not yet implemented")
                         }
 
-                    })
-                    //adapterUser.notifyDataSetChanged()
+                    })*/
+                    /*mRef.child(firebaseAuth.uid!!).child("chats")
+                        .addListenerForSingleValueEvent(object : ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                if (snapshot.hasChild(model!!.uid)) {
+                                    userList.add(model)
+                                    adapterUser.notifyDataSetChanged()
+                                    mRef.removeEventListener(this)
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })*/
+                    mRef.child(firebaseAuth.uid!!).child("chats")
+                        .addChildEventListener(object : ChildEventListener{
+                            override fun onChildAdded(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                if (snapshot.key == model!!.uid) {
+                                    if (!userList.contains(model)) {
+                                        userList.add(model)
+                                        adapterUser.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+
+                            override fun onChildChanged(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onChildRemoved(snapshot: DataSnapshot) {
+                                if (!snapshot.hasChild(model!!.uid)) {
+                                    userList.remove(model)
+                                    //adapterUser.notifyDataSetChanged()
+                                }
+                            }
+
+                            override fun onChildMoved(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
                 }
-                //ref.removeEventListener(this)
-                //adapterUser.notifyDataSetChanged()
+
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -145,8 +201,31 @@ class ChatActivity : AppCompatActivity() {
         })
     }
 
+    private fun online(status: String) {
+        val db = FirebaseDatabase.getInstance().getReference("Status").child(firebaseAuth.uid!!)
+        val hashMap: HashMap<String, Any?> = HashMap()
+        hashMap["status"] = status
+        db.updateChildren(hashMap)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        online("online")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        online("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        online("offline")
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        online("offline")
         startActivity(Intent(this@ChatActivity, DashboardUserActivity::class.java))
         overridePendingTransition(0,0)
         finish()

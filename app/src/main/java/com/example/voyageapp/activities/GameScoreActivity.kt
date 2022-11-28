@@ -37,7 +37,7 @@ class GameScoreActivity : AppCompatActivity() {
             binding.secondText.setText("Ya da ana menüye dönerek yeni oyunlar oynayabilirsin. Unutma bu müzedeki ilerlemen silinmeyecek, tekrar girdiğinde doğrudan etkileşime geçebileceğin insanları görebileceksin")
             binding.nextButton.visibility=android.view.View.VISIBLE
             binding.mainMenuButton.visibility=android.view.View.VISIBLE
-            val ref = FirebaseDatabase.getInstance().getReference("Users")
+            val ref = FirebaseDatabase.getInstance().getReference("PlayerGames")
             ref.child(firebaseAuth.uid!!).child("games").child(museum!!).setValue(true)
         }
         else {
@@ -60,7 +60,7 @@ class GameScoreActivity : AppCompatActivity() {
             val intent = Intent(this@GameScoreActivity, GamePrizeActivity::class.java)
             intent.putExtra("museum", museum)
             startActivity(intent)
-            //finish()
+            finish()
             overridePendingTransition(0,0)
         }
 

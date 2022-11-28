@@ -1,138 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".activities.ProfileActivity">
+    tools:context=".activities.ProfileActivity"
+    android:id="@+id/drawerLayout">
 
-
-
-    <LinearLayout
-        android:id="@+id/headerLl"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/bg_header"
-        android:orientation="horizontal">
+        android:layout_height="match_parent">
 
-        <TextView
+        <LinearLayout
+            android:id="@+id/headerLl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_header"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Voyage"
+                android:gravity="start|bottom"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="25sp"/>
+
+        </LinearLayout>
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="165dp"
+            android:layout_below="@id/headerLl"
+            android:layout_marginTop="-1dp"
+            android:background="@drawable/bg_header2" />
+
+        <View
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="180dp"
+            android:background="@drawable/back05" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImageId"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/shape_button5"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_person_white"/>
+
+        <TextView
+            android:id="@+id/fullNameId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileImageId"
+            android:text=""
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/poppins_regular"
+            android:textColor="@color/light_white"
+            android:textSize="14sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toStartOf="@id/barcodeId"
+            android:text="#"
+            android:textColor="@color/yellow"
+            android:layout_below="@id/fullNameId"
+            android:layout_marginEnd="2dp"
+            android:textSize="10dp"
+            android:fontFamily="@font/poppins_semibold"/>
+        <TextView
+            android:id="@+id/barcodeId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/fullNameId"
+            android:layout_centerHorizontal="true"
+            android:text=""
+            android:textSize="10sp"
             android:fontFamily="@font/poppins_semibold"
-            android:text="Voyage"
-            android:gravity="start|bottom"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="25sp"/>
-
-    </LinearLayout>
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="165dp"
-        android:layout_below="@id/headerLl"
-        android:layout_marginTop="-1dp"
-        android:background="@drawable/bg_header2" />
-
-    <Button
-            android:id="@+id/editProfileId"
-            android:layout_width="110dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="195dp"
-            android:layout_marginEnd="5dp"
-            android:text="Profili düzenle"
-            android:textAllCaps="false"
+            android:textColor="@color/yellow" />
+        <TextView
+            android:id="@+id/emailId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/barcodeId"
+            android:layout_centerHorizontal="true"
+            android:fontFamily="@font/poppins_regular"
             android:textColor="@color/subtext"
-            android:textSize="12sp"
-            android:backgroundTint="@color/secondary"/>
+            android:text=""
+            android:textSize="12sp"/>
 
-        <Button
-            android:id="@+id/logoutBtn"
-            android:layout_width="110dp"
-            android:layout_height="50dp"
-            android:layout_alignParentEnd="false"
-            android:layout_marginTop="195dp"
-            android:layout_marginStart="5dp"
-            android:text="Çıkış yap"
-            android:textAllCaps="false"
-            android:textSize="12sp"
-            android:backgroundTint="@color/secondary" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewProfile"
+            android:layout_marginTop="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/emailId"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:background="@drawable/stroke_shape_01"
+            tools:listitem="@layout/list_item" />
 
-    <View
-        android:layout_width="match_parent"
+
+
+        <!--Bottom Navbar-->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/linearBotIdProfile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="30dp"
+            android:elevation="2dp"
+            app:menu="@menu/item_menu"
+            android:background="@drawable/round_corner"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemIconSize="30dp"
+            app:labelVisibilityMode="unlabeled"
+            app:itemIconTint="@drawable/item_selector"/>
+    </RelativeLayout>
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navView"
+        android:layout_width="200dp"
         android:layout_height="match_parent"
-        android:layout_marginTop="180dp"
-        android:background="@drawable/back05" />
+        app:menu="@menu/nav_menu"
+        android:background="@drawable/back01"
+        app:itemTextColor="@color/yellow"
+        app:headerLayout="@layout/nav_header"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
 
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/profileImageId"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="120dp"
-        android:background="@drawable/shape_button5"
-        android:scaleType="centerCrop"
-        android:src="@drawable/ic_person_white"/>
-
-    <TextView
-        android:id="@+id/fullNameId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/profileImageId"
-        android:text=""
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="5dp"
-        android:fontFamily="@font/poppins_regular"
-        android:textColor="@color/light_white"
-        android:textSize="14sp"/>
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_toStartOf="@id/barcodeId"
-        android:text="#"
-        android:textColor="@color/yellow"
-        android:layout_below="@id/fullNameId"
-        android:layout_marginEnd="2dp"
-        android:textSize="10dp"
-        android:fontFamily="@font/poppins_semibold"/>
-    <TextView
-        android:id="@+id/barcodeId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/fullNameId"
-        android:layout_centerHorizontal="true"
-        android:text=""
-        android:textSize="10sp"
-        android:fontFamily="@font/poppins_semibold"
-        android:textColor="@color/yellow" />
-    <TextView
-        android:id="@+id/emailId"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/barcodeId"
-        android:layout_centerHorizontal="true"
-        android:fontFamily="@font/poppins_regular"
-        android:textColor="@color/subtext"
-        android:text=""
-        android:textSize="12sp"/>
-
-
-    <!--Bottom Navbar-->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/linearBotIdProfile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_margin="30dp"
-        android:elevation="2dp"
-        app:menu="@menu/item_menu"
-        android:background="@drawable/round_corner"
-        app:itemRippleColor="@android:color/transparent"
-        app:itemIconSize="30dp"
-        app:labelVisibilityMode="unlabeled"
-        app:itemIconTint="@drawable/item_selector"/>
-
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -127,6 +127,9 @@ class DashboardUserActivity : AppCompatActivity() {
                     //add to arraylist
                     categoryArrayList.add(model!!)
                 }
+                categoryArrayList.sortBy {
+                    it.category.lowercase()
+                }
                 //setup adapter
                 adapterCategory = AdapterCategory(this@DashboardUserActivity, categoryArrayList)
                 //set adapter to recyclerview

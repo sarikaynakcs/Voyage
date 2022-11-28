@@ -5,10 +5,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:paddingStart="10dp"
     android:paddingEnd="10dp"
-    android:layout_marginBottom="10dp">
+    android:layout_marginBottom="5dp">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/photo_img"
+        android:id="@+id/photo_image_block"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="5dp"
@@ -18,36 +18,41 @@
         android:src="@drawable/ic_person_white"/>
 
     <TextView
-        android:id="@+id/name_txt"
+        android:id="@+id/username_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         app:layout_constraintVertical_bias="0.2"
-        app:layout_constraintStart_toEndOf="@id/photo_img"
-        app:layout_constraintTop_toTopOf="@id/photo_img"
-        app:layout_constraintBottom_toBottomOf="@id/photo_img"
-        android:layout_marginStart="15dp"
+        app:layout_constraintStart_toEndOf="@id/photo_image_block"
+        app:layout_constraintTop_toTopOf="@id/photo_image_block"
+        app:layout_constraintBottom_toBottomOf="@id/photo_image_block"
+        android:layout_marginStart="10dp"
         android:textColor="@color/white"
         android:textStyle="bold"/>
 
     <TextView
-        android:id="@+id/message_txt"
+        android:id="@+id/name_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=""
         android:textColor="@color/subtext"
-        app:layout_constraintStart_toStartOf="@id/name_txt"
-        app:layout_constraintTop_toBottomOf="@id/name_txt"/>
+        app:layout_constraintStart_toStartOf="@id/username_block"
+        app:layout_constraintTop_toBottomOf="@id/username_block"/>
 
-    <ImageButton
-        android:id="@+id/deleteChatBtn"
+    <TextView
+        android:id="@+id/unblock_btn_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_delete_gray"
-        android:background="@android:color/transparent"
+        android:background="@drawable/gray_btn_bg"
+        android:textColor="@color/secondary"
+        android:minHeight="0dp"
+        android:minWidth="0dp"
+        android:paddingTop="3dp"
+        android:paddingBottom="3dp"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:text="Engeli Kaldır"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="@id/name_txt"
-        android:paddingTop="5dp"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toTopOf="@id/username_block" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

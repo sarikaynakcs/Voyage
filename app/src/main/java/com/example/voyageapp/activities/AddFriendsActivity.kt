@@ -131,6 +131,23 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         })
     }
 
+    private fun online(status: String) {
+        val db = FirebaseDatabase.getInstance().getReference("Status").child(firebaseAuth.uid!!)
+        val hashMap: HashMap<String, Any?> = HashMap()
+        hashMap["status"] = status
+        db.updateChildren(hashMap)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        online("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        online("offline")
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         startActivity(Intent(this, ChatActivity::class.java))
@@ -151,7 +168,7 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
     }
 
     private fun setFollow(uid: String, follow: Boolean, onSucces: () -> Unit){
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
+        val ref = FirebaseDatabase.getInstance().getReference("Friends")
 
         val followTask = ref.child(uid).child("friends").child(firebaseAuth.uid!!)
         val setFollow = if (follow) followTask.setValue(true) else followTask.removeValue()
@@ -193,19 +210,62 @@ class FriendsAdapter(private val listener: Listener)
         return ViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: ViewHolder, @SuppressLint("RecyclerView") position: Int) {
         with(holder) {
             val user = mUsers[position]
-            view.username_text.text = user.username
-            view.name_text.text = user.name
-            Glide.with(view)
-                .load(mUsers[position].profileImage)
-                .placeholder(R.drawable.ic_person_gray)
-                .into(view.photo_image)
-            view.follow_btn.setOnClickListener { listener.follow(user.uid) }
-            view.unfollow_btn.setOnClickListener { listener.unfollow(user.uid) }
             //init firebase auth
             firebaseAuth = FirebaseAuth.getInstance()
+
+            val dbRef = FirebaseDatabase.getInstance().getReference("Blocklist")
+            dbRef.child(user.uid).child("blocklist")
+                .addValueEventListener(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.hasChild(firebaseAuth.uid!!)) {
+                            view.follow_btn.visibility = View.GONE
+                            view.unfollow_btn.visibility = View.GONE
+                            view.username_text.text = "Voyage Kullanıcısı"
+                            view.name_text.visibility = View.GONE
+                            view.photo_image.setImageResource(R.drawable.ic_person_white)
+
+                        } else {
+                            dbRef.child(firebaseAuth.uid!!).child("blocklist")
+                                .addValueEventListener(object : ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        if (snapshot.hasChild(user.uid)) {
+                                            view.follow_btn.visibility = View.GONE
+                                            view.unfollow_btn.visibility = View.GONE
+                                            view.username_text.text = "Voyage Kullanıcısı"
+                                            view.name_text.visibility = View.GONE
+                                            view.photo_image.setImageResource(R.drawable.ic_person_white)
+
+                                        } else {
+
+                                            view.username_text.text = user.username
+                                            view.name_text.text = user.name
+                                            Glide.with(view)
+                                                .load(mUsers[position].profileImage)
+                                                .placeholder(R.drawable.ic_person_gray)
+                                                .into(view.photo_image)
+                                        }
+                                    }
+
+                                    override fun onCancelled(error: DatabaseError) {
+                                        TODO("Not yet implemented")
+                                    }
+
+                                })
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
+
+            view.follow_btn.setOnClickListener { listener.follow(user.uid) }
+            view.unfollow_btn.setOnClickListener { listener.unfollow(user.uid) }
+
 
             val follows = mFollows[user.uid] ?: false
             if (follows) {
@@ -223,6 +283,39 @@ class FriendsAdapter(private val listener: Listener)
                 view.follow_btn.visibility = View.GONE
                 view.unfollow_btn.visibility = View.GONE
             }
+
+
+            val mRef = FirebaseDatabase.getInstance().getReference("Friends")
+            val ref = FirebaseDatabase.getInstance().getReference("Users")
+            ref.addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (ds in snapshot.children) {
+                        mRef.child(firebaseAuth.uid!!).child("friends")
+                            .addValueEventListener(object : ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for (sd in snapshot.children) {
+                                    val uid = sd.key
+
+                                    if (uid == user.uid) {
+                                        view.follow_btn.visibility = View.GONE
+                                        view.unfollow_btn.visibility = View.VISIBLE
+                                    }
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
         }
     }
 

@@ -16,13 +16,14 @@ import com.example.voyageapp.databinding.ActivityFriendsBinding
 import com.example.voyageapp.models.ModelUser
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import kotlinx.android.synthetic.main.activity_add_friends.*
 
-class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
+class FriendsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFriendsBinding
 
@@ -30,11 +31,7 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
 
     private lateinit var firebaseAuth: FirebaseAuth
 
-    private lateinit var mUsers: List<ModelUser>
-
     private lateinit var mUser: ModelUser
-
-    private lateinit var mAdapter: FriendsAdapter
 
     private lateinit var adapterUser: AdapterUser
 
@@ -49,7 +46,6 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)
         //init firebase Auth
         firebaseAuth = FirebaseAuth.getInstance()
-        mAdapter = FriendsAdapter(this)
         userList = ArrayList()
         mUser = ModelUser()
         //setup adapter
@@ -86,6 +82,7 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
 
     private fun loadUsers() {
 
+        val mRef = FirebaseDatabase.getInstance().getReference("Friends")
         val ref = FirebaseDatabase.getInstance().getReference("Users")
         ref.addValueEventListener(object : ValueEventListener{
             @SuppressLint("NotifyDataSetChanged")
@@ -100,7 +97,7 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
                             mUser = model
                         }
                     }
-                    ref.child(firebaseAuth.uid!!).child("friends").addValueEventListener(object : ValueEventListener{
+                    /*mRef.child(firebaseAuth.uid!!).child("friends").addValueEventListener(object : ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
                             for (sd in snapshot.children){
                                 val uid = sd.key
@@ -109,6 +106,9 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
                                     if (model != null) {
                                         //(mUsers as ArrayList<ModelUser>).add(model)
                                         userList.add(model)
+                                        userList.sortBy {
+                                            it.name.lowercase()
+                                        }
                                         adapterUser.notifyDataSetChanged()
                                     }
                                 }
@@ -119,8 +119,48 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
 
                         }
 
-                    })
+                    })*/
+                    mRef.child(firebaseAuth.uid!!).child("friends")
+                        .addChildEventListener(object : ChildEventListener{
+                            override fun onChildAdded(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                if (snapshot.key == model!!.uid) {
+                                    if (!userList.contains(model)) {
+                                        userList.add(model)
+                                        adapterUser.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+
+                            override fun onChildChanged(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onChildRemoved(snapshot: DataSnapshot) {
+                                if (!snapshot.hasChild(model!!.uid)) {
+                                    userList.remove(model)
+                                }
+                            }
+
+                            override fun onChildMoved(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
                 }
+                adapterUser.isClickable = false
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -130,40 +170,27 @@ class FriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         })
     }
 
+    private fun online(status: String) {
+        val db = FirebaseDatabase.getInstance().getReference("Status").child(firebaseAuth.uid!!)
+        val hashMap: HashMap<String, Any?> = HashMap()
+        hashMap["status"] = status
+        db.updateChildren(hashMap)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        online("online")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        online("offline")
+    }
+
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         startActivity(Intent(this, ChatActivity::class.java))
         overridePendingTransition(0,0)
         finish()
-    }
-
-    override fun follow(uid: String) {
-        setFollow(uid, true){
-            mAdapter.followed(uid)
-        }
-    }
-
-    override fun unfollow(uid: String) {
-        setFollow(uid, false){
-            mAdapter.unfollowed(uid)
-        }
-    }
-
-    private fun setFollow(uid: String, follow: Boolean, onSucces: () -> Unit){
-        val ref = FirebaseDatabase.getInstance().getReference("Users")
-
-        val followTask = ref.child(uid).child("friends").child(firebaseAuth.uid!!)
-        val setFollow = if (follow) followTask.setValue(true) else followTask.removeValue()
-
-        val followersTask = ref.child(firebaseAuth.uid!!).child("friends").child(uid)
-        val setFollower = if (follow) followersTask.setValue(true) else followersTask.removeValue()
-
-        setFollow.continueWithTask({setFollower}).addOnCompleteListener {
-            if (it.isSuccessful) {
-                onSucces()
-            }else{
-                Toast.makeText(this, "Failed due to ${it.exception!!.message}", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 }
