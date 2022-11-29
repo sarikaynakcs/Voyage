@@ -17,8 +17,10 @@ import com.bumptech.glide.Glide
 import com.example.voyageapp.activities.InsideChatActivity
 import com.example.voyageapp.R
 import com.example.voyageapp.activities.ShowProfileActivity
+import com.example.voyageapp.models.ModelMessage
 import com.example.voyageapp.models.ModelUser
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -50,14 +52,38 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
             .into(holder.photo)
 
         val senderRoom = currentUser.uid + firebaseAuth.currentUser?.uid
-        val mRef = FirebaseDatabase.getInstance().getReference()
-        mRef.child("Chats").child(senderRoom).child("Messages").orderByKey().limitToLast(1)
-            .addListenerForSingleValueEvent(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (ds in snapshot.children) {
-                        val message = ds.child("message").value
-                        holder.message.text = message.toString()
+        val mRef = FirebaseDatabase.getInstance().getReference("Chats").child(senderRoom).child("Messages")
+
+        mRef.addChildEventListener(object : ChildEventListener{
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    mRef.orderByKey().limitToLast(1)
+                        .addListenerForSingleValueEvent(object : ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for (ds in snapshot.children) {
+                                    val message = ds.child("message").value
+                                    holder.message.text = message.toString()
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
+                }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+                    if (!snapshot.exists()) {
+                        mRef.removeEventListener(this)
                     }
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                    TODO("Not yet implemented")
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -140,12 +166,6 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
                         true
                     }
                 }
-                /*else {
-                    holder.itemView.setOnLongClickListener {
-                        Toast.makeText(context, "Sohbet geçmişi bulunamadı.", Toast.LENGTH_SHORT).show()
-                        true
-                    }
-                }*/
             }
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")

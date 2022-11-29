@@ -20,8 +20,12 @@ import com.example.voyageapp.models.ModelMessage
 import com.example.voyageapp.models.ModelUser
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
+import java.lang.StringBuilder
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Date
 
-class InsideChatActivity : AppCompatActivity() {
+ class InsideChatActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInsideChatBinding
     private lateinit var firebaseAuth: FirebaseAuth
@@ -31,6 +35,8 @@ class InsideChatActivity : AppCompatActivity() {
     private lateinit var messageAdapter: AdapterMessage
     private lateinit var messageList: ArrayList<ModelMessage>
     private lateinit var ref: DatabaseReference
+    private lateinit var time: java.lang.StringBuilder
+    private lateinit var date: java.lang.StringBuilder
 
     var receiverRoom: String? = null
     var senderRoom: String? = null
@@ -46,6 +52,19 @@ class InsideChatActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
         val name = intent.getStringExtra("name")
         val receiverUid = intent.getStringExtra("uid")
+
+        time = StringBuilder()
+        date = StringBuilder()
+
+        val today: Date = Calendar.getInstance().time
+        val format_date: SimpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+        val dateString: String = format_date.format(today)
+        date.append(dateString)
+
+        val timeOfDay: Date = Calendar.getInstance().time
+        val format_time: SimpleDateFormat = SimpleDateFormat("hh:mm")
+        val timeString: String = format_time.format(timeOfDay)
+        time.append(timeString)
 
 
         binding.nameTxt.text = name
@@ -151,7 +170,7 @@ class InsideChatActivity : AppCompatActivity() {
         sendButton.setOnClickListener {
             val message = messageBox.text.toString()
             val timestamp = System.currentTimeMillis()
-            val messageObject = ModelMessage(message, senderUid, timestamp)
+            val messageObject = ModelMessage(message, senderUid, timestamp, time.toString(), date.toString())
             val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
 
             if (message.isNotEmpty()) {

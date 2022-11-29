@@ -186,6 +186,10 @@ class ShowProfileActivity : AppCompatActivity() {
                                                 val barcode = "${snapshot.child("barcodeId").value}"
                                                 val profileImage = "${snapshot.child("profileImage").value}"
 
+                                                binding.emailId.visibility = View.VISIBLE
+                                                binding.barcodeId.visibility = View.VISIBLE
+                                                binding.barcodeText.visibility = View.VISIBLE
+
                                                 binding.fullNameId.text = name
                                                 binding.emailId.text = email
                                                 binding.barcodeId.text = barcode

@@ -11,6 +11,7 @@ import com.example.voyageapp.adapters.AdapterBlock
 import com.example.voyageapp.databinding.ActivityBlockListBinding
 import com.example.voyageapp.models.ModelUser
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -55,7 +56,7 @@ class BlockListActivity : AppCompatActivity() {
                 for (ds in snapshot.children) {
                     val model = ds.getValue(ModelUser::class.java)
 
-                    mRef.child(firebaseAuth.uid!!).child("blocklist")
+                    /*mRef.child(firebaseAuth.uid!!).child("blocklist")
                         .addValueEventListener(object : ValueEventListener{
                             @SuppressLint("NotifyDataSetChanged")
                             override fun onDataChange(snapshot: DataSnapshot) {
@@ -63,6 +64,47 @@ class BlockListActivity : AppCompatActivity() {
                                     userList.add(model)
                                     adapterBlock.notifyDataSetChanged()
                                 }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })*/
+                    mRef.child(firebaseAuth.uid!!).child("blocklist")
+                        .addChildEventListener(object : ChildEventListener{
+                            @SuppressLint("NotifyDataSetChanged")
+                            override fun onChildAdded(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                if (snapshot.key == model!!.uid) {
+                                    if (!userList.contains(model)) {
+                                        userList.add(model)
+                                        adapterBlock.notifyDataSetChanged()
+                                    }
+                                }
+                            }
+
+                            override fun onChildChanged(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                TODO("Not yet implemented")
+                            }
+
+                            @SuppressLint("NotifyDataSetChanged")
+                            override fun onChildRemoved(snapshot: DataSnapshot) {
+                                if (!snapshot.hasChild(model!!.uid)) {
+                                    adapterBlock.notifyDataSetChanged()
+                                }
+                            }
+
+                            override fun onChildMoved(
+                                snapshot: DataSnapshot,
+                                previousChildName: String?
+                            ) {
+                                TODO("Not yet implemented")
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -80,6 +122,7 @@ class BlockListActivity : AppCompatActivity() {
         })
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
         super.onBackPressed()
         overridePendingTransition(0,0)

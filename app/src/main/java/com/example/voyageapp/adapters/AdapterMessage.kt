@@ -41,11 +41,15 @@ class AdapterMessage(val context: Context, val messageList: ArrayList<ModelMessa
             //do the stuff for sent view holder
             val viewHolder = holder as SentViewHolder
             holder.sentMessage.text = currentMessage.message
+            holder.sentDate.text = currentMessage.date
+            holder.sentTime.text = currentMessage.time
         }
         else{
             //do the stuff for receive view holder
             val viewHolder = holder as ReceivedViewHolder
             holder.receivedMessage.text = currentMessage.message
+            holder.receivedDate.text = currentMessage.date
+            holder.receivedTime.text = currentMessage.time
         }
     }
 
@@ -67,10 +71,14 @@ class AdapterMessage(val context: Context, val messageList: ArrayList<ModelMessa
 
     class SentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val sentMessage = itemView.findViewById<TextView>(R.id.text_gchat_message_me)
+        val sentDate = itemView.findViewById<TextView>(R.id.message_date_sent)
+        val sentTime = itemView.findViewById<TextView>(R.id.message_time_sent)
 
     }
 
     class ReceivedViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val receivedMessage = itemView.findViewById<TextView>(R.id.text_gchat_message_other)
+        val receivedDate = itemView.findViewById<TextView>(R.id.message_date_received)
+        val receivedTime = itemView.findViewById<TextView>(R.id.message_time_received)
     }
 }

@@ -143,7 +143,8 @@ class FriendsActivity : AppCompatActivity() {
 
                             override fun onChildRemoved(snapshot: DataSnapshot) {
                                 if (!snapshot.hasChild(model!!.uid)) {
-                                    userList.remove(model)
+                                    //userList.remove(model)
+                                    mRef.removeEventListener(this)
                                 }
                             }
 

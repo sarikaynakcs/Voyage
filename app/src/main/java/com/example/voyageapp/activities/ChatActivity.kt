@@ -119,37 +119,6 @@ class ChatActivity : AppCompatActivity() {
                     val uid = ds.child("uid").getValue(String::class.java)
                     val senderRoom = uid + firebaseAuth.currentUser?.uid
 
-                    /*mRef.child(firebaseAuth.uid!!).child("chats")
-                        .addValueEventListener(object : ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-
-                            if (snapshot.hasChild(model!!.uid)) {
-                                userList.add(model)
-                                adapterUser.notifyDataSetChanged()
-                            }
-
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            TODO("Not yet implemented")
-                        }
-
-                    })*/
-                    /*mRef.child(firebaseAuth.uid!!).child("chats")
-                        .addListenerForSingleValueEvent(object : ValueEventListener{
-                            override fun onDataChange(snapshot: DataSnapshot) {
-                                if (snapshot.hasChild(model!!.uid)) {
-                                    userList.add(model)
-                                    adapterUser.notifyDataSetChanged()
-                                    mRef.removeEventListener(this)
-                                }
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                TODO("Not yet implemented")
-                            }
-
-                        })*/
                     mRef.child(firebaseAuth.uid!!).child("chats")
                         .addChildEventListener(object : ChildEventListener{
                             override fun onChildAdded(
@@ -173,8 +142,8 @@ class ChatActivity : AppCompatActivity() {
 
                             override fun onChildRemoved(snapshot: DataSnapshot) {
                                 if (!snapshot.hasChild(model!!.uid)) {
-                                    userList.remove(model)
-                                    //adapterUser.notifyDataSetChanged()
+                                    //userList.remove(model)
+                                    adapterUser.notifyDataSetChanged()
                                 }
                             }
 
