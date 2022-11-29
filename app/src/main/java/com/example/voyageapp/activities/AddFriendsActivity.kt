@@ -216,6 +216,13 @@ class FriendsAdapter(private val listener: Listener)
             //init firebase auth
             firebaseAuth = FirebaseAuth.getInstance()
 
+            view.username_text.text = user.username
+            view.name_text.text = user.name
+            Glide.with(view)
+                .load(mUsers[position].profileImage)
+                .placeholder(R.drawable.ic_person_gray)
+                .into(view.photo_image)
+
             val dbRef = FirebaseDatabase.getInstance().getReference("Blocklist")
             dbRef.child(user.uid).child("blocklist")
                 .addValueEventListener(object : ValueEventListener{
@@ -238,14 +245,6 @@ class FriendsAdapter(private val listener: Listener)
                                             view.name_text.visibility = View.GONE
                                             view.photo_image.setImageResource(R.drawable.ic_person_white)
 
-                                        } else {
-
-                                            view.username_text.text = user.username
-                                            view.name_text.text = user.name
-                                            Glide.with(view)
-                                                .load(mUsers[position].profileImage)
-                                                .placeholder(R.drawable.ic_person_gray)
-                                                .into(view.photo_image)
                                         }
                                     }
 

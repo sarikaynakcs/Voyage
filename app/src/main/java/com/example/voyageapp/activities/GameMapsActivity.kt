@@ -103,7 +103,7 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
             fusedLocationProviderClient.requestLocationUpdates(locationRequest,locationCallback, Looper.myLooper())
         }
 
-        bottom_navigation_view.setOnNavigationItemSelectedListener { item->
+        /*bottom_navigation_view.setOnNavigationItemSelectedListener { item->
             when(item.itemId)
             {
                 R.id.action_museum -> nearByPlace("Museum")
@@ -111,7 +111,7 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
             }
             true
-        }
+        }*/
     }
 
     private fun nearByPlace(typePlace: String) {
@@ -135,7 +135,8 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                             val googlePlace = response.body()!!.results!![i]
                             val lat = googlePlace.geometry!!.location!!.lat
                             val lng = googlePlace.geometry!!.location!!.lng
-                            val placeName = googlePlace.name
+                            //val placeName = googlePlace.name
+                            val placeName = googlePlace.name?.replace(".","")
                             val latLng= LatLng(lat,lng)
 
                             val mRef = FirebaseDatabase.getInstance().getReference("GameUpdate")
@@ -145,12 +146,21 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                         markerOptions.position(latLng)
                                         markerOptions.title(placeName)
                                         markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_museum))
-                                        markerOptions.snippet(i.toString())
-
-                                        //Add marker to map
                                         mMap.addMarker(markerOptions)
-                                        mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                                        mMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
+
+                                        //markerOptions.snippet(i.toString())
+                                        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                                        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
+                                    }
+                                    else{
+                                        markerOptions.position(latLng)
+                                        markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_museum2))
+                                        markerOptions.title(placeName)
+                                        mMap.addMarker(markerOptions)
+
+                                        //markerOptions.snippet(i.toString())
+                                        //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
+                                        //mMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
                                     }
                                 }
 
@@ -159,14 +169,7 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                                 }
 
                             })
-                            //markerOptions.position(latLng)
-                            //markerOptions.title(placeName)
-                            //markerOptions.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_action_museum))
-                            //markerOptions.snippet(i.toString())
-                            //Add marker to map
-                            //mMap.addMarker(markerOptions)
-                            //mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng))
-                            //mMap.animateCamera(CameraUpdateFactory.zoomTo(15f))
+
 
                         }
                         mMap!!.setOnInfoWindowClickListener  { marker ->
@@ -239,7 +242,9 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun getUrl(latitude: Double, longitude: Double, typePlace: String): String {
         val googlePlaceUrl = StringBuilder("https://maps.googleapis.com/maps/api/place/nearbysearch/json")
-        googlePlaceUrl.append("?location=39.87523, 32.86346")
+        googlePlaceUrl.append("?location=39.877747,32.86422") //39.52308,32.51485 //39.87523, 32.86346 //39.925533, 32.866287 //39.877747,32.86422
+        googlePlaceUrl.append("&name=Müzesi")
+        googlePlaceUrl.append("&language=tr")
         googlePlaceUrl.append("&radius=10000") //10km
         googlePlaceUrl.append("&types=museum")
         googlePlaceUrl.append("&sensor=true")
@@ -271,6 +276,7 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
                 mMap!!.moveCamera(CameraUpdateFactory.newLatLng(latLng))
                 mMap!!.animateCamera(CameraUpdateFactory.zoomTo(11f))
+                nearByPlace("Museum")
 
             }
         }
