@@ -265,9 +265,9 @@ import java.util.Date
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        //super.onBackPressed()
-        startActivity(Intent(this@InsideChatActivity, ChatActivity::class.java))
-        finish()
+        super.onBackPressed()
+        //startActivity(Intent(this@InsideChatActivity, ChatActivity::class.java))
+        //finish()
         overridePendingTransition(0,0)
     }
 }

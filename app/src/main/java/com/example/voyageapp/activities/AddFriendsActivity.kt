@@ -150,7 +150,9 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        startActivity(Intent(this, ChatActivity::class.java))
+        //startActivity(Intent(this, ChatActivity::class.java))
+        super.onBackPressed()
+        navigationViewTop.selectedItemId = R.id.nav_chats
         overridePendingTransition(0,0)
         finish()
     }

@@ -232,8 +232,9 @@ class InsideGameActivity : AppCompatActivity() {
                         val intent= Intent(this@InsideGameActivity, GameScoreActivity::class.java)
                         intent.putExtra("check", checkAnswer.toString())
                         intent.putExtra("museum", name)
-                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)
+                        finishAffinity()
                         finish()
                         overridePendingTransition(0,0)
                     }

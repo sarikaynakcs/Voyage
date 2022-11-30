@@ -133,7 +133,7 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
             intent.putExtra("name", currentUser.name)
             intent.putExtra("uid", currentUser.uid)
             context.startActivity(intent)
-            context.finish()
+            //context.finish()
             activity.overridePendingTransition(0,0)
         }
 
@@ -142,7 +142,7 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
             val activity = context as Activity
             intent.putExtra("uid", currentUser.uid)
             context.startActivity(intent)
-            context.finish()
+            //context.finish()
             activity.overridePendingTransition(0,0)
         }
 

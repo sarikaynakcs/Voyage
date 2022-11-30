@@ -69,7 +69,7 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
                             mUser = model
                         }
                     }
-                    mRef.addValueEventListener(object : ValueEventListener{
+                    mRef.addListenerForSingleValueEvent(object : ValueEventListener{
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.hasChild(model!!.uid)) {
                                 mRef.child(model.uid).child("games")
@@ -77,9 +77,9 @@ class GamePrizeActivity : AppCompatActivity(), FriendsAdapter.Listener {
                                         @SuppressLint("NotifyDataSetChanged")
                                         override fun onDataChange(snapshot: DataSnapshot) {
                                             for (sd in snapshot.children) {
-                                                val uid = sd.key
+                                                val museumName = sd.key
 
-                                                if (uid == museum) {
+                                                if (museumName == museum) {
                                                     (mUsers as ArrayList<ModelUser>).add(model)
                                                     //mAdapter.notifyDataSetChanged()
                                                 }

@@ -134,20 +134,7 @@ class ProfileActivity : AppCompatActivity() {
     private fun loadMuseumName() {
 
         val ref = FirebaseDatabase.getInstance().getReference("PlayerGames")
-        /*ref.child(firebaseAuth.uid!!).child("games")
-            .addValueEventListener(object : ValueEventListener{
-                @SuppressLint("NotifyDataSetChanged")
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    for (ds in snapshot.children) {
-                        val gameName = ds.key
-                        gameList.add(gameName!!)
-                        adapterGame.notifyDataSetChanged()
-                    }
-                }
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })*/
+
         ref.child(firebaseAuth.uid!!).child("games")
             .addChildEventListener(object : ChildEventListener{
                 @SuppressLint("NotifyDataSetChanged")

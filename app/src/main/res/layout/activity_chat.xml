@@ -1,75 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/back05"
-    tools:context=".activities.ChatActivity">
+    tools:context=".activities.ChatActivity"
+    android:id="@+id/drawerLayoutChat">
 
-    <LinearLayout
-        android:id="@+id/headerLl"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="@drawable/bg_header"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:fontFamily="@font/poppins_semibold"
-            android:text="Voyage"
-            android:gravity="start|bottom"
-            android:layout_marginLeft="15dp"
-            android:textColor="@color/white"
-            android:textStyle="bold"
-            android:textSize="25sp"/>
-
-    </LinearLayout>
-
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/linearTopIdChat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/headerLl"
-        android:background="@drawable/bg_header"
-        app:menu="@menu/chat_menu"
-        app:itemRippleColor="@android:color/transparent"
-        app:itemIconTint="@drawable/item_selector"
-        app:labelVisibilityMode="unlabeled"
-        app:elevation="-1dp"/>
-
-
-    <!--Chats-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/chatsRv"
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/linearTopIdChat"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="5dp"
-        android:layout_marginBottom="5dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/chat_view"
-        android:visibility="visible"/>
+        android:background="@drawable/back05">
 
-    <!--Bottom Navbar-->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/linearBotIdChat"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:layout_marginBottom="30dp"
-        android:background="@drawable/round_corner"
-        android:elevation="2dp"
-        app:itemIconSize="30dp"
-        app:itemIconTint="@drawable/item_selector"
-        app:itemRippleColor="@android:color/transparent"
-        app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/item_menu" />
 
-</RelativeLayout>
+        <LinearLayout
+            android:id="@+id/headerLl"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:background="@drawable/bg_header"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="Voyage"
+                android:gravity="start|bottom"
+                android:layout_marginLeft="15dp"
+                android:textColor="@color/white"
+                android:textStyle="bold"
+                android:textSize="25sp"/>
+
+        </LinearLayout>
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/linearTopIdChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/headerLl"
+            android:background="@drawable/bg_header"
+            app:menu="@menu/chat_menu"
+            app:itemRippleColor="@android:color/transparent"
+            app:itemIconTint="@drawable/item_selector"
+            app:labelVisibilityMode="unlabeled"
+            app:elevation="-1dp"/>
+
+
+        <!--Chats-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/chatsRv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/linearTopIdChat"
+            android:layout_above="@id/linearBotIdChat"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            tools:listitem="@layout/chat_view"
+            android:visibility="visible"/>
+
+        <!--Bottom Navbar-->
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+            android:id="@+id/linearBotIdChat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="30dp"
+            android:layout_marginBottom="30dp"
+            android:background="@drawable/round_corner"
+            android:elevation="2dp"
+            app:itemIconSize="30dp"
+            app:itemIconTint="@drawable/item_selector"
+            app:itemRippleColor="@android:color/transparent"
+            app:labelVisibilityMode="unlabeled"
+            app:menu="@menu/item_menu" />
+
+    </RelativeLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navViewChat"
+        android:layout_width="200dp"
+        android:layout_height="match_parent"
+        app:menu="@menu/nav_menu"
+        android:background="@drawable/back01"
+        app:itemTextColor="@color/yellow"
+        app:headerLayout="@layout/nav_header"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"/>
+
+</androidx.drawerlayout.widget.DrawerLayout>
