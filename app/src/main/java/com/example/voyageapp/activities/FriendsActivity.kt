@@ -97,29 +97,7 @@ class FriendsActivity : AppCompatActivity() {
                             mUser = model
                         }
                     }
-                    /*mRef.child(firebaseAuth.uid!!).child("friends").addValueEventListener(object : ValueEventListener{
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            for (sd in snapshot.children){
-                                val uid = sd.key
 
-                                if (uid == model?.uid) {
-                                    if (model != null) {
-                                        //(mUsers as ArrayList<ModelUser>).add(model)
-                                        userList.add(model)
-                                        userList.sortBy {
-                                            it.name.lowercase()
-                                        }
-                                        adapterUser.notifyDataSetChanged()
-                                    }
-                                }
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-
-                        }
-
-                    })*/
                     mRef.child(firebaseAuth.uid!!).child("friends")
                         .addChildEventListener(object : ChildEventListener{
                             override fun onChildAdded(
@@ -190,7 +168,9 @@ class FriendsActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        startActivity(Intent(this, ChatActivity::class.java))
+        //startActivity(Intent(this, ChatActivity::class.java))
+        super.onBackPressed()
+        navigationViewTop.selectedItemId = R.id.nav_chats
         overridePendingTransition(0,0)
         finish()
     }

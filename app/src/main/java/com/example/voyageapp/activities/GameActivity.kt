@@ -142,6 +142,7 @@ class GameActivity : AppCompatActivity() {
     override fun onBackPressed() {
         startActivity(Intent(this@GameActivity, DashboardUserActivity::class.java))
         overridePendingTransition(0,0)
+        finishAffinity()
         finish()
     }
 }

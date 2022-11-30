@@ -85,6 +85,10 @@ class ShowProfileActivity : AppCompatActivity() {
             loadData(uid)
         }
 
+        binding.backBtn.setOnClickListener {
+            onBackPressed()
+        }
+
     }
 
     private fun checkUser(uid: String?) {
@@ -231,7 +235,8 @@ class ShowProfileActivity : AppCompatActivity() {
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        startActivity(Intent(this, ChatActivity::class.java))
+        //startActivity(Intent(this, ChatActivity::class.java))
+        super.onBackPressed()
         overridePendingTransition(0,0)
         finish()
     }

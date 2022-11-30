@@ -174,58 +174,76 @@ class GameMapsActivity : AppCompatActivity(), OnMapReadyCallback {
                         }
                         mMap!!.setOnInfoWindowClickListener  { marker ->
 
-                            val mRef = FirebaseDatabase.getInstance().getReference("PlayerGames").child(firebaseAuth.uid!!)
-                            mRef.addValueEventListener(object : ValueEventListener{
-                                    override fun onDataChange(snapshot: DataSnapshot) {
+                            val mRef = FirebaseDatabase.getInstance().getReference("PlayerGames")
+                            val dbRef = FirebaseDatabase.getInstance().getReference("GameUpdate")
 
-                                        if (snapshot.hasChild("games")) {
-                                            mRef.child("games")
-                                                .addValueEventListener(object : ValueEventListener{
-                                                    override fun onDataChange(snapshot: DataSnapshot) {
-                                                        for (sd in snapshot.children) {
-                                                            val museumName = sd.key
+                            dbRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                                override fun onDataChange(snapshot: DataSnapshot) {
+                                    for (ds in snapshot.children) {
+                                        val museumName = ds.key
 
-                                                            if (museumName == marker.title) {
-                                                                val intent = Intent(this@GameMapsActivity, GamePrizeActivity::class.java)
-                                                                Toast.makeText(this@GameMapsActivity, "Keşfet sayfasına yönlendiriliyorsun", Toast.LENGTH_SHORT).show()
-                                                                intent.putExtra("museum", marker.title)
-                                                                startActivity(intent)
-                                                                finish()
-                                                                overridePendingTransition(0,0)
-                                                                mRef.removeEventListener(this)
-                                                            }
-                                                            else if (marker.title != "Your Position") {
-                                                                val intent = Intent(this@GameMapsActivity, InsideGameActivity::class.java)
-                                                                intent.putExtra("museum", marker.title)
-                                                                startActivity(intent)
-                                                                //finish()
-                                                                overridePendingTransition(0,0)
-                                                                mRef.removeEventListener(this)
-                                                            }
+                                        if (museumName == marker.title) {
+
+                                            mRef.addListenerForSingleValueEvent(object : ValueEventListener{
+                                                override fun onDataChange(snapshot: DataSnapshot) {
+                                                    if (snapshot.hasChild(firebaseAuth.uid!!)) {
+                                                        mRef.child(firebaseAuth.uid!!).child("games")
+                                                            .addListenerForSingleValueEvent(object : ValueEventListener{
+                                                                override fun onDataChange(snapshot: DataSnapshot) {
+                                                                    if (snapshot.hasChild(marker.title!!)) {
+                                                                        val intent = Intent(this@GameMapsActivity, GamePrizeActivity::class.java)
+                                                                        Toast.makeText(this@GameMapsActivity, "Keşfet sayfasına yönlendiriliyorsun", Toast.LENGTH_SHORT).show()
+                                                                        intent.putExtra("museum", marker.title)
+                                                                        startActivity(intent)
+                                                                        finish()
+                                                                        overridePendingTransition(0,0)
+                                                                        mRef.removeEventListener(this)
+                                                                    }
+                                                                    else {
+                                                                        if (marker.title != "Your Position") {
+                                                                            val intent = Intent(this@GameMapsActivity, InsideGameActivity::class.java)
+                                                                            intent.putExtra("museum", marker.title)
+                                                                            startActivity(intent)
+                                                                            //finish()
+                                                                            overridePendingTransition(0,0)
+                                                                            mRef.removeEventListener(this)
+                                                                        }
+                                                                    }
+                                                                }
+
+                                                                override fun onCancelled(error: DatabaseError) {
+                                                                    TODO("Not yet implemented")
+                                                                }
+
+                                                            })
+                                                    }
+                                                    else {
+                                                        if (marker.title != "Your Position") {
+                                                            val intent = Intent(this@GameMapsActivity, InsideGameActivity::class.java)
+                                                            intent.putExtra("museum", marker.title)
+                                                            startActivity(intent)
+                                                            //finish()
+                                                            overridePendingTransition(0,0)
+                                                            mRef.removeEventListener(this)
                                                         }
                                                     }
+                                                }
 
-                                                    override fun onCancelled(error: DatabaseError) {
-                                                        TODO("Not yet implemented")
-                                                    }
+                                                override fun onCancelled(error: DatabaseError) {
+                                                    TODO("Not yet implemented")
+                                                }
 
-                                                })
-                                        }
-                                        else {
-                                            val intent = Intent(this@GameMapsActivity, InsideGameActivity::class.java)
-                                            intent.putExtra("museum", marker.title)
-                                            startActivity(intent)
-                                            //finish()
-                                            overridePendingTransition(0,0)
-                                            mRef.removeEventListener(this)
+                                            })
                                         }
                                     }
+                                }
 
-                                    override fun onCancelled(error: DatabaseError) {
-                                        TODO("Not yet implemented")
-                                    }
+                                override fun onCancelled(error: DatabaseError) {
+                                    TODO("Not yet implemented")
+                                }
 
-                                })
+                            })
+
                         }
 
                     }
