@@ -1,6 +1,7 @@
 package com.example.voyageapp.models
 
 class ModelMessage {
+    var messageId: String? = null
     var message: String? = null
     var senderId: String? = null
     var timestamp:Long = 0

@@ -131,28 +131,9 @@ class AddFriendsActivity : AppCompatActivity(), FriendsAdapter.Listener {
         })
     }
 
-    private fun online(status: String) {
-        val db = FirebaseDatabase.getInstance().getReference("Status").child(firebaseAuth.uid!!)
-        val hashMap: HashMap<String, Any?> = HashMap()
-        hashMap["status"] = status
-        db.updateChildren(hashMap)
-    }
-
-    override fun onStart() {
-        super.onStart()
-        online("online")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        online("offline")
-    }
-
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        //startActivity(Intent(this, ChatActivity::class.java))
-        super.onBackPressed()
-        navigationViewTop.selectedItemId = R.id.nav_chats
+        startActivity(Intent(this, ChatActivity::class.java))
         overridePendingTransition(0,0)
         finish()
     }

@@ -11,7 +11,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:text="İpuclarını kullanarak doğru cevabı bulmaya çalış"
+        android:text="İpuçlarını kullanarak doğru cevabı bulmaya çalış"
         android:gravity="center"
         android:textColor="@color/white"/>
 
@@ -142,7 +142,8 @@
         android:layout_height="70dp"
         android:text="Seç"
         android:gravity="center"
-        android:background="@drawable/clue_design_radius"/>
+        android:background="@drawable/clue_design_radius"
+        android:visibility="gone"/>
     <TextView
         android:id="@+id/next"
         android:layout_alignParentBottom="true"
@@ -151,7 +152,7 @@
         android:text="İlerle"
         android:gravity="center"
         android:background="@drawable/clue_design_radius"
-        android:visibility="invisible"/>
+        android:visibility="gone"/>
 
 
 </RelativeLayout>

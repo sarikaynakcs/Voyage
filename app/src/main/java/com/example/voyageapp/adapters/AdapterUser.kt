@@ -73,7 +73,21 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
                 }
 
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                    TODO("Not yet implemented")
+                    mRef.orderByKey().limitToLast(1)
+                        .addListenerForSingleValueEvent(object : ValueEventListener{
+                            override fun onDataChange(snapshot: DataSnapshot) {
+                                for (ds in snapshot.children) {
+                                    val message = ds.child("message").value
+                                    holder.message.text = message.toString()
+                                }
+                            }
+
+                            override fun onCancelled(error: DatabaseError) {
+                                TODO("Not yet implemented")
+                            }
+
+                        })
+                    mRef.removeEventListener(this)
                 }
 
                 override fun onChildRemoved(snapshot: DataSnapshot) {
@@ -133,7 +147,7 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
             intent.putExtra("name", currentUser.name)
             intent.putExtra("uid", currentUser.uid)
             context.startActivity(intent)
-            //context.finish()
+            context.finish()
             activity.overridePendingTransition(0,0)
         }
 
