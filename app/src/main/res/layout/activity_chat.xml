@@ -1,16 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ChatActivity"
-    android:id="@+id/drawerLayoutChat">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/back05">
+    android:background="@drawable/back05">
 
 
         <LinearLayout
@@ -79,17 +74,5 @@
             app:labelVisibilityMode="unlabeled"
             app:menu="@menu/item_menu" />
 
-    </RelativeLayout>
 
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/navViewChat"
-        android:layout_width="200dp"
-        android:layout_height="match_parent"
-        app:menu="@menu/nav_menu"
-        android:background="@drawable/back01"
-        app:itemTextColor="@color/yellow"
-        app:headerLayout="@layout/nav_header"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"/>
-
-</androidx.drawerlayout.widget.DrawerLayout>
+</RelativeLayout>

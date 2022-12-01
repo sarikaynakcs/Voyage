@@ -4,6 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.View
 import android.view.WindowManager
 import android.widget.EditText
@@ -37,6 +40,7 @@ import java.util.Date
     private lateinit var ref: DatabaseReference
     private lateinit var time: java.lang.StringBuilder
     private lateinit var date: java.lang.StringBuilder
+    var database: FirebaseDatabase? = null
 
     var receiverRoom: String? = null
     var senderRoom: String? = null
@@ -52,6 +56,7 @@ import java.util.Date
         firebaseAuth = FirebaseAuth.getInstance()
         val name = intent.getStringExtra("name")
         val receiverUid = intent.getStringExtra("uid")
+        database = FirebaseDatabase.getInstance()
 
         time = StringBuilder()
         date = StringBuilder()
@@ -126,9 +131,27 @@ import java.util.Date
 
             })
 
+        val handler = Handler()
+        binding.editChatMessage.addTextChangedListener(object : TextWatcher{
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+
+            override fun afterTextChanged(s: Editable?) {
+                online("yazıyor...")
+                handler.removeCallbacksAndMessages(null)
+                handler.postDelayed(userStoppedTyping, 1000)
+            }
+            var userStoppedTyping = Runnable {
+                online("çevrimiçi")
+            }
+        })
+
         //handle click back button
         binding.backBtn.setOnClickListener {
-            onBackPressed()
+            startActivity(Intent(this@InsideChatActivity, ChatActivity::class.java))
+            finish()
+            overridePendingTransition(0,0)
         }
 
         val senderUid = firebaseAuth.currentUser?.uid
@@ -141,7 +164,7 @@ import java.util.Date
         messageBox = findViewById(R.id.edit_chat_message)
         sendButton = findViewById(R.id.button_gchat_send)
         messageList = ArrayList()
-        messageAdapter = AdapterMessage(this@InsideChatActivity, messageList)
+        messageAdapter = AdapterMessage(this@InsideChatActivity, messageList,senderRoom!!,receiverRoom!!)
         chatRecyclerView.layoutManager = LinearLayoutManager(this@InsideChatActivity)
         chatRecyclerView.adapter = messageAdapter
 
@@ -154,7 +177,8 @@ import java.util.Date
 
                     for (ds in snapshot.children){
                         val message = ds.getValue(ModelMessage::class.java)
-                        messageList.add(message!!)
+                        message!!.messageId = ds.key
+                        messageList.add(message)
                     }
                     messageAdapter.notifyDataSetChanged()
                     chatRecyclerView.smoothScrollToPosition((chatRecyclerView.adapter as AdapterMessage).itemCount)
@@ -171,16 +195,39 @@ import java.util.Date
             val message = messageBox.text.toString()
             val timestamp = System.currentTimeMillis()
             val messageObject = ModelMessage(message, senderUid, timestamp, time.toString(), date.toString())
+            val randomKey = database!!.reference.push().key
+            val lastMsgObj = HashMap<String,Any>()
+            lastMsgObj["date"] = date.toString()
+            lastMsgObj["message"] = messageObject.message!!
+            lastMsgObj["senderId"] = messageObject.senderId!!
+            lastMsgObj["time"] = time.toString()
+            lastMsgObj["timestamp"] = messageObject.timestamp
             val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
 
             if (message.isNotEmpty()) {
 
-                ref.child("Chats").child(senderRoom!!).child("Messages").push()
+                database!!.reference.child("Chats").child(senderRoom!!)
+                    .updateChildren(lastMsgObj)
+                database!!.reference.child("Chats").child(receiverRoom!!)
+                    .updateChildren(lastMsgObj)
+                database!!.reference.child("Chats").child(senderRoom!!)
+                    .child("Messages").child(randomKey!!)
+                    .setValue(messageObject).addOnSuccessListener {
+                        database!!.reference.child("Chats").child(receiverRoom!!)
+                            .child("Messages").child(randomKey)
+                            .setValue(messageObject)
+                            .addOnSuccessListener {
+                                databaseRef.child(senderUid!!).child("chats").child(receiverUid).setValue(true)
+                                databaseRef.child(receiverUid).child("chats").child(senderUid).setValue(true)
+                            }
+                    }
+
+                /*ref.child("Chats").child(senderRoom!!).child("Messages").push()
                     .setValue(messageObject)
                 databaseRef.child(senderUid!!).child("chats").child(receiverUid).setValue(true)
                 ref.child("Chats").child(receiverRoom!!).child("Messages").push()
                     .setValue(messageObject)
-                databaseRef.child(receiverUid).child("chats").child(senderUid).setValue(true)
+                databaseRef.child(receiverUid).child("chats").child(senderUid).setValue(true)*/
 
                 messageBox.text.clear()
             }
@@ -188,86 +235,81 @@ import java.util.Date
 
     }
 
-    private fun checkStatus(receiverUid: String?) {
-        val mRef = FirebaseDatabase.getInstance().getReference("Blocklist")
-        val dbRef = FirebaseDatabase.getInstance().getReference("Status").child(receiverUid!!)
+     private fun checkStatus(receiverUid: String?) {
+         val mRef = FirebaseDatabase.getInstance().getReference("Blocklist")
+         val dbRef = FirebaseDatabase.getInstance().getReference("Status").child(receiverUid!!)
 
-        mRef.child(receiverUid!!).child("blocklist")
-            .addValueEventListener(object : ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.hasChild(firebaseAuth.uid!!)) {
-                        binding.status.visibility = View.GONE
-                    } else {
-                        mRef.child(firebaseAuth.uid!!).child("blocklist")
-                            .addValueEventListener(object : ValueEventListener{
-                                override fun onDataChange(snapshot: DataSnapshot) {
-                                    if (snapshot.hasChild(receiverUid)) {
-                                        binding.status.visibility = View.GONE
-                                    } else {
-                                        dbRef.child("status").addValueEventListener(object : ValueEventListener{
-                                            override fun onDataChange(snapshot: DataSnapshot) {
-                                                val status = snapshot.value.toString()
+         mRef.child(receiverUid!!).child("blocklist")
+             .addValueEventListener(object : ValueEventListener{
+                 override fun onDataChange(snapshot: DataSnapshot) {
+                     if (snapshot.hasChild(firebaseAuth.uid!!)) {
+                         binding.status.visibility = View.GONE
+                     } else {
+                         mRef.child(firebaseAuth.uid!!).child("blocklist")
+                             .addValueEventListener(object : ValueEventListener{
+                                 override fun onDataChange(snapshot: DataSnapshot) {
+                                     if (snapshot.hasChild(receiverUid)) {
+                                         binding.status.visibility = View.GONE
+                                     } else {
+                                         dbRef.child("status").addValueEventListener(object : ValueEventListener{
+                                             override fun onDataChange(snapshot: DataSnapshot) {
+                                                 val status = snapshot.value.toString()
 
-                                                if (status == "online") {
-                                                    binding.status.visibility = View.VISIBLE
-                                                }else {
-                                                    binding.status.visibility = View.GONE
-                                                }
-                                            }
+                                                 if (status != "null") {
+                                                     binding.status.text = status
+                                                 }
+                                             }
 
-                                            override fun onCancelled(error: DatabaseError) {
-                                                TODO("Not yet implemented")
-                                            }
+                                             override fun onCancelled(error: DatabaseError) {
+                                                 TODO("Not yet implemented")
+                                             }
 
-                                        })
-                                    }
-                                }
+                                         })
+                                     }
+                                 }
 
-                                override fun onCancelled(error: DatabaseError) {
-                                    TODO("Not yet implemented")
-                                }
+                                 override fun onCancelled(error: DatabaseError) {
+                                     TODO("Not yet implemented")
+                                 }
 
-                            })
-                    }
-                }
+                             })
+                     }
+                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
+                 override fun onCancelled(error: DatabaseError) {
+                     TODO("Not yet implemented")
+                 }
 
-            })
+             })
 
-    }
+     }
 
-    private fun online(status: String) {
-        val db = FirebaseDatabase.getInstance().getReference("Status").child(firebaseAuth.uid!!)
-        val hashMap: HashMap<String, Any?> = HashMap()
-        hashMap["status"] = status
-        db.updateChildren(hashMap)
-        val receiverUid = intent.getStringExtra("uid")
-        checkStatus(receiverUid)
-    }
+     private fun online(status: String) {
+         val db = FirebaseDatabase.getInstance().getReference("Status").child(firebaseAuth.uid!!)
+         val hashMap: HashMap<String, Any?> = HashMap()
+         hashMap["status"] = status
+         db.updateChildren(hashMap)
+         val receiverUid = intent.getStringExtra("uid")
+         checkStatus(receiverUid)
+     }
 
-    override fun onStart() {
-        super.onStart()
-        online("online")
-    }
+     override fun onStart() {
+         super.onStart()
+         online("çevrimiçi")
+     }
 
-    /*override fun onStop() {
-        super.onStop()
-        online("offline")
-    }*/
-
-    override fun onPause() {
-        super.onPause()
-        online("offline")
-    }
+     override fun onPause() {
+         super.onPause()
+         val time = time.toString()
+         val date = date.toString()
+         val lastSeen = date + ", " + time
+         online("Son görülme $lastSeen")
+     }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
-        super.onBackPressed()
-        //startActivity(Intent(this@InsideChatActivity, ChatActivity::class.java))
-        //finish()
+        startActivity(Intent(this@InsideChatActivity, ChatActivity::class.java))
+        finish()
         overridePendingTransition(0,0)
     }
 }

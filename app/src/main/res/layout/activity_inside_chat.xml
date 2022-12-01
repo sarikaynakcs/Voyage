@@ -41,7 +41,7 @@
             android:id="@+id/name_txt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Tayyar"
+            android:text=""
             app:layout_constraintVertical_bias="0.2"
             app:layout_constraintStart_toEndOf="@id/photo_img"
             app:layout_constraintTop_toTopOf="@id/photo_img"
@@ -55,11 +55,11 @@
             android:id="@+id/status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="çevrimiçi"
+            android:text=""
             app:layout_constraintStart_toStartOf="@id/name_txt"
             app:layout_constraintTop_toBottomOf="@id/name_txt"
             android:textColor="@color/subtext"
-            android:visibility="gone"
+            android:visibility="visible"
             android:textStyle="italic"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
