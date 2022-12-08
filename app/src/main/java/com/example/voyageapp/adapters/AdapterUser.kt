@@ -61,7 +61,9 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 for (ds in snapshot.children) {
                                     val message = ds.child("message").value
+                                    val time = ds.child("time").value
                                     holder.message.text = message.toString()
+                                    holder.time.text = time.toString()
                                 }
                             }
 
@@ -78,7 +80,9 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 for (ds in snapshot.children) {
                                     val message = ds.child("message").value
+                                    val time = ds.child("time").value
                                     holder.message.text = message.toString()
+                                    holder.time.text = time.toString()
                                 }
                             }
 
@@ -226,6 +230,7 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
         val photo: de.hdodenhof.circleimageview.CircleImageView = itemView.findViewById(R.id.photo_img)
         val message: TextView = itemView.findViewById(R.id.message_txt)
         val delete: ImageButton = itemView.findViewById(R.id.deleteChatBtn)
+        val time: TextView = itemView.findViewById(R.id.time_txt)
     }
 }
 

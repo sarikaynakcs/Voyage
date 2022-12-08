@@ -273,7 +273,7 @@ class FriendsAdapter(private val listener: Listener)
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (ds in snapshot.children) {
                         mRef.child(firebaseAuth.uid!!).child("friends")
-                            .addValueEventListener(object : ValueEventListener{
+                            .addListenerForSingleValueEvent(object : ValueEventListener{
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 for (sd in snapshot.children) {
                                     val uid = sd.key
@@ -281,6 +281,7 @@ class FriendsAdapter(private val listener: Listener)
                                     if (uid == user.uid) {
                                         view.follow_btn.visibility = View.GONE
                                         view.unfollow_btn.visibility = View.VISIBLE
+                                        mRef.removeEventListener(this)
                                     }
                                 }
                             }

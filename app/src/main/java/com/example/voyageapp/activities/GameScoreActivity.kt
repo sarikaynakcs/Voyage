@@ -27,10 +27,15 @@ class GameScoreActivity : AppCompatActivity() {
         firebaseAuth = FirebaseAuth.getInstance()
 
         val check = intent.getStringExtra("check")
-        val museum = intent.getStringExtra("museum")
+        var score = intent.getStringExtra("score")
+        val museum = intent.getStringExtra("museum").toString()
 
-        //adding parameter to firebase database
-        if (check != "false") {
+
+
+        //adding paramter to firebase database
+        if (score == "10" || score == "15") {
+            val hashmap = HashMap<String,Any>()
+            hashmap[museum] = score
             binding.background.setBackgroundResource(R.drawable.conc)
             binding.winText.setText("TEBRİKLER")
             binding.firstText.setText("Devam ederek oyunu oynayan insanlarla etkileşime geçebilirsin")
@@ -38,16 +43,14 @@ class GameScoreActivity : AppCompatActivity() {
             binding.nextButton.visibility=android.view.View.VISIBLE
             binding.mainMenuButton.visibility=android.view.View.VISIBLE
             val ref = FirebaseDatabase.getInstance().getReference("PlayerGames")
-            ref.child(firebaseAuth.uid!!).child("games").child(museum!!).setValue(true)
-        }
-        else {
+            ref.child(firebaseAuth.uid!!).child("games").updateChildren(hashmap)
+        } else {
             binding.background.setBackgroundResource(R.drawable.fail)
             binding.winText.setText("BAŞARAMADIN")
             binding.firstText.setText("Ana Menüye dönerek tekrar oyuna girip görevi tamamlayabilirsin")
             binding.secondText.setText("")
             binding.loseMainMenuButton.visibility=android.view.View.VISIBLE
         }
-
 
         binding.mainMenuButton.setOnClickListener {
             val intent = Intent(this@GameScoreActivity, GameActivity::class.java)

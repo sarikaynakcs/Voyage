@@ -49,16 +49,31 @@
                 android:layout_marginTop="30dp"
                 android:textColor="@color/white"
                 android:fontFamily="@font/poppins_semibold"
-                android:text="Görev yerine yakınsan başla butonuna bas"/>
+                android:text="Voyage simgelerine tıklayarak göreve başlayabilirsin"/>
 
             <TextView
                 android:id="@+id/nextBtn"
-                android:layout_width="150dp"
+                android:layout_width="170dp"
                 android:layout_height="50dp"
+                android:layout_centerInParent="true"
                 android:background="@drawable/button_design"
                 android:fontFamily="@font/poppins_black"
                 android:gravity="center"
-                android:text="Devam Et"
+                android:padding="10dp"
+                android:text="Oyna"
+                android:textColor="@color/yellow"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/leaderboardBtn"
+                android:layout_width="170dp"
+                android:layout_height="50dp"
+                android:layout_below="@id/nextBtn"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/button_design"
+                android:fontFamily="@font/poppins_black"
+                android:gravity="center"
+                android:text="Liderler Sıralaması"
                 android:textColor="@color/yellow"
                 android:layout_centerInParent="true"/>
 

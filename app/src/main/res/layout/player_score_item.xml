@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/player_score_shape"
+    android:paddingStart="10dp"
+    android:paddingEnd="10dp"
+    android:layout_marginTop="10dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/photo_img_game"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/shape_button5"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/ic_person_white"/>
+
+    <TextView
+        android:id="@+id/username_txt_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintStart_toEndOf="@id/photo_img_game"
+        app:layout_constraintTop_toTopOf="@id/photo_img_game"
+        app:layout_constraintBottom_toBottomOf="@id/photo_img_game"
+        android:layout_marginStart="15dp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textSize="16sp"/>
+
+
+    <TextView
+        android:id="@+id/name_txt_game"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textColor="@color/subtext"
+        android:maxLines="1"
+        app:layout_constraintWidth_max="250dp"
+        app:layout_constraintStart_toStartOf="@id/username_txt_game"
+        app:layout_constraintTop_toBottomOf="@id/username_txt_game"
+        android:layout_marginTop="2dp"
+        android:textSize="14sp"/>
+
+    <LinearLayout
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:background="@drawable/score_shape"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+
+        <TextView
+            android:id="@+id/score_txt_game"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:drawableStartCompat="@drawable/money"
+            android:padding="10dp"
+            android:gravity="center"
+            android:text=""
+            android:textColor="@color/subtext"
+            android:textStyle="bold|italic"
+            android:textAlignment="viewStart"
+            tools:ignore="RtlCompat" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

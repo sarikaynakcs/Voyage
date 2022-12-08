@@ -67,7 +67,7 @@ import java.util.Date
         date.append(dateString)
 
         val timeOfDay: Date = Calendar.getInstance().time
-        val format_time: SimpleDateFormat = SimpleDateFormat("hh:mm")
+        val format_time: SimpleDateFormat = SimpleDateFormat("HH:mm")
         val timeString: String = format_time.format(timeOfDay)
         time.append(timeString)
 
@@ -149,6 +149,20 @@ import java.util.Date
 
         //handle click back button
         binding.backBtn.setOnClickListener {
+            val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
+            databaseRef.child(firebaseAuth.uid!!).child("chats")
+                .addListenerForSingleValueEvent(object : ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.child(receiverUid!!).exists()) {
+                            databaseRef.child(firebaseAuth.uid!!).child("chats").child(receiverUid).setValue(false)
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+
+                })
             startActivity(Intent(this@InsideChatActivity, ChatActivity::class.java))
             finish()
             overridePendingTransition(0,0)
@@ -167,6 +181,21 @@ import java.util.Date
         messageAdapter = AdapterMessage(this@InsideChatActivity, messageList,senderRoom!!,receiverRoom!!)
         chatRecyclerView.layoutManager = LinearLayoutManager(this@InsideChatActivity)
         chatRecyclerView.adapter = messageAdapter
+
+        val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
+        databaseRef.child(senderUid!!).child("chats")
+            .addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.child(receiverUid).exists()) {
+                        databaseRef.child(senderUid!!).child("chats").child(receiverUid).setValue(true)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
 
         // logic for adding data to recyclerview
         ref.child("Chats").child(senderRoom!!).child("Messages")
@@ -217,17 +246,34 @@ import java.util.Date
                             .child("Messages").child(randomKey)
                             .setValue(messageObject)
                             .addOnSuccessListener {
-                                databaseRef.child(senderUid!!).child("chats").child(receiverUid).setValue(true)
-                                databaseRef.child(receiverUid).child("chats").child(senderUid).setValue(true)
+                                database!!.reference.child("isChat").child(senderUid!!).child("chats")
+                                    .addListenerForSingleValueEvent(object : ValueEventListener{
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            if (!snapshot.child(receiverUid).exists()) {
+                                                databaseRef.child(senderUid!!).child("chats").child(receiverUid).setValue(true)
+                                            }
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            TODO("Not yet implemented")
+                                        }
+
+                                    })
+                                database!!.reference.child("isChat").child(receiverUid).child("chats")
+                                    .addListenerForSingleValueEvent(object : ValueEventListener{
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            if (!snapshot.child(senderUid).exists()) {
+                                                databaseRef.child(receiverUid).child("chats").child(senderUid).setValue(false)
+                                            }
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            TODO("Not yet implemented")
+                                        }
+
+                                    })
                             }
                     }
-
-                /*ref.child("Chats").child(senderRoom!!).child("Messages").push()
-                    .setValue(messageObject)
-                databaseRef.child(senderUid!!).child("chats").child(receiverUid).setValue(true)
-                ref.child("Chats").child(receiverRoom!!).child("Messages").push()
-                    .setValue(messageObject)
-                databaseRef.child(receiverUid).child("chats").child(senderUid).setValue(true)*/
 
                 messageBox.text.clear()
             }
@@ -238,6 +284,7 @@ import java.util.Date
      private fun checkStatus(receiverUid: String?) {
          val mRef = FirebaseDatabase.getInstance().getReference("Blocklist")
          val dbRef = FirebaseDatabase.getInstance().getReference("Status").child(receiverUid!!)
+         val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
 
          mRef.child(receiverUid!!).child("blocklist")
              .addValueEventListener(object : ValueEventListener{
@@ -251,20 +298,55 @@ import java.util.Date
                                      if (snapshot.hasChild(receiverUid)) {
                                          binding.status.visibility = View.GONE
                                      } else {
-                                         dbRef.child("status").addValueEventListener(object : ValueEventListener{
-                                             override fun onDataChange(snapshot: DataSnapshot) {
-                                                 val status = snapshot.value.toString()
+                                         databaseRef.child(receiverUid).child("chats").child(firebaseAuth.uid!!)
+                                             .addValueEventListener(object : ValueEventListener{
+                                                 override fun onDataChange(snapshot: DataSnapshot) {
+                                                     val isChat = snapshot.value.toString()
 
-                                                 if (status != "null") {
-                                                     binding.status.text = status
+                                                     if (isChat == "true") {
+                                                         dbRef.child("status").addValueEventListener(object : ValueEventListener{
+                                                             override fun onDataChange(snapshot: DataSnapshot) {
+                                                                 val status = snapshot.value.toString()
+
+                                                                 if (status != "null") {
+                                                                     binding.status.text = status
+                                                                 }
+                                                             }
+
+                                                             override fun onCancelled(error: DatabaseError) {
+                                                                 TODO("Not yet implemented")
+                                                             }
+
+                                                         })
+                                                     } else {
+                                                         dbRef.child("status").addValueEventListener(object : ValueEventListener{
+                                                             override fun onDataChange(snapshot: DataSnapshot) {
+                                                                 val status = snapshot.value.toString()
+
+                                                                 if (status != "null") {
+                                                                     if (status == "yazıyor...") {
+                                                                         binding.status.text = "çevrimiçi"
+                                                                     } else {
+                                                                         binding.status.text = status
+                                                                     }
+                                                                 }
+                                                             }
+
+                                                             override fun onCancelled(error: DatabaseError) {
+                                                                 TODO("Not yet implemented")
+                                                             }
+
+                                                         })
+                                                     }
                                                  }
-                                             }
 
-                                             override fun onCancelled(error: DatabaseError) {
-                                                 TODO("Not yet implemented")
-                                             }
+                                                 override fun onCancelled(error: DatabaseError) {
+                                                     TODO("Not yet implemented")
+                                                 }
 
-                                         })
+                                             })
+
+
                                      }
                                  }
 
@@ -296,6 +378,21 @@ import java.util.Date
      override fun onStart() {
          super.onStart()
          online("çevrimiçi")
+         val receiverUid = intent.getStringExtra("uid")
+         val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
+         databaseRef.child(firebaseAuth.uid!!).child("chats")
+             .addListenerForSingleValueEvent(object : ValueEventListener{
+                 override fun onDataChange(snapshot: DataSnapshot) {
+                     if (snapshot.child(receiverUid!!).exists()) {
+                         databaseRef.child(firebaseAuth.uid!!).child("chats").child(receiverUid).setValue(true)
+                     }
+                 }
+
+                 override fun onCancelled(error: DatabaseError) {
+                     TODO("Not yet implemented")
+                 }
+
+             })
      }
 
      override fun onPause() {
@@ -304,10 +401,40 @@ import java.util.Date
          val date = date.toString()
          val lastSeen = date + ", " + time
          online("Son görülme $lastSeen")
+         val receiverUid = intent.getStringExtra("uid")
+         val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
+         databaseRef.child(firebaseAuth.uid!!).child("chats")
+             .addListenerForSingleValueEvent(object : ValueEventListener{
+                 override fun onDataChange(snapshot: DataSnapshot) {
+                     if (snapshot.child(receiverUid!!).exists()) {
+                         databaseRef.child(firebaseAuth.uid!!).child("chats").child(receiverUid).setValue(false)
+                     }
+                 }
+
+                 override fun onCancelled(error: DatabaseError) {
+                     TODO("Not yet implemented")
+                 }
+
+             })
      }
 
     @Deprecated("Deprecated in Java")
     override fun onBackPressed() {
+        val receiverUid = intent.getStringExtra("uid")
+        val databaseRef = FirebaseDatabase.getInstance().getReference("isChat")
+        databaseRef.child(firebaseAuth.uid!!).child("chats")
+            .addListenerForSingleValueEvent(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.child(receiverUid!!).exists()) {
+                        databaseRef.child(firebaseAuth.uid!!).child("chats").child(receiverUid).setValue(false)
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
         startActivity(Intent(this@InsideChatActivity, ChatActivity::class.java))
         finish()
         overridePendingTransition(0,0)

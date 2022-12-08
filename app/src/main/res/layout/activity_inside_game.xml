@@ -33,9 +33,11 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/clue_design_radius"
-
-                android:text="ipucu 1"></TextView>
+                android:background="@drawable/museum_name_shape"
+                android:text="ipucu 1"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_regular"></TextView>
             <TextView
                 android:id="@+id/clueTwo"
                 android:layout_width="310dp"
@@ -43,8 +45,11 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/clue_design_radius"
-                android:text="ipucu 2"></TextView>
+                android:background="@drawable/museum_name_shape"
+                android:text="ipucu 2"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_regular"></TextView>
             <TextView
                 android:id="@+id/clueThree"
                 android:layout_width="310dp"
@@ -52,9 +57,11 @@
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_marginEnd="30dp"
-                android:background="@drawable/clue_design_radius"
-
-                android:text="ipucu 3"></TextView>
+                android:background="@drawable/museum_name_shape"
+                android:text="ipucu 3"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                android:fontFamily="@font/poppins_regular"></TextView>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -72,7 +79,7 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center"
-        android:text="İçlerinden birini seçip devam butonuna bas"
+        android:text="İçlerinden birini seçip ilerle butonuna bas"
         android:textColor="@color/white"/>
     <LinearLayout
 
@@ -87,22 +94,22 @@
             android:id="@+id/option1"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="cevap a"
+            android:text=""
             android:layout_weight="1"
             android:layout_marginEnd="10dp"
             android:textColor="@color/white"
             android:gravity="center"
-            android:background="@drawable/clue_design_radius"/>
+            android:background="@drawable/options_unselected"/>
         <TextView
             android:id="@+id/option2"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="cevap a"
+            android:text=""
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:textColor="@color/white"
             android:gravity="center"
-            android:background="@drawable/clue_design_radius"/>
+            android:background="@drawable/options_unselected"/>
 
     </LinearLayout>
     <LinearLayout
@@ -116,42 +123,50 @@
             android:id="@+id/option3"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="cevap c"
+            android:text=""
             android:layout_weight="1"
             android:layout_marginEnd="10dp"
             android:textColor="@color/white"
             android:gravity="center"
-            android:background="@drawable/clue_design_radius"/>
+            android:background="@drawable/options_unselected"/>
         <TextView
             android:id="@+id/option4"
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:text="cevap d"
+            android:text=""
             android:layout_marginStart="10dp"
             android:layout_weight="1"
             android:textColor="@color/white"
             android:gravity="center"
-            android:background="@drawable/clue_design_radius"/>
+            android:background="@drawable/options_unselected"/>
 
 
     </LinearLayout>
     <TextView
         android:id="@+id/submit"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
         android:text="Seç"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:background="@drawable/clue_design_radius"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/next_button_two"
         android:visibility="gone"/>
     <TextView
         android:id="@+id/next"
-        android:layout_alignParentBottom="true"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
         android:text="İlerle"
+        android:layout_alignParentBottom="true"
         android:gravity="center"
-        android:background="@drawable/clue_design_radius"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:fontFamily="@font/poppins_semibold"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/next_button_two"
         android:visibility="gone"/>
 
 
