@@ -17,6 +17,34 @@
         android:theme="@style/Theme.MaterialComponents.Light.NoActionBar"
         tools:targetApi="31">
         <activity
+            android:name=".activities.InsideLeaderBoardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.LeaderBoardActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.InsideSecondGameActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".activities.InsideThirdGameActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".activities.BlockListActivity"
             android:exported="false">
             <meta-data

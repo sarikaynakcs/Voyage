@@ -19,13 +19,15 @@ class InsideGameActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityInsideGameBinding
     private lateinit var timer: CountDownTimer
+    var score=0
+
 
     private var random=(1..3).random()
     companion object{
         private const val MY_PERMISSION_CODE: Int = 2000 //1000
     }
     lateinit var mServices: IGoogleAPIService
-//----------------------------------------------------
+    //----------------------------------------------------
     private lateinit var database: DatabaseReference
     var checkAnswer: Boolean = true
 
@@ -39,23 +41,27 @@ class InsideGameActivity : AppCompatActivity() {
 
         mServices = Common.googleAPIService
 
-        //-----------------------------------------
         val long =intent.getStringExtra("museum")
 
+        //-----------------------------------------
 
-        timer = object : CountDownTimer(10000,1000) {
+
+
+        timer = object : CountDownTimer(100000,1000) {
             override fun onFinish() {
-                binding.sayac.text = "Left: 0"
+                binding.sayac.text = "Kalan Zaman: 0"
                 checkAnswer = false
-                val intent=Intent(this@InsideGameActivity,GameScoreActivity::class.java)
-                intent.putExtra("check",checkAnswer.toString())
+                val intent=Intent(this@InsideGameActivity,InsideSecondGameActivity::class.java)
+                //intent.putExtra("check",checkAnswer.toString())
+                intent.putExtra("score", (score).toString())
                 startActivity(intent)
                 finish()
                 overridePendingTransition(0,0)
             }
 
             override fun onTick(millisUntilFinished: Long) {
-                binding.sayac.text = "Left: ${millisUntilFinished/1000}"
+
+                binding.sayac.text = "Kalan Zaman: ${millisUntilFinished/1000}"
             }
 
         }.start()
@@ -93,61 +99,37 @@ class InsideGameActivity : AppCompatActivity() {
 
                 binding.option1.setOnClickListener{
                     binding.submit.visibility = View.VISIBLE
-                    binding.option1.setBackgroundColor(ContextCompat.getColor(this, R.color.gray01))
-                    binding.option2.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option3.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option4.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
+                    binding.option1.setBackgroundResource(R.drawable.options_selected)
+                    binding.option2.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option3.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option4.setBackgroundResource(R.drawable.options_unselected)
                     id= 1
 
                 }
                 binding.option2.setOnClickListener{
                     binding.submit.visibility = View.VISIBLE
-                    binding.option2.setBackgroundColor(ContextCompat.getColor(this, R.color.gray01))
-                    binding.option1.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option3.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option4.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
+                    binding.option2.setBackgroundResource(R.drawable.options_selected)
+                    binding.option1.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option3.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option4.setBackgroundResource(R.drawable.options_unselected)
                     id= 2
 
                 }
                 binding.option3.setOnClickListener{
                     binding.submit.visibility = View.VISIBLE
-                    binding.option3.setBackgroundColor(ContextCompat.getColor(this, R.color.gray01))
-                    binding.option2.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option1.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option4.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
+                    binding.option3.setBackgroundResource(R.drawable.options_selected)
+                    binding.option2.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option1.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option4.setBackgroundResource(R.drawable.options_unselected)
                     id= 3
 
                 }
                 binding.option4.setOnClickListener{
                     binding.submit.visibility = View.VISIBLE
-                    binding.option4.setBackgroundColor(ContextCompat.getColor(this, R.color.gray01))
-                    binding.option3.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option2.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
-                    binding.option1.setBackgroundColor(ContextCompat.getColor(this,
-                        R.color.secondary
-                    ))
+                    binding.option4.setBackgroundResource(R.drawable.options_selected)
+                    binding.option3.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option2.setBackgroundResource(R.drawable.options_unselected)
+                    binding.option1.setBackgroundResource(R.drawable.options_unselected)
                     id= 4
 
                 }
@@ -157,57 +139,41 @@ class InsideGameActivity : AppCompatActivity() {
 
                     if(id == 1){
                         if(binding.option1.text==answer){
-                            binding.option1.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.green
-                            ))
+                            binding.option1.setBackgroundResource(R.drawable.option_true)
                             checkAnswer = true
                         }
                         else{
-                            binding.option1.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.red
-                            ))
+                            binding.option1.setBackgroundResource(R.drawable.option_false)
                             checkAnswer = false
                         }
                     }
                     else if(id == 2){
                         if(binding.option2.text==answer){
-                            binding.option2.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.green
-                            ))
+                            binding.option2.setBackgroundResource(R.drawable.option_true)
                             checkAnswer = true
                         }
                         else{
-                            binding.option2.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.red
-                            ))
+                            binding.option2.setBackgroundResource(R.drawable.option_false)
                             checkAnswer = false
                         }
                     }
                     else if(id == 3){
                         if(binding.option3.text==answer){
-                            binding.option3.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.green
-                            ))
+                            binding.option3.setBackgroundResource(R.drawable.option_true)
                             checkAnswer = true
                         }
                         else{
-                            binding.option3.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.red
-                            ))
+                            binding.option3.setBackgroundResource(R.drawable.option_false)
                             checkAnswer = false
                         }
                     }
                     else if(id == 4){
                         if(binding.option4.text==answer){
-                            binding.option4.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.green
-                            ))
+                            binding.option4.setBackgroundResource(R.drawable.option_true)
                             checkAnswer = true
                         }
                         else{
-                            binding.option4.setBackgroundColor(ContextCompat.getColor(this,
-                                R.color.red
-                            ))
+                            binding.option4.setBackgroundResource(R.drawable.option_false)
                             checkAnswer = false
                         }
                     }
@@ -229,8 +195,13 @@ class InsideGameActivity : AppCompatActivity() {
                     timer.cancel()
 
                     binding.next.setOnClickListener {
-                        val intent= Intent(this@InsideGameActivity, GameScoreActivity::class.java)
-                        intent.putExtra("check", checkAnswer.toString())
+                        val intent= Intent(this@InsideGameActivity, InsideSecondGameActivity::class.java)
+                        if(checkAnswer){
+                            intent.putExtra("score", (score+5).toString())
+                        }
+                        else if(!checkAnswer){
+                            intent.putExtra("score", (score).toString())
+                        }
                         intent.putExtra("museum", name)
                         //intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                         startActivity(intent)

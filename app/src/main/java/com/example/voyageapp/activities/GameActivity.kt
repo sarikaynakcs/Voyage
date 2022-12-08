@@ -85,6 +85,12 @@ class GameActivity : AppCompatActivity() {
             overridePendingTransition(0,0)
         }
 
+        binding.leaderboardBtn.setOnClickListener {
+            val intent = Intent(this@GameActivity, LeaderBoardActivity::class.java)
+            startActivity(intent)
+            overridePendingTransition(0,0)
+        }
+
 
         window.addFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN)
         window.statusBarColor = ContextCompat.getColor(this, R.color.black)

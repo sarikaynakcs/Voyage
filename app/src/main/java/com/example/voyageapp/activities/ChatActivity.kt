@@ -135,7 +135,7 @@ class ChatActivity : AppCompatActivity() {
                                 snapshot: DataSnapshot,
                                 previousChildName: String?
                             ) {
-                                TODO("Not yet implemented")
+                                mRef.removeEventListener(this)
                             }
 
                             override fun onChildRemoved(snapshot: DataSnapshot) {
