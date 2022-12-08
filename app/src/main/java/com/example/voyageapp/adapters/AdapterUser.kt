@@ -117,6 +117,7 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
                     if (snapshot.hasChild(firebaseAuth.uid!!)) {
                         holder.name.text = "Voyage Kullanıcısı"
                         holder.message.visibility = View.GONE
+                        holder.time.visibility = View.GONE
                         holder.photo.setImageResource(R.drawable.ic_person_white)
                     } else {
 
@@ -126,6 +127,7 @@ class AdapterUser(val context: Context, val userList: ArrayList<ModelUser>):
                                     if (snapshot.hasChild(currentUser.uid)) {
                                         holder.name.text = "Voyage Kullanıcısı"
                                         holder.message.visibility = View.GONE
+                                        holder.time.visibility = View.GONE
                                         holder.photo.setImageResource(R.drawable.ic_person_white)
                                     }
                                 }
