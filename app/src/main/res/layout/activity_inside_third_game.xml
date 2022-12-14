@@ -72,8 +72,8 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:background="@drawable/empty_space"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp">
                     <TextView
                         android:id="@+id/example1"
                         android:layout_width="200dp"
@@ -98,8 +98,8 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:background="@drawable/empty_space"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp">
                     <TextView
                         android:id="@+id/example2"
                         android:layout_width="200dp"
@@ -123,8 +123,8 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:background="@drawable/empty_space"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp">
                     <TextView
                         android:id="@+id/example3"
                         android:layout_width="200dp"
@@ -148,8 +148,8 @@
                     android:orientation="horizontal"
                     android:gravity="center"
                     android:background="@drawable/empty_space"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginStart="30dp">
+                    android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp">
                     <TextView
                         android:id="@+id/example4"
                         android:layout_width="200dp"
