@@ -131,7 +131,7 @@
         android:layout_height="match_parent"
         app:menu="@menu/nav_menu"
         android:background="@drawable/back01"
-        app:itemTextColor="@color/yellow"
+        app:itemTextColor="@color/primary"
         app:headerLayout="@layout/nav_header"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"/>

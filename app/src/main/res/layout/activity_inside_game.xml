@@ -37,7 +37,8 @@
                 android:text="ipucu 1"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:fontFamily="@font/poppins_regular"></TextView>
+                android:fontFamily="@font/poppins_regular"/>
+
             <TextView
                 android:id="@+id/clueTwo"
                 android:layout_width="310dp"
@@ -49,7 +50,8 @@
                 android:text="ipucu 2"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:fontFamily="@font/poppins_regular"></TextView>
+                android:fontFamily="@font/poppins_regular"/>
+
             <TextView
                 android:id="@+id/clueThree"
                 android:layout_width="310dp"
@@ -61,7 +63,7 @@
                 android:text="ipucu 3"
                 android:textColor="@color/white"
                 android:textSize="16sp"
-                android:fontFamily="@font/poppins_regular"></TextView>
+                android:fontFamily="@font/poppins_regular"/>
 
         </LinearLayout>
     </HorizontalScrollView>

@@ -35,7 +35,7 @@
         android:layout_marginEnd="25dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Seçtiğin şehre tıklayarak ilgili mekanlar hakkında bilgi sahibi olabilirsin"
+        android:text="Dilediğin şehre tıklayarak seçtiğin şehirdeki müzeler hakkında bilgi sahibi olabilirsin!"
         android:layout_below="@id/headerLl"
         android:fontFamily="@font/poppins_regular"
         android:textColor="@color/subtext"

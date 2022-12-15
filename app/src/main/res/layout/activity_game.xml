@@ -42,19 +42,33 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-            <TextView
+
+            <ScrollView
+                android:id="@+id/description"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:layout_marginTop="30dp"
-                android:textColor="@color/white"
-                android:fontFamily="@font/poppins_semibold"
-                android:text="Voyage simgelerine tıklayarak göreve başlayabilirsin"/>
+                android:layout_height="130dp"
+                android:paddingHorizontal="50dp"
+                android:paddingTop="30dp"
+                android:paddingBottom="20dp"
+                android:layout_centerInParent="true">
+
+                <TextView
+                    android:id="@+id/descriptionTv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/poppins_semibold"
+                    android:gravity="center"
+                    android:text="Oyna butonuna bastıktan sonra bulunduğun lokasyondaki müzeleri görebilirsin. Üzerinde Voyage ikonu olan müzelere tıklayarak açılan başlıktaki müze adına tıklayıp oyuna başlayabilirsin. Her müze için 3 farklı soru bulunmakla beraber her soru 5 puan değerinde. Oyunu başarıyla tamamlamak içi soruların en az 2 tanesine doğru cevap vermelisin. Başka bir deyişle minimum 10 pu an toplayarak seçili müzeyi keşfetmiş sayılacaksın. Unutma sorular müzedeki nesnelerle alakalı olacak, bu sebeple başlamadan önce müzeye girdiğinden emin olmalısın. Son olarak, bir müzeyi başarılı bir şekilde keşfettikten sonra o müzeyi keşfeden diğer kullanıcıları arkadaş ekleme hakkına sahip olacaksın. Başarısız olursan üzülmene gerek yok, aynı oyunu tekrardan oynayabilirsin. Fakat bu sefer sorular değişmiş bir şekilde karşına gelecek. Tebrikler, artık yeni müzeler ve yeni insanlar keşfetmeye hazırsın! "
+                    android:textColor="@color/white" />
+
+            </ScrollView>
+
 
             <TextView
                 android:id="@+id/nextBtn"
                 android:layout_width="170dp"
                 android:layout_height="50dp"
+                android:layout_below="@id/description"
                 android:layout_centerInParent="true"
                 android:background="@drawable/button_design"
                 android:fontFamily="@font/poppins_black"
@@ -62,20 +76,20 @@
                 android:padding="10dp"
                 android:text="Oyna"
                 android:textColor="@color/yellow"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/leaderboardBtn"
                 android:layout_width="170dp"
                 android:layout_height="50dp"
                 android:layout_below="@id/nextBtn"
+                android:layout_centerInParent="true"
                 android:layout_marginTop="30dp"
                 android:background="@drawable/button_design"
                 android:fontFamily="@font/poppins_black"
                 android:gravity="center"
                 android:text="Liderler Sıralaması"
-                android:textColor="@color/yellow"
-                android:layout_centerInParent="true"/>
+                android:textColor="@color/yellow" />
 
 
         </RelativeLayout>

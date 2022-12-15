@@ -77,6 +77,7 @@ class InsideThirdGameActivity : AppCompatActivity() {
         database = FirebaseDatabase.getInstance().getReference("GameUpdate")
         database.child(long).child("examples").child("ThirdGameExample").addValueEventListener(object :ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                names.add("")
                 for (ds in snapshot.children){
                     val spinnerName="${ds.child("name").value}"
                     if (spinnerName!="null"){
